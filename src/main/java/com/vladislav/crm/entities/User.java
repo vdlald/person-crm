@@ -16,12 +16,13 @@ import java.util.List;
 @AllArgsConstructor
 @Accessors(chain = true)
 @ToString(callSuper = true, exclude = "password")
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = "info")
 @Entity(name = "User")
 @Table(name = "users")
 @AttributeOverride(name = "id", column = @Column(name = "user_id", updatable = false, nullable = false))
 public class User extends AbstractEntity {
 
+    @Setter(AccessLevel.PRIVATE)
     @Pattern(regexp = "^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$")
     @Column(name = "username", updatable = false, nullable = false, unique = true, length = 32)
     private String username;
@@ -36,6 +37,9 @@ public class User extends AbstractEntity {
     private List<Authority> authorities = new ArrayList<>() {{
         add(Authority.ROLE_USER);
     }};
+
+    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
+    private UserInfo info;
 
     @AllArgsConstructor
     public enum Authority implements GrantedAuthority {
