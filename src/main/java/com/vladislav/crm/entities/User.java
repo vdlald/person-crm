@@ -10,6 +10,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -40,6 +41,20 @@ public class User extends AbstractEntity {
 
     @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
     private UserInfo info;
+
+    public void setInfo(UserInfo newInfo) {
+        if (Objects.equals(info, newInfo))
+            return;
+
+        final UserInfo oldInfo = this.info;
+        info = newInfo;
+
+        if (oldInfo != null)
+            oldInfo.setUser(null);
+
+        if (info != null)
+            info.setUser(this);
+    }
 
     @AllArgsConstructor
     public enum Authority implements GrantedAuthority {

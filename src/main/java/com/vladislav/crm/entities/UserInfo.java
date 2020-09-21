@@ -6,6 +6,7 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -34,4 +35,17 @@ public class UserInfo extends AbstractEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public void setUser(User newUser) {
+        if (Objects.equals(user, newUser))
+            return;
+
+        final User oldInfo = this.user;
+        user = newUser;
+
+        if (oldInfo != null)
+            oldInfo.setInfo(null);
+
+        if (user != null)
+            user.setInfo(this);
+    }
 }
