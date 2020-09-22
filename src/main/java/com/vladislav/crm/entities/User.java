@@ -3,6 +3,7 @@ package com.vladislav.crm.entities;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -21,7 +22,7 @@ import java.util.Objects;
 @Entity(name = "User")
 @Table(name = "users")
 @AttributeOverride(name = "id", column = @Column(name = "user_id", updatable = false, nullable = false))
-public class User extends AbstractEntity {
+public class User extends AbstractEntity implements UserDetails {
 
     @Setter(AccessLevel.PRIVATE)
     @Pattern(regexp = "^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$")
@@ -120,6 +121,26 @@ public class User extends AbstractEntity {
 
     public List<Pipeline> getPipelines() {
         return new ArrayList<>(pipelines);
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     @AllArgsConstructor
