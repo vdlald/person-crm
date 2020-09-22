@@ -1,6 +1,9 @@
 package com.vladislav.crm.entities;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -39,5 +42,19 @@ public class Contact extends AbstractEntity {
 
         if (user != null)
             user.addContact(this);
+    }
+
+    public void setCompany(Company newCompany) {
+        if (Objects.equals(company, newCompany))
+            return;
+
+        final Company oldCompany = this.company;
+        company = newCompany;
+
+        if (oldCompany != null)
+            oldCompany.removeContact(this);
+
+        if (company != null)
+            newCompany.addContact(this);
     }
 }

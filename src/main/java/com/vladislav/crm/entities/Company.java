@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -17,10 +18,23 @@ import java.util.List;
 @AttributeOverride(name = "id", column = @Column(name = "company_id", updatable = false, nullable = false))
 public class Company extends AbstractEntity {
 
-    @Column("name")
+    @Column(name = "name")
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
-    private List<Contact> contacts;
+    private List<Contact> contacts = new ArrayList<>();
 
+    public void addContact(Contact contact) {
+        if (contacts.contains(contact))
+            return;
+        contacts.add(contact);
+        contact.setCompany(this);
+    }
+
+    public void removeContact(Contact contact) {
+        if (!contacts.contains(contact))
+            return;
+        contacts.remove(contact);
+        contact.setCompany(null);
+    }
 }
