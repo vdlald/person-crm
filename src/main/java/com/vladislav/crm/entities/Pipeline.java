@@ -56,4 +56,8 @@ public class Pipeline extends AbstractEntity {
         statuses.remove(status);
         status.setPipeline(null);
     }
+
+    public List<Status> getStatuses() {
+        return new ArrayList<>(statuses);
+    }
 }

@@ -78,4 +78,8 @@ public class Lead extends AbstractEntity {
         contacts.remove(contact);
         contact.removeLead(this);
     }
+
+    public List<Contact> getContacts() {
+        return new ArrayList<>(contacts);
+    }
 }

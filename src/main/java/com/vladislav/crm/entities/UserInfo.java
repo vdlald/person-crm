@@ -13,6 +13,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true, exclude = "user")
+@ToString(callSuper = true, exclude = "user")
 @Entity(name = "UserInfo")
 @Table(name = "usersinfo")
 @AttributeOverride(name = "id", column = @Column(name = "userinfo_id", updatable = false, nullable = false))

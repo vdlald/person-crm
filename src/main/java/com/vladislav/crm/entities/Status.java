@@ -12,8 +12,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true, exclude = {"leads"})
+@EqualsAndHashCode(callSuper = true, exclude = {"leads"})
 @Entity(name = "Status")
 @Table(name = "statuses")
 @AttributeOverride(name = "id", column = @Column(name = "status_id", updatable = false, nullable = false))
@@ -22,7 +22,7 @@ public class Status extends AbstractEntity {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Pipeline pipeline;
 
     @OneToMany(mappedBy = "status", fetch = FetchType.LAZY, orphanRemoval = true)
@@ -54,5 +54,9 @@ public class Status extends AbstractEntity {
             return;
         leads.remove(lead);
         lead.setStatus(null);
+    }
+
+    public List<Lead> getLeads() {
+        return new ArrayList<>(leads);
     }
 }

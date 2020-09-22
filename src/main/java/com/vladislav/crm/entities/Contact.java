@@ -13,7 +13,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true, exclude = "user")
-@ToString(exclude = {"company", "user"})
+@ToString(callSuper = true, exclude = {"user"})
 @Entity(name = "Contact")
 @Table(name = "contacts")
 @AttributeOverride(name = "id", column = @Column(name = "contact_id", updatable = false, nullable = false))
@@ -31,6 +31,7 @@ public class Contact extends AbstractEntity {
     private Company company;
 
     @ManyToMany
+    @Setter(AccessLevel.PRIVATE)
     private List<Lead> leads = new ArrayList<>();
 
     public void setUser(User newUser) {
@@ -73,5 +74,9 @@ public class Contact extends AbstractEntity {
             return;
         leads.remove(lead);
         lead.removeContact(this);
+    }
+
+    public List<Lead> getLeads() {
+        return new ArrayList<>(leads);
     }
 }

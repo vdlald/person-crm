@@ -21,6 +21,7 @@ public class Company extends AbstractEntity {
     @Column(name = "name")
     private String name;
 
+    @Setter(AccessLevel.PRIVATE)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
     private List<Contact> contacts = new ArrayList<>();
 
@@ -36,5 +37,9 @@ public class Company extends AbstractEntity {
             return;
         contacts.remove(contact);
         contact.setCompany(null);
+    }
+
+    public List<Contact> getContacts() {
+        return new ArrayList<>(contacts);
     }
 }
