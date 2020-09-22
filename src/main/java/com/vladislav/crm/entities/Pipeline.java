@@ -23,5 +23,5 @@ public class Pipeline extends AbstractEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-    
+
 }
