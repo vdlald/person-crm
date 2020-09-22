@@ -4,14 +4,15 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true, exclude = "user")
-@ToString(exclude = "user")
+@EqualsAndHashCode(callSuper = true, exclude = {"user", "statuses"})
+@ToString(callSuper = true, exclude = {"user", "statuses"})
 @Entity(name = "Pipeline")
 @Table(name = "pipelines")
 @AttributeOverride(name = "id", column = @Column(name = "pipeline_id", updatable = false, nullable = false))
@@ -21,7 +22,11 @@ public class Pipeline extends AbstractEntity {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "pipeline", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Status> statuses;
 
     public void setUser(User newUser) {
         if (Objects.equals(user, newUser))
