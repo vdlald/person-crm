@@ -1,14 +1,14 @@
 package com.vladislav.crm.controllers;
 
+import com.vladislav.crm.controllers.assemblers.UserAssembler;
 import com.vladislav.crm.controllers.requests.CreateUserRequest;
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.operations.CreateUserOperation;
+import com.vladislav.crm.services.operations.ReadUserOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -18,10 +18,17 @@ import javax.validation.Valid;
 public class UserController {
 
     private final CreateUserOperation createUserOperation;
+    private final ReadUserOperation readUserOperation;
+    private final UserAssembler userAssembler;
+
+    @GetMapping("/{id}")
+    public EntityModel<User> readUser(@PathVariable Long id) {
+        return userAssembler.toModel(readUserOperation.execute(id));
+    }
 
     @PostMapping(value = {"", "/"})
-    public User createUser(@Valid @RequestBody CreateUserRequest request) {
+    public EntityModel<User> createUser(@Valid @RequestBody CreateUserRequest request) {
         final User newUser = new User().setUsername(request.getUsername()).setPassword(request.getPassword());
-        return createUserOperation.execute(newUser);
+        return userAssembler.toModel(createUserOperation.execute(newUser));
     }
 }

@@ -1,5 +1,6 @@
 package com.vladislav.crm.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -32,6 +33,7 @@ public class User extends AbstractEntity implements UserDetails {
     @NotEmpty
     @Size(min = 8, max = 64)
     @Column(name = "password", nullable = false, length = 64)
+    @JsonIgnore
     private String password;
 
     @Enumerated(EnumType.STRING)
