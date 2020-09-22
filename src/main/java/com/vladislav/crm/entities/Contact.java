@@ -1,9 +1,6 @@
 package com.vladislav.crm.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -14,6 +11,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true, exclude = "user")
+@ToString(exclude = {"company", "user"})
 @Entity(name = "Contact")
 @Table(name = "contacts")
 @AttributeOverride(name = "id", column = @Column(name = "contact_id", updatable = false, nullable = false))
