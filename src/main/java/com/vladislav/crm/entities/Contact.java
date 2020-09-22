@@ -10,7 +10,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = "user")
 @Entity(name = "Contact")
 @Table(name = "contacts")
 @AttributeOverride(name = "id", column = @Column(name = "contact_id", updatable = false, nullable = false))
@@ -22,6 +22,10 @@ public class Contact extends AbstractEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "company_id")
+    private Company company;
 
     public void setUser(User newUser) {
         if (Objects.equals(user, newUser))

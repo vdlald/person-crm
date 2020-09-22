@@ -16,7 +16,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@ToString(callSuper = true, exclude = "password")
+@ToString(callSuper = true, exclude = {"password", "contacts"})
 @EqualsAndHashCode(callSuper = true, exclude = {"info", "authorities", "contacts"})
 @Entity(name = "User")
 @Table(name = "users")
