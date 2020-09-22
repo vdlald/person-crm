@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -22,4 +23,17 @@ public class Status extends AbstractEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Pipeline pipeline;
 
+    public void setPipeline(Pipeline newPipeline) {
+        if (Objects.equals(pipeline, newPipeline))
+            return;
+
+        final Pipeline oldPipeline = this.pipeline;
+        pipeline = newPipeline;
+
+        if (oldPipeline != null)
+            oldPipeline.removeStatus(this);
+
+        if (pipeline != null)
+            pipeline.addStatus(this);
+    }
 }

@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,7 +27,7 @@ public class Pipeline extends AbstractEntity {
     private User user;
 
     @OneToMany(mappedBy = "pipeline", fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Status> statuses;
+    private List<Status> statuses = new ArrayList<>();
 
     public void setUser(User newUser) {
         if (Objects.equals(user, newUser))
@@ -42,4 +43,17 @@ public class Pipeline extends AbstractEntity {
             user.addPipeline(this);
     }
 
+    public void addStatus(Status status) {
+        if (statuses.contains(status))
+            return;
+        statuses.add(status);
+        status.setPipeline(this);
+    }
+
+    public void removeStatus(Status status) {
+        if (!statuses.contains(status))
+            return;
+        statuses.remove(status);
+        status.setPipeline(null);
+    }
 }
