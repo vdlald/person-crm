@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Data
@@ -27,6 +28,9 @@ public class Contact extends AbstractEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id")
     private Company company;
+
+    @ManyToMany
+    private List<Lead> leads;
 
     public void setUser(User newUser) {
         if (Objects.equals(user, newUser))

@@ -16,8 +16,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@ToString(callSuper = true, exclude = {"password", "contacts", "pipelines"})
-@EqualsAndHashCode(callSuper = true, exclude = {"info", "authorities", "contacts", "pipelines"})
+@ToString(callSuper = true, exclude = {"password", "contacts", "pipelines", "leads"})
+@EqualsAndHashCode(callSuper = true, exclude = {"info", "authorities", "contacts", "pipelines", "leads"})
 @Entity(name = "User")
 @Table(name = "users")
 @AttributeOverride(name = "id", column = @Column(name = "user_id", updatable = false, nullable = false))
@@ -47,6 +47,9 @@ public class User extends AbstractEntity {
 
     @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
     private UserInfo info;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Lead> leads = new ArrayList<>();
 
     public void setInfo(UserInfo newInfo) {
         if (Objects.equals(info, newInfo))

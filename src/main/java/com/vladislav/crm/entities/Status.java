@@ -4,6 +4,8 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Data
@@ -22,6 +24,9 @@ public class Status extends AbstractEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Pipeline pipeline;
+
+    @OneToMany(mappedBy = "status", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Lead> leads = new ArrayList<>();
 
     public void setPipeline(Pipeline newPipeline) {
         if (Objects.equals(pipeline, newPipeline))
