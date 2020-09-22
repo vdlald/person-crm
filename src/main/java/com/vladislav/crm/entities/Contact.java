@@ -16,6 +16,7 @@ import java.util.Objects;
 @AttributeOverride(name = "id", column = @Column(name = "contact_id", updatable = false, nullable = false))
 public class Contact extends AbstractEntity {
 
+    @Column(name = "name")
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
