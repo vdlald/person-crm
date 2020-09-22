@@ -17,7 +17,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Accessors(chain = true)
 @ToString(callSuper = true, exclude = "password")
-@EqualsAndHashCode(callSuper = true, exclude = "info")
+@EqualsAndHashCode(callSuper = true, exclude = {"info", "authorities"})
 @Entity(name = "User")
 @Table(name = "users")
 @AttributeOverride(name = "id", column = @Column(name = "user_id", updatable = false, nullable = false))
@@ -38,6 +38,9 @@ public class User extends AbstractEntity {
     private List<Authority> authorities = new ArrayList<>() {{
         add(Authority.ROLE_USER);
     }};
+
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
+    private List<Contact> contacts;
 
     @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
     private UserInfo info;
