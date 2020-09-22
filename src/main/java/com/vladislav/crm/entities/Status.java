@@ -25,7 +25,8 @@ public class Status extends AbstractEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private Pipeline pipeline;
 
-    @OneToMany(mappedBy = "status", fetch = FetchType.LAZY, orphanRemoval = true)
+    @Setter(AccessLevel.PRIVATE)
+    @OneToMany(mappedBy = "status", fetch = FetchType.LAZY)
     private List<Lead> leads = new ArrayList<>();
 
     public void setPipeline(Pipeline newPipeline) {

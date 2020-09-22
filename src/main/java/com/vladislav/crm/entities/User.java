@@ -39,15 +39,18 @@ public class User extends AbstractEntity {
         add(Authority.ROLE_USER);
     }};
 
+    @Setter(AccessLevel.PRIVATE)
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
     private List<Contact> contacts = new ArrayList<>();
 
+    @Setter(AccessLevel.PRIVATE)
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
     private List<Pipeline> pipelines = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
     private UserInfo info;
 
+    @Setter(AccessLevel.PRIVATE)
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Lead> leads = new ArrayList<>();
 
@@ -105,6 +108,18 @@ public class User extends AbstractEntity {
             return;
         leads.remove(lead);
         lead.setUser(null);
+    }
+
+    public List<Contact> getContacts() {
+        return new ArrayList<>(contacts);
+    }
+
+    public List<Lead> getLeads() {
+        return new ArrayList<>(leads);
+    }
+
+    public List<Pipeline> getPipelines() {
+        return new ArrayList<>(pipelines);
     }
 
     @AllArgsConstructor

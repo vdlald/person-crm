@@ -26,6 +26,7 @@ public class Pipeline extends AbstractEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Setter(AccessLevel.PRIVATE)
     @OneToMany(mappedBy = "pipeline", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Status> statuses = new ArrayList<>();
 

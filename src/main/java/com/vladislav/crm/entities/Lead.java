@@ -13,8 +13,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@ToString(callSuper = true, exclude = {"contacts", "status", "user"})
-@EqualsAndHashCode(callSuper = true, exclude = {"contacts", "status", "user"})
+@ToString(callSuper = true, exclude = {"contacts", "user"})
+@EqualsAndHashCode(callSuper = true, exclude = {"contacts", "user"})
 @Entity(name = "Lead")
 @Table(name = "leads")
 @AttributeOverride(name = "id", column = @Column(name = "lead_id", updatable = false, nullable = false))
@@ -26,15 +26,19 @@ public class Lead extends AbstractEntity {
     @Column(name = "sale")
     private BigDecimal sale;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "status_id")
     private Status status;
 
-    @ManyToMany(mappedBy = "leads")
+    @Setter(AccessLevel.PRIVATE)
+    @ManyToMany(mappedBy = "leads", fetch = FetchType.LAZY)
+    @JoinTable(name = "leads_contacts",
+            joinColumns = @JoinColumn(name = "lead_id", referencedColumnName = "lead_id"),
+            inverseJoinColumns = @JoinColumn(name = "contact_id", referencedColumnName = "contact_id"))
     private List<Contact> contacts = new ArrayList<>();
 
     public void setUser(User newUser) {
