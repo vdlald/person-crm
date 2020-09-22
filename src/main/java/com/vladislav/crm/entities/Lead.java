@@ -36,9 +36,6 @@ public class Lead extends AbstractEntity {
 
     @Setter(AccessLevel.PRIVATE)
     @ManyToMany(mappedBy = "leads", fetch = FetchType.LAZY)
-    @JoinTable(name = "leads_contacts",
-            joinColumns = @JoinColumn(name = "lead_id", referencedColumnName = "lead_id"),
-            inverseJoinColumns = @JoinColumn(name = "contact_id", referencedColumnName = "contact_id"))
     private List<Contact> contacts = new ArrayList<>();
 
     public void setUser(User newUser) {

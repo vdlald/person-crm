@@ -23,6 +23,7 @@ public class Status extends AbstractEntity {
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "pipeline_id")
     private Pipeline pipeline;
 
     @Setter(AccessLevel.PRIVATE)

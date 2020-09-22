@@ -1,10 +1,11 @@
 spring:
+  liquibase:
+    change-log: classpath:/db/changelog/v-1.0/changelog-v.1.0-cumulative.xml
   jpa:
-    show-sql: true
     hibernate:
-      ddl-auto: create-drop
-  datasource:
-    url: jdbc:postgresql://localhost:5432/newcrm
-    platform: postgres
-    username: crm
-    password: crm
+      ddl-auto: none
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/newcrm
+#    platform: postgres
+#    username: crm
+#    password: crm
