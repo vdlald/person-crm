@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,8 @@ import java.util.List;
 @AttributeOverride(name = "id", column = @Column(name = "company_id", updatable = false, nullable = false))
 public class Company extends AbstractEntity {
 
-    @Column(name = "name")
+    @Size(min = 1, max = 32)
+    @Column(name = "name", length = 32)
     private String name;
 
     @Setter(AccessLevel.PRIVATE)
