@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -23,5 +24,19 @@ public class Pipeline extends AbstractEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    public void setUser(User newUser) {
+        if (Objects.equals(user, newUser))
+            return;
+
+        final User oldUser = this.user;
+        user = newUser;
+
+        if (oldUser != null)
+            oldUser.removePipeline(this);
+
+        if (user != null)
+            user.addPipeline(this);
+    }
 
 }

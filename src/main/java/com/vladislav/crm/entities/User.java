@@ -76,6 +76,20 @@ public class User extends AbstractEntity {
         contact.setUser(null);
     }
 
+    public void addPipeline(Pipeline pipeline) {
+        if (pipelines.contains(pipeline))
+            return;
+        pipelines.add(pipeline);
+        pipeline.setUser(this);
+    }
+
+    public void removePipeline(Pipeline pipeline) {
+        if (!pipelines.contains(pipeline))
+            return;
+        pipelines.remove(pipeline);
+        pipeline.setUser(null);
+    }
+
     @AllArgsConstructor
     public enum Authority implements GrantedAuthority {
         ROLE_USER("role_user");
