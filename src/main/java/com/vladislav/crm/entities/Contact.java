@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,7 +31,7 @@ public class Contact extends AbstractEntity {
     private Company company;
 
     @ManyToMany
-    private List<Lead> leads;
+    private List<Lead> leads = new ArrayList<>();
 
     public void setUser(User newUser) {
         if (Objects.equals(user, newUser))
@@ -58,5 +59,19 @@ public class Contact extends AbstractEntity {
 
         if (company != null)
             newCompany.addContact(this);
+    }
+
+    public void addLead(Lead lead) {
+        if (leads.contains(lead))
+            return;
+        leads.add(lead);
+        lead.addContact(this);
+    }
+
+    public void removeLead(Lead lead) {
+        if (!leads.contains(lead))
+            return;
+        leads.remove(lead);
+        lead.removeContact(this);
     }
 }

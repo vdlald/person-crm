@@ -64,4 +64,18 @@ public class Lead extends AbstractEntity {
         if (newStatus != null)
             status.addLead(this);
     }
+
+    public void addContact(Contact contact) {
+        if (contacts.contains(contact))
+            return;
+        contacts.add(contact);
+        contact.addLead(this);
+    }
+
+    public void removeContact(Contact contact) {
+        if (!contacts.contains(contact))
+            return;
+        contacts.remove(contact);
+        contact.removeLead(this);
+    }
 }
