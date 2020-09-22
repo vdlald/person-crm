@@ -93,6 +93,20 @@ public class User extends AbstractEntity {
         pipeline.setUser(null);
     }
 
+    public void addLead(Lead lead) {
+        if (leads.contains(lead))
+            return;
+        leads.add(lead);
+        lead.setUser(this);
+    }
+
+    public void removeLead(Lead lead) {
+        if (!leads.contains(lead))
+            return;
+        leads.remove(lead);
+        lead.setUser(null);
+    }
+
     @AllArgsConstructor
     public enum Authority implements GrantedAuthority {
         ROLE_USER("role_user");

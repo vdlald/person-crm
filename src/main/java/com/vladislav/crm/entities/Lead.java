@@ -5,7 +5,9 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -33,5 +35,19 @@ public class Lead extends AbstractEntity {
     private Status status;
 
     @ManyToMany(mappedBy = "leads")
-    private List<Contact> contacts;
+    private List<Contact> contacts = new ArrayList<>();
+
+    public void setUser(User newUser) {
+        if (Objects.equals(user, newUser))
+            return;
+
+        final User oldUser = this.user;
+        user = newUser;
+
+        if (oldUser != null)
+            oldUser.removeLead(this);
+
+        if (user != null)
+            user.addLead(this);
+    }
 }
