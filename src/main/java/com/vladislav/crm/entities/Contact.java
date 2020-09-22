@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -21,4 +22,17 @@ public class Contact extends AbstractEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public void setUser(User newUser) {
+        if (Objects.equals(user, newUser))
+            return;
+
+        final User oldUser = this.user;
+        user = newUser;
+
+        if (oldUser != null)
+            oldUser.removeContact(this);
+
+        if (user != null)
+            user.addContact(this);
+    }
 }

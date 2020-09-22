@@ -40,7 +40,7 @@ public class User extends AbstractEntity {
     }};
 
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
-    private List<Contact> contacts;
+    private List<Contact> contacts = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
     private UserInfo info;
@@ -57,6 +57,20 @@ public class User extends AbstractEntity {
 
         if (info != null)
             info.setUser(this);
+    }
+
+    public void addContact(Contact contact) {
+        if (contacts.contains(contact))
+            return;
+        contacts.add(contact);
+        contact.setUser(this);
+    }
+
+    public void removeContact(Contact contact) {
+        if (!contacts.contains(contact))
+            return;
+        contacts.remove(contact);
+        contact.setUser(null);
     }
 
     @AllArgsConstructor
