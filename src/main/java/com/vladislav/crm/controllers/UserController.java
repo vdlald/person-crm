@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
 
     private final CreateUserOperation createUserOperation;
 
-    @PostMapping("/")
+    @PostMapping(value = {"", "/"})
     public User createUser(@Valid @RequestBody CreateUserRequest request) {
         final User newUser = new User().setUsername(request.getUsername()).setPassword(request.getPassword());
         return createUserOperation.execute(newUser);

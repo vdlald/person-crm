@@ -1,5 +1,6 @@
 package com.vladislav.crm.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
@@ -47,7 +48,8 @@ public class User extends AbstractEntity implements UserDetails {
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
     private List<Pipeline> pipelines = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
+    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("user")
     private UserInfo info;
 
     @Setter(AccessLevel.PRIVATE)
