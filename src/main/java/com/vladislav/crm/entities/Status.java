@@ -41,4 +41,18 @@ public class Status extends AbstractEntity {
         if (pipeline != null)
             pipeline.addStatus(this);
     }
+
+    public void addLead(Lead lead) {
+        if (leads.contains(lead))
+            return;
+        leads.add(lead);
+        lead.setStatus(this);
+    }
+
+    public void removeLead(Lead lead) {
+        if (!leads.contains(lead))
+            return;
+        leads.remove(lead);
+        lead.setStatus(null);
+    }
 }

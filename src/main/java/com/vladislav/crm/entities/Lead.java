@@ -50,4 +50,18 @@ public class Lead extends AbstractEntity {
         if (user != null)
             user.addLead(this);
     }
+
+    public void setStatus(Status newStatus) {
+        if (Objects.equals(status, newStatus))
+            return;
+
+        final Status oldStatus = this.status;
+        status = newStatus;
+
+        if (oldStatus != null)
+            oldStatus.removeLead(this);
+
+        if (newStatus != null)
+            status.addLead(this);
+    }
 }
