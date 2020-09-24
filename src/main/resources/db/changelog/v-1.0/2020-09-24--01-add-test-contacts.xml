@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+         http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd"
+>
+
+    <changeSet id="13" author="vdlald">
+        <insert tableName="companies">
+            <column name="company_id" valueNumeric="1"/>
+            <column name="name" value="demo_company1"/>
+        </insert>
+        <insert tableName="companies">
+            <column name="company_id" valueNumeric="2"/>
+            <column name="name" value="demo_company2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="14" author="vdlald">
+        <insert tableName="contacts">
+            <column name="contact_id" valueNumeric="1"/>
+            <column name="name" value="Bob"/>
+            <column name="company_id" valueNumeric="1"/>
+            <column name="user_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="contacts">
+            <column name="contact_id" valueNumeric="2"/>
+            <column name="name" value="John"/>
+            <column name="company_id" valueNumeric="2"/>
+            <column name="user_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="contacts">
+            <column name="contact_id" valueNumeric="3"/>
+            <column name="name" value="Alex"/>
+            <column name="user_id" valueNumeric="1"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
