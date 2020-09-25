@@ -68,11 +68,11 @@ public class UserContactsController {
     }
 
     @PostMapping("/")
-    public Contact createContact(Authentication authentication, @RequestBody CreateContactRequest request) {
+    public EntityModel<ReadContactResponse> createContact(Authentication authentication, @RequestBody CreateContactRequest request) {
         User user = (User) authentication.getPrincipal();
         final User user1 = new User();
         user1.setId(user.getId());
 
-        return createContactOperation.execute(new Contact().setName(request.getName()).setUser(user1));
+        return readContactResponseAssembler.toModel(createContactOperation.execute(new Contact().setName(request.getName()).setUser(user1)));
     }
 }
