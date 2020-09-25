@@ -8,10 +8,7 @@ import com.vladislav.crm.controllers.responses.ReadContactResponse;
 import com.vladislav.crm.controllers.responses.ReadUserContactsResponse;
 import com.vladislav.crm.entities.Contact;
 import com.vladislav.crm.entities.User;
-import com.vladislav.crm.services.operations.CreateContactOperation;
-import com.vladislav.crm.services.operations.ReadContactOperation;
-import com.vladislav.crm.services.operations.ReadUserContactsOperation;
-import com.vladislav.crm.services.operations.UpdateContactOperation;
+import com.vladislav.crm.services.operations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
@@ -34,14 +31,14 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserContactsController {
 
-    private final ReadUserContactsOperation readUserContactsOperation;
     private final ReadUserContactsResponseAssembler readUserContactsResponseAssembler;
-
-    private final ReadContactOperation readContactOperation;
     private final ReadContactResponseAssembler readContactResponseAssembler;
 
+    private final ReadUserContactsOperation readUserContactsOperation;
+    private final ReadContactOperation readContactOperation;
     private final CreateContactOperation createContactOperation;
     private final UpdateContactOperation updateContactOperation;
+    private final DeleteContactOperation deleteContactOperation;
 
     @GetMapping(value = {"", "/"})  // вопрос: спросить нормально ли так делать?
     public RepresentationModel<?> readUserContacts(Authentication authentication) {
@@ -95,6 +92,14 @@ public class UserContactsController {
         return readContactResponseAssembler.toModel(
                 updateContactOperation.execute(
                         new Contact().setName(request.getName()).setUser(stubUser(user))));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteContact(
+            Authentication authentication,
+            @PathVariable("id") Long contactId
+    ) {
+        deleteContactOperation.execute(contactId);
     }
 
     private User stubUser(User user) {
