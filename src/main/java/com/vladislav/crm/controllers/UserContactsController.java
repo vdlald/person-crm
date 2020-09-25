@@ -3,6 +3,7 @@ package com.vladislav.crm.controllers;
 import com.vladislav.crm.controllers.assemblers.ReadContactResponseAssembler;
 import com.vladislav.crm.controllers.assemblers.ReadUserContactsResponseAssembler;
 import com.vladislav.crm.controllers.requests.CreateContactRequest;
+import com.vladislav.crm.controllers.requests.UpdateContactRequest;
 import com.vladislav.crm.controllers.responses.ReadContactResponse;
 import com.vladislav.crm.controllers.responses.ReadUserContactsResponse;
 import com.vladislav.crm.entities.Contact;
@@ -10,6 +11,7 @@ import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.operations.CreateContactOperation;
 import com.vladislav.crm.services.operations.ReadContactOperation;
 import com.vladislav.crm.services.operations.ReadUserContactsOperation;
+import com.vladislav.crm.services.operations.UpdateContactOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
@@ -39,6 +41,7 @@ public class UserContactsController {
     private final ReadContactResponseAssembler readContactResponseAssembler;
 
     private final CreateContactOperation createContactOperation;
+    private final UpdateContactOperation updateContactOperation;
 
     @GetMapping(value = {"", "/"})  // вопрос: спросить нормально ли так делать?
     public RepresentationModel<?> readUserContacts(Authentication authentication) {
@@ -48,7 +51,7 @@ public class UserContactsController {
                 .stream()
                 .map(readUserContactsResponseAssembler::toModel)
                 .collect(Collectors.toUnmodifiableList());
-        
+
         return HalModelBuilder.emptyHalModel()
                 .embed(models, LinkRelation.of("contacts"))
                 .link(linkTo(methodOn(UserContactsController.class).readUserContacts(authentication)).withSelfRel())
@@ -56,7 +59,10 @@ public class UserContactsController {
     }
 
     @GetMapping("/{id}")  // вопрос: может здесь можно перенести проверку в AOP ?
-    public ResponseEntity<EntityModel<ReadContactResponse>> readContact(Authentication authentication, @PathVariable("id") Long contactId) {
+    public ResponseEntity<EntityModel<ReadContactResponse>> readContact(
+            Authentication authentication,
+            @PathVariable("id") Long contactId
+    ) {
         User user = (User) authentication.getPrincipal();
 
         final Contact contact = readContactOperation.execute(contactId);
@@ -68,11 +74,32 @@ public class UserContactsController {
     }
 
     @PostMapping("/")
-    public EntityModel<ReadContactResponse> createContact(Authentication authentication, @RequestBody CreateContactRequest request) {
+    public EntityModel<ReadContactResponse> createContact(
+            Authentication authentication,
+            @RequestBody CreateContactRequest request
+    ) {
         User user = (User) authentication.getPrincipal();
-        final User user1 = new User();
-        user1.setId(user.getId());
 
-        return readContactResponseAssembler.toModel(createContactOperation.execute(new Contact().setName(request.getName()).setUser(user1)));
+        return readContactResponseAssembler.toModel(
+                createContactOperation.execute(new Contact().setName(request.getName()).setUser(stubUser(user))));
+    }
+
+    @PostMapping("/{id}")
+    public EntityModel<ReadContactResponse> updateContact(
+            Authentication authentication,
+            @PathVariable("id") Long contactId,
+            @RequestBody UpdateContactRequest request
+    ) {
+        User user = (User) authentication.getPrincipal();
+
+        return readContactResponseAssembler.toModel(
+                updateContactOperation.execute(
+                        new Contact().setName(request.getName()).setUser(stubUser(user))));
+    }
+
+    private User stubUser(User user) {
+        final User stub = new User();
+        stub.setId(user.getId());
+        return stub;
     }
 }
