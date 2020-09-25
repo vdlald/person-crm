@@ -55,7 +55,8 @@ public class UserContactsController {
                 .build();
     }
 
-    @GetMapping("/{id}")  // вопрос: может здесь можно перенести проверку в AOP ?
+    // вопрос: Domain object security. Стоит ли каждой сущности добавлять поле userId (owner) чтобы иметь возможность легко проверить владение объектом
+    @GetMapping("/{id}")
     public ResponseEntity<EntityModel<ReadContactResponse>> readContact(
             Authentication authentication,
             @PathVariable("id") Long contactId
