@@ -39,7 +39,7 @@ public class UserContactsController {
     private final ReadContactOperation readContactOperation;
     private final ReadContactResponseAssembler readContactResponseAssembler;
 
-    @GetMapping(value = {"", "/"})  // todo: спросить нормально ли так делать?
+    @GetMapping(value = {"", "/"})  // вопрос: спросить нормально ли так делать?
     public RepresentationModel<?> readUserContacts(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
 
@@ -54,7 +54,7 @@ public class UserContactsController {
                 .build();
     }
 
-    @GetMapping("/{id}")  // todo: может здесь можно перенести проверку в AOP ?
+    @GetMapping("/{id}")  // вопрос: может здесь можно перенести проверку в AOP ?
     public ResponseEntity<EntityModel<ReadContactResponse>> readContact(Authentication authentication, @PathVariable("id") Long contactId) {
         User user = (User) authentication.getPrincipal();
 
