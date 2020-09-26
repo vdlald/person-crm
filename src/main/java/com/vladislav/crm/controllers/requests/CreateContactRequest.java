@@ -12,6 +12,14 @@ import lombok.experimental.Accessors;
 public class CreateContactRequest {
 
     private String name;
-    private Long companyId;
+    private CompanyRequest company;
 
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Accessors(chain = true)
+    public static class CompanyRequest {
+        private Long id;
+        private String name;
+    }
 }
