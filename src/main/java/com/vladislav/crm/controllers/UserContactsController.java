@@ -64,7 +64,7 @@ public class UserContactsController {
         User user = (User) authentication.getPrincipal();
 
         final Contact contact = readContactOperation.execute(contactId);
-        if (contact.getUser().getId().equals(user.getId())) {
+        if (isUserOwner(user, contact)) {
             return ResponseEntity.ok(readContactResponseAssembler.toModel(contact));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -78,29 +78,47 @@ public class UserContactsController {
     ) {
         User user = (User) authentication.getPrincipal();
 
-        return readContactResponseAssembler.toModel(
-                createContactOperation.execute(new Contact().setName(request.getName()).setUser(stubUser(user))));
+        final Contact contact = new Contact();
+        contact.setUser(stubUser(user)).setName(request.getName());  // todo: set company
+
+        return readContactResponseAssembler.toModel(createContactOperation.execute(contact));
     }
 
     @PostMapping("/{id}")
-    public EntityModel<ReadContactResponse> updateContact(
+    public ResponseEntity<EntityModel<ReadContactResponse>> updateContact(
             Authentication authentication,
             @PathVariable("id") Long contactId,
             @RequestBody UpdateContactRequest request
     ) {
         User user = (User) authentication.getPrincipal();
 
-        return readContactResponseAssembler.toModel(
-                updateContactOperation.execute(
-                        new Contact().setName(request.getName()).setUser(stubUser(user))));
+        final Contact contact = readContactOperation.execute(contactId);
+        if (isUserOwner(user, contact)) {
+            contact.setName(request.getName());  // todo: set company
+            return ResponseEntity.ok(readContactResponseAssembler.toModel(updateContactOperation.execute(contact)));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteContact(
+    public ResponseEntity<Void> deleteContact(
             Authentication authentication,
             @PathVariable("id") Long contactId
     ) {
-        deleteContactOperation.execute(contactId);
+        User user = (User) authentication.getPrincipal();
+
+        final Contact contact = readContactOperation.execute(contactId);
+        if (isUserOwner(user, contact)) {
+            deleteContactOperation.execute(contactId);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    private boolean isUserOwner(User user, Contact contact) {
+        return contact.getUser().getId().equals(user.getId());
     }
 
     private User stubUser(User user) {
