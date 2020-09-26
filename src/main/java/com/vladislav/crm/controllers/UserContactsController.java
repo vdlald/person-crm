@@ -9,7 +9,8 @@ import com.vladislav.crm.controllers.responses.ReadUserContactsResponse;
 import com.vladislav.crm.entities.Company;
 import com.vladislav.crm.entities.Contact;
 import com.vladislav.crm.entities.User;
-import com.vladislav.crm.services.operations.*;
+import com.vladislav.crm.services.operations.companies.ReadCompanyOperation;
+import com.vladislav.crm.services.operations.contacts.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
@@ -115,7 +116,7 @@ public class UserContactsController {
 
         final Contact contact = readContactOperation.execute(contactId);
         if (isUserOwner(user, contact)) {
-            contact.setName(request.getName());  // todo: set company
+            contact.setName(request.getName());
             final UpdateContactRequest.CompanyRequest companyRequest = request.getCompany();
             if (companyRequest == null) {  // вопрос: или мы не должны обновлять компанию в таком случае? как лучше делать? полное обновление или частичное?
                 contact.setCompany(null);

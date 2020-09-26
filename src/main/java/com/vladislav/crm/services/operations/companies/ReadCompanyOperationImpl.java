@@ -1,4 +1,4 @@
-package com.vladislav.crm.services.operations;
+package com.vladislav.crm.services.operations.companies;
 
 import com.vladislav.crm.entities.Company;
 import com.vladislav.crm.repositories.CompanyRepository;
