@@ -13,7 +13,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class UserAssemblerImpl implements UserAssembler {
     @Override
     public EntityModel<User> toModel(User entity) {
-        final Link selfRel = linkTo(methodOn(UserController.class).readUser(entity.getId())).withSelfRel();
+        final Link selfRel = linkTo(methodOn(UserController.class).readUser(null)).withSelfRel();
         return EntityModel.of(entity, selfRel);
     }
 }

@@ -8,6 +8,7 @@ import com.vladislav.crm.services.operations.users.ReadUserOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,9 +22,10 @@ public class UserController {
     private final ReadUserOperation readUserOperation;
     private final UserAssembler userAssembler;
 
-    @GetMapping("/{id}")
-    public EntityModel<User> readUser(@PathVariable Long id) {
-        return userAssembler.toModel(readUserOperation.execute(id));
+    @GetMapping("/")
+    public EntityModel<User> readUser(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return userAssembler.toModel(readUserOperation.execute(user.getId()));
     }
 
     @PostMapping("/")
