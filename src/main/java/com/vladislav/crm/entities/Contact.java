@@ -28,7 +28,7 @@ public class Contact extends AbstractEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "company_id")
     private Company company;
 
@@ -39,9 +39,9 @@ public class Contact extends AbstractEntity {
             inverseJoinColumns = @JoinColumn(name = "lead_id", referencedColumnName = "lead_id"))
     private List<Lead> leads = new ArrayList<>();
 
-    public void setUser(User newUser) {
+    public Contact setUser(User newUser) {
         if (Objects.equals(user, newUser))
-            return;
+            return this;
 
         final User oldUser = this.user;
         user = newUser;
@@ -51,6 +51,7 @@ public class Contact extends AbstractEntity {
 
         if (user != null)
             user.addContact(this);
+        return this;
     }
 
     public void setCompany(Company newCompany) {

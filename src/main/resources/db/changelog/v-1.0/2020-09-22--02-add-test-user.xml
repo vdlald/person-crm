@@ -11,7 +11,7 @@
         <insert tableName="users">
             <column name="user_id" valueNumeric="1"/>
             <column name="username" value="demo"/>
-            <column name="password" value="$2y$12$W0dFc8OpDCZjIGwu7Lhp3.x8puqvW0YED4ywf7c0HNhcQa4hzd/X2"/>
+            <column name="password" value="$2a$10$hGueLku/zBqQz7LEmko3PeO7rOhGA0Yp8wMo.5uVdxKyNNHDUAISu"/>
         </insert>
     </changeSet>
 

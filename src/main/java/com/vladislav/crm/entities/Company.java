@@ -8,6 +8,7 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
+// Нужна ли связь с User ?
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
