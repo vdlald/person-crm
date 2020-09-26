@@ -1,4 +1,4 @@
-package com.vladislav.crm.services.operations;
+package com.vladislav.crm.services.operations.contacts;
 
 import com.vladislav.crm.entities.Contact;
 import com.vladislav.crm.repositories.ContactRepository;
