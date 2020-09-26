@@ -46,7 +46,7 @@ public class UserContactsController {
 
     private final ReadCompanyOperation readCompanyOperation;
 
-    @GetMapping(value = {"", "/"})  // вопрос: спросить нормально ли так делать?
+    @GetMapping("/")
     public RepresentationModel<?> readUserContacts(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
 
@@ -106,7 +106,7 @@ public class UserContactsController {
     }
 
     // refactor candidate
-    @PostMapping("/{id}")  // вопрос: не слишком ли много кода здесь? может вынести его в отдельный Handler?
+    @PutMapping("/{id}")  // вопрос: не слишком ли много кода здесь? может вынести его в отдельный Handler?
     public ResponseEntity<EntityModel<ReadContactResponse>> updateContact(
             Authentication authentication,
             @PathVariable("id") Long contactId,
@@ -118,7 +118,7 @@ public class UserContactsController {
         if (isUserOwner(user, contact)) {
             contact.setName(request.getName());
             final UpdateContactRequest.CompanyRequest companyRequest = request.getCompany();
-            if (companyRequest == null) {  // вопрос: или мы не должны обновлять компанию в таком случае? как лучше делать? полное обновление или частичное?
+            if (companyRequest == null) {
                 contact.setCompany(null);
             } else {
                 final Long companyId = companyRequest.getId();
