@@ -26,7 +26,7 @@ public class UserController {
         return userAssembler.toModel(readUserOperation.execute(id));
     }
 
-    @PostMapping(value = {"", "/"})
+    @PostMapping("/")
     public EntityModel<User> createUser(@Valid @RequestBody CreateUserRequest request) {
         final User newUser = new User().setUsername(request.getUsername()).setPassword(request.getPassword());
         return userAssembler.toModel(createUserOperation.execute(newUser));
