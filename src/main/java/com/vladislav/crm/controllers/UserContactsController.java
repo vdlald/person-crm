@@ -77,7 +77,7 @@ public class UserContactsController {
         }
     }
 
-    // refactoring candidate
+    // refactor candidate
     @PostMapping("/")  // вопрос: не слишком ли много кода здесь? может вынести его в отдельный Handler?
     public EntityModel<ReadContactResponse> createContact(
             Authentication authentication,
@@ -105,7 +105,7 @@ public class UserContactsController {
         return readContactResponseAssembler.toModel(createContactOperation.execute(contact));
     }
 
-    // refactoring candidate
+    // refactor candidate
     @PostMapping("/{id}")  // вопрос: не слишком ли много кода здесь? может вынести его в отдельный Handler?
     public ResponseEntity<EntityModel<ReadContactResponse>> updateContact(
             Authentication authentication,
