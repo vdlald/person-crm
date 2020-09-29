@@ -34,7 +34,7 @@ public class UserContactsControllerImpl implements UserContactsController {
     @Override
     @GetMapping("/{id}")
     @PreAuthorize("@userOwnsContactAuthorization.hasAuthorization(#contactId)")
-    public ResponseEntity<EntityModel<ReadContactResponse>> readContact(
+    public EntityModel<ReadContactResponse> readContact(
             @PathVariable("id") Long contactId
     ) {
         return readContactRequestHandler.handle(contactId);
@@ -51,7 +51,7 @@ public class UserContactsControllerImpl implements UserContactsController {
     @Override
     @PostMapping("/{id}")
     @PreAuthorize("@userOwnsContactAuthorization.hasAuthorization(#contactId)")
-    public ResponseEntity<EntityModel<ReadContactResponse>> updateContact(
+    public EntityModel<ReadContactResponse> updateContact(
             @PathVariable("id") Long contactId,
             @RequestBody UpdateContactRequest request
     ) {

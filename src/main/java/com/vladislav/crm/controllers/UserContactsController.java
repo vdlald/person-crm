@@ -10,11 +10,11 @@ import org.springframework.http.ResponseEntity;
 public interface UserContactsController {
     RepresentationModel<?> readUserContacts();
 
-    ResponseEntity<EntityModel<ReadContactResponse>> readContact(Long contactId);
+    EntityModel<ReadContactResponse> readContact(Long contactId);
 
     EntityModel<ReadContactResponse> createContact(CreateContactRequest request);
 
-    ResponseEntity<EntityModel<ReadContactResponse>> updateContact(Long contactId, UpdateContactRequest request);
+    EntityModel<ReadContactResponse> updateContact(Long contactId, UpdateContactRequest request);
 
     ResponseEntity<Void> deleteContact(Long contactId);
 }

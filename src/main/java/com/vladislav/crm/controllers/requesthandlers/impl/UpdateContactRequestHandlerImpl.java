@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,7 +25,7 @@ public class UpdateContactRequestHandlerImpl implements UpdateContactRequestHand
     private final UpdateContactOperation updateContactOperation;
 
     @Override
-    public ResponseEntity<EntityModel<ReadContactResponse>> handle(Pair<Long, UpdateContactRequest> requestPair) {
+    public EntityModel<ReadContactResponse> handle(Pair<Long, UpdateContactRequest> requestPair) {
         final Long contactId = requestPair.getFirst();
         final UpdateContactRequest request = requestPair.getSecond();
 
@@ -40,7 +39,7 @@ public class UpdateContactRequestHandlerImpl implements UpdateContactRequestHand
             updateCompany(contact, companyRequest);
         }
 
-        return ResponseEntity.ok(readContactResponseAssembler.toModel(updateContactOperation.execute(contact)));
+        return readContactResponseAssembler.toModel(updateContactOperation.execute(contact));
     }
 
     private void updateCompany(Contact contact, UpdateContactRequest.CompanyRequest companyRequest) {
