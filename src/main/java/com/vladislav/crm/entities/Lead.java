@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -22,6 +23,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "leads")
 @AttributeOverride(name = "id", column = @Column(name = "lead_id", updatable = false, nullable = false))
+@EntityListeners(AuditingEntityListener.class)
 public class Lead extends AbstractEntity {
 
     @Size(min = 1, max = 32)

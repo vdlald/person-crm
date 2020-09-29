@@ -3,6 +3,7 @@ package com.vladislav.crm.controllers.assemblers;
 import com.vladislav.crm.controllers.UserContactsController;
 import com.vladislav.crm.controllers.responses.CompanyResponse;
 import com.vladislav.crm.controllers.responses.ReadUserContactsResponse;
+import com.vladislav.crm.entities.Company;
 import com.vladislav.crm.entities.Contact;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
@@ -21,8 +22,12 @@ public class ReadUserContactsResponseAssemblerImpl implements ReadUserContactsRe
 
         final ReadUserContactsResponse response = new ReadUserContactsResponse()
                 .setContactId(contact.getId())
-                .setName(contact.getName())
-                .setCompany(new CompanyResponse().setName(contact.getCompany().getName()));
+                .setName(contact.getName());
+
+        final Company company = contact.getCompany();
+        if (company != null) {
+            response.setCompany(new CompanyResponse().setName(company.getName()));
+        }
 
         return EntityModel.of(response, selfRel);
     }
