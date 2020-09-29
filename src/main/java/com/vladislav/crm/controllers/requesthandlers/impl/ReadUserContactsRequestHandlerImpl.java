@@ -1,6 +1,6 @@
 package com.vladislav.crm.controllers.requesthandlers.impl;
 
-import com.vladislav.crm.controllers.UserContactsController;
+import com.vladislav.crm.controllers.impl.UserContactsControllerImpl;
 import com.vladislav.crm.controllers.assemblers.ReadUserContactsResponseAssembler;
 import com.vladislav.crm.controllers.requesthandlers.ReadUserContactsRequestHandler;
 import com.vladislav.crm.controllers.responses.ReadUserContactsResponse;
@@ -40,7 +40,7 @@ public class ReadUserContactsRequestHandlerImpl implements ReadUserContactsReque
 
         return HalModelBuilder.emptyHalModel()
                 .embed(models, LinkRelation.of("contacts"))
-                .link(linkTo(methodOn(UserContactsController.class).readUserContacts()).withSelfRel())
+                .link(linkTo(methodOn(UserContactsControllerImpl.class).readUserContacts()).withSelfRel())
                 .build();
     }
 

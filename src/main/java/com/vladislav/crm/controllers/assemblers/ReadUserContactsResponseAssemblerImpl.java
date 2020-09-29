@@ -1,6 +1,6 @@
 package com.vladislav.crm.controllers.assemblers;
 
-import com.vladislav.crm.controllers.UserContactsController;
+import com.vladislav.crm.controllers.impl.UserContactsControllerImpl;
 import com.vladislav.crm.controllers.responses.CompanyResponse;
 import com.vladislav.crm.controllers.responses.ReadUserContactsResponse;
 import com.vladislav.crm.entities.Company;
@@ -16,7 +16,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class ReadUserContactsResponseAssemblerImpl implements ReadUserContactsResponseAssembler {
     @Override
     public EntityModel<ReadUserContactsResponse> toModel(Contact contact) {
-        final Link selfRel = linkTo(methodOn(UserContactsController.class)
+        final Link selfRel = linkTo(methodOn(UserContactsControllerImpl.class)
                 .readContact(contact.getId()))
                 .withSelfRel();
 

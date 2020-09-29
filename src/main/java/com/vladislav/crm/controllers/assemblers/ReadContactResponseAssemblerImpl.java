@@ -1,6 +1,6 @@
 package com.vladislav.crm.controllers.assemblers;
 
-import com.vladislav.crm.controllers.UserContactsController;
+import com.vladislav.crm.controllers.impl.UserContactsControllerImpl;
 import com.vladislav.crm.controllers.responses.CompanyResponse;
 import com.vladislav.crm.controllers.responses.ReadContactResponse;
 import com.vladislav.crm.entities.Contact;
@@ -21,7 +21,7 @@ public class ReadContactResponseAssemblerImpl implements ReadContactResponseAsse
                 .setCompany(new CompanyResponse().setName(entity.getCompany().getName()))
                 .setUserId(entity.getUser().getId());
 
-        final Link selfRel = linkTo(methodOn(UserContactsController.class)
+        final Link selfRel = linkTo(methodOn(UserContactsControllerImpl.class)
                 .readContact(entity.getId()))
                 .withSelfRel();
 
