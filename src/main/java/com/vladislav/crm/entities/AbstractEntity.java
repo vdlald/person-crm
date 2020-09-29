@@ -1,9 +1,11 @@
 package com.vladislav.crm.entities;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,16 +19,4 @@ public abstract class AbstractEntity {
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
-    @Column(name = "createdAt", nullable = false, updatable = false)
-    @Setter(AccessLevel.PRIVATE)
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    @Column(name = "updatedAt")
-    @Setter(AccessLevel.PRIVATE)
-    private LocalDateTime updatedAt;
-
-    @PreUpdate
-    private void setUpdatedAt() {
-        updatedAt = LocalDateTime.now();
-    }
 }

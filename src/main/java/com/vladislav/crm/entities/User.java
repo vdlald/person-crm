@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,6 +13,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -57,6 +60,16 @@ public class User extends AbstractEntity implements UserDetails {
     @Setter(AccessLevel.PRIVATE)
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Lead> leads = new ArrayList<>();
+
+    @Column(name = "createdAt", nullable = false, updatable = false)
+    @Setter(AccessLevel.PRIVATE)
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    @Column(name = "updatedAt")
+    @Setter(AccessLevel.PRIVATE)
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 
     public void setInfo(UserInfo newInfo) {
         if (Objects.equals(info, newInfo)) {
