@@ -29,8 +29,8 @@ public class UpdateContactRequestHandlerImpl implements UpdateContactRequestHand
         final Long contactId = requestPair.getFirst();
         final UpdateContactRequest request = requestPair.getSecond();
 
-        final Contact contact = readContactOperation.execute(contactId);
-        contact.setName(request.getName());
+        final Contact contact = readContactOperation.execute(contactId)
+                .setName(request.getName());
 
         final UpdateContactRequest.CompanyRequest companyRequest = request.getCompany();
         if (companyRequest == null) {

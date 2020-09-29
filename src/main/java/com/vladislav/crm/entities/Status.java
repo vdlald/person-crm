@@ -32,9 +32,9 @@ public class Status extends AbstractEntity {
     @OneToMany(mappedBy = "status", fetch = FetchType.LAZY)
     private List<Lead> leads = new ArrayList<>();
 
-    public void setPipeline(Pipeline newPipeline) {
+    public Status setPipeline(Pipeline newPipeline) {
         if (Objects.equals(pipeline, newPipeline)) {
-            return;
+            return this;
         }
 
         final Pipeline oldPipeline = this.pipeline;
@@ -47,22 +47,25 @@ public class Status extends AbstractEntity {
         if (pipeline != null) {
             pipeline.addStatus(this);
         }
+        return this;
     }
 
-    public void addLead(Lead lead) {
+    public Status addLead(Lead lead) {
         if (leads.contains(lead)) {
-            return;
+            return this;
         }
         leads.add(lead);
         lead.setStatus(this);
+        return this;
     }
 
-    public void removeLead(Lead lead) {
+    public Status removeLead(Lead lead) {
         if (!leads.contains(lead)) {
-            return;
+            return this;
         }
         leads.remove(lead);
         lead.setStatus(null);
+        return this;
     }
 
     public List<Lead> getLeads() {

@@ -28,20 +28,22 @@ public class Company extends AbstractEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
     private List<Contact> contacts = new ArrayList<>();
 
-    public void addContact(Contact contact) {
+    public Company addContact(Contact contact) {
         if (contacts.contains(contact)) {
-            return;
+            return null;
         }
         contacts.add(contact);
         contact.setCompany(this);
+        return this;
     }
 
-    public void removeContact(Contact contact) {
+    public Company removeContact(Contact contact) {
         if (!contacts.contains(contact)) {
-            return;
+            return null;
         }
         contacts.remove(contact);
         contact.setCompany(null);
+        return this;
     }
 
     public List<Contact> getContacts() {

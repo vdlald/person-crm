@@ -72,9 +72,9 @@ public class Contact extends AbstractEntity {
         return this;
     }
 
-    public void setCompany(Company newCompany) {
+    public Contact setCompany(Company newCompany) {
         if (Objects.equals(company, newCompany))
-            return;
+            return this;
 
         final Company oldCompany = this.company;
         company = newCompany;
@@ -86,22 +86,25 @@ public class Contact extends AbstractEntity {
         if (company != null) {
             newCompany.addContact(this);
         }
+        return this;
     }
 
-    public void addLead(Lead lead) {
+    public Contact addLead(Lead lead) {
         if (leads.contains(lead)) {
-            return;
+            return null;
         }
         leads.add(lead);
         lead.addContact(this);
+        return this;
     }
 
-    public void removeLead(Lead lead) {
+    public Contact removeLead(Lead lead) {
         if (!leads.contains(lead)) {
-            return;
+            return null;
         }
         leads.remove(lead);
         lead.removeContact(this);
+        return this;
     }
 
     public List<Lead> getLeads() {

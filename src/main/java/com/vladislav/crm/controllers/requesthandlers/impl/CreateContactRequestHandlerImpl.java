@@ -28,8 +28,9 @@ public class CreateContactRequestHandlerImpl implements CreateContactRequestHand
     public EntityModel<ReadContactResponse> handle(CreateContactRequest request) {
         final User user = getCurrentUserOperation.execute();
 
-        final Contact contact = new Contact();
-        contact.setUser(user).setName(request.getName());
+        final Contact contact = new Contact()
+                .setUser(user)
+                .setName(request.getName());
 
         final CreateContactRequest.CompanyRequest companyRequest = request.getCompany();
         if (companyRequest != null) {

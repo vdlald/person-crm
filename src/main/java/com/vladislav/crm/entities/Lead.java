@@ -55,9 +55,9 @@ public class Lead extends AbstractEntity {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    public void setUser(User newUser) {
+    public Lead setUser(User newUser) {
         if (Objects.equals(user, newUser)) {
-            return;
+            return null;
         }
 
         final User oldUser = this.user;
@@ -70,11 +70,12 @@ public class Lead extends AbstractEntity {
         if (user != null) {
             user.addLead(this);
         }
+        return this;
     }
 
-    public void setStatus(Status newStatus) {
+    public Lead setStatus(Status newStatus) {
         if (Objects.equals(status, newStatus)) {
-            return;
+            return this;
         }
 
         final Status oldStatus = this.status;
@@ -87,22 +88,25 @@ public class Lead extends AbstractEntity {
         if (newStatus != null) {
             status.addLead(this);
         }
+        return this;
     }
 
-    public void addContact(Contact contact) {
+    public Lead addContact(Contact contact) {
         if (contacts.contains(contact)) {
-            return;
+            return this;
         }
         contacts.add(contact);
         contact.addLead(this);
+        return this;
     }
 
-    public void removeContact(Contact contact) {
+    public Lead removeContact(Contact contact) {
         if (!contacts.contains(contact)) {
-            return;
+            return this;
         }
         contacts.remove(contact);
         contact.removeLead(this);
+        return this;
     }
 
     public List<Contact> getContacts() {

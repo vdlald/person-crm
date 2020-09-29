@@ -73,9 +73,9 @@ public class User extends AbstractEntity implements UserDetails {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    public void setInfo(UserInfo newInfo) {
+    public User setInfo(UserInfo newInfo) {
         if (Objects.equals(info, newInfo)) {
-            return;
+            return this;
         }
 
         final UserInfo oldInfo = this.info;
@@ -88,54 +88,61 @@ public class User extends AbstractEntity implements UserDetails {
         if (info != null) {
             info.setUser(this);
         }
+        return this;
     }
 
-    public void addContact(Contact contact) {
+    public User addContact(Contact contact) {
         if (contacts.contains(contact)) {
-            return;
+            return this;
         }
         contacts.add(contact);
         contact.setUser(this);
+        return this;
     }
 
-    public void removeContact(Contact contact) {
+    public User removeContact(Contact contact) {
         if (!contacts.contains(contact)) {
-            return;
+            return this;
         }
         contacts.remove(contact);
         contact.setUser(null);
+        return this;
     }
 
-    public void addPipeline(Pipeline pipeline) {
+    public User addPipeline(Pipeline pipeline) {
         if (pipelines.contains(pipeline)) {
-            return;
+            return this;
         }
         pipelines.add(pipeline);
         pipeline.setUser(this);
+        return this;
     }
 
-    public void removePipeline(Pipeline pipeline) {
+    public User removePipeline(Pipeline pipeline) {
         if (!pipelines.contains(pipeline)) {
-            return;
+            return this;
         }
         pipelines.remove(pipeline);
         pipeline.setUser(null);
+        return this;
     }
 
-    public void addLead(Lead lead) {
+    public User addLead(Lead lead) {
         if (leads.contains(lead)) {
-            return;
+            return this;
         }
         leads.add(lead);
         lead.setUser(this);
+        return this;
     }
 
-    public void removeLead(Lead lead) {
+    public User removeLead(Lead lead) {
         if (!leads.contains(lead)) {
-            return;
+            return this;
         }
         leads.remove(lead);
         lead.setUser(null);
+        return this;
     }
 
     public List<Contact> getContacts() {
