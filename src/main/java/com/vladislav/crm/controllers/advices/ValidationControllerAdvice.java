@@ -28,7 +28,7 @@ public class ValidationControllerAdvice {
                 .collect(Collectors.joining("\n"));
 
         return ErrorResponse.builder()
-                .setStatus(HttpStatus.BAD_REQUEST.value())
+                .setStatus(HttpStatus.BAD_REQUEST)
                 .setMessage(message)
                 .build();
     }
@@ -48,7 +48,7 @@ public class ValidationControllerAdvice {
                 .collect(Collectors.joining("; "));
 
         return ErrorResponse.builder()
-                .setStatus(HttpStatus.BAD_REQUEST.value())
+                .setStatus(HttpStatus.BAD_REQUEST)
                 .setMessage(message)
                 .build();
     }

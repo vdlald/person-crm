@@ -15,7 +15,7 @@ public class ExceptionControllerAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse exceptionHandler(Exception e) {
         return ErrorResponse.builder()
-                .setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .setStatus(HttpStatus.INTERNAL_SERVER_ERROR)
                 .setMessage(e.getMessage())
                 .build();
     }
