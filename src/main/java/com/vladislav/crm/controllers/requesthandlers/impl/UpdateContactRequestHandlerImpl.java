@@ -6,16 +6,13 @@ import com.vladislav.crm.controllers.requests.UpdateContactRequest;
 import com.vladislav.crm.controllers.responses.ReadContactResponse;
 import com.vladislav.crm.entities.Company;
 import com.vladislav.crm.entities.Contact;
-import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.operations.companies.ReadCompanyOperation;
 import com.vladislav.crm.services.operations.contacts.ReadContactOperation;
 import com.vladislav.crm.services.operations.contacts.UpdateContactOperation;
-import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +20,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UpdateContactRequestHandlerImpl implements UpdateContactRequestHandler {
 
-    private final GetCurrentUserOperation getCurrentUserOperation;
     private final ReadContactOperation readContactOperation;
     private final ReadContactResponseAssembler readContactResponseAssembler;
     private final ReadCompanyOperation readCompanyOperation;
@@ -31,26 +27,20 @@ public class UpdateContactRequestHandlerImpl implements UpdateContactRequestHand
 
     @Override
     public ResponseEntity<EntityModel<ReadContactResponse>> handle(Pair<Long, UpdateContactRequest> requestPair) {
-        final User user = getCurrentUserOperation.execute();
-
         final Long contactId = requestPair.getFirst();
         final UpdateContactRequest request = requestPair.getSecond();
 
         final Contact contact = readContactOperation.execute(contactId);
-        if (isUserOwner(user, contact)) {
-            contact.setName(request.getName());
+        contact.setName(request.getName());
 
-            final UpdateContactRequest.CompanyRequest companyRequest = request.getCompany();
-            if (companyRequest == null) {
-                contact.setCompany(null);
-            } else {
-                updateCompany(contact, companyRequest);
-            }
-
-            return ResponseEntity.ok(readContactResponseAssembler.toModel(updateContactOperation.execute(contact)));
+        final UpdateContactRequest.CompanyRequest companyRequest = request.getCompany();
+        if (companyRequest == null) {
+            contact.setCompany(null);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            updateCompany(contact, companyRequest);
         }
+
+        return ResponseEntity.ok(readContactResponseAssembler.toModel(updateContactOperation.execute(contact)));
     }
 
     private void updateCompany(Contact contact, UpdateContactRequest.CompanyRequest companyRequest) {
@@ -68,9 +58,5 @@ public class UpdateContactRequestHandlerImpl implements UpdateContactRequestHand
                 contact.getCompany().setName(companyName);
             }
         }
-    }
-
-    private boolean isUserOwner(User user, Contact contact) {
-        return contact.getUser().getId().equals(user.getId());
     }
 }

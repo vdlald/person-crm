@@ -10,6 +10,7 @@ import org.springframework.data.util.Pair;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,6 +30,7 @@ public class UserContactsController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("@userOwnsContactAuthorization.hasAuthorization(#contactId)")
     public ResponseEntity<EntityModel<ReadContactResponse>> readContact(
             @PathVariable("id") Long contactId
     ) {
@@ -43,6 +45,7 @@ public class UserContactsController {
     }
 
     @PostMapping("/{id}")
+    @PreAuthorize("@userOwnsContactAuthorization.hasAuthorization(#contactId)")
     public ResponseEntity<EntityModel<ReadContactResponse>> updateContact(
             @PathVariable("id") Long contactId,
             @RequestBody UpdateContactRequest request
@@ -51,6 +54,7 @@ public class UserContactsController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("@userOwnsContactAuthorization.hasAuthorization(#contactId)")
     public ResponseEntity<Void> deleteContact(
             @PathVariable("id") Long contactId
     ) {

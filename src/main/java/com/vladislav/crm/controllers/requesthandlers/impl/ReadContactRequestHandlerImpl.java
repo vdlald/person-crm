@@ -10,7 +10,6 @@ import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -24,14 +23,14 @@ public class ReadContactRequestHandlerImpl implements ReadContactRequestHandler 
     
     @Override
     public ResponseEntity<EntityModel<ReadContactResponse>> handle(Long contactId) {
-        ;final User user = getCurrentUserOperation.execute();
+        final User user = getCurrentUserOperation.execute();
 
         final Contact contact = readContactOperation.execute(contactId);
-        if (isUserOwner(user, contact)) {
-            return ResponseEntity.ok(readContactResponseAssembler.toModel(contact));
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+        return ResponseEntity.ok(readContactResponseAssembler.toModel(contact));
+//        if (isUserOwner(user, contact)) {
+//        } else {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+//        }
     }
     
     private boolean isUserOwner(User user, Contact contact) {
