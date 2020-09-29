@@ -15,7 +15,7 @@ import java.util.Objects;
 @Accessors(chain = true)
 @ToString(callSuper = true, exclude = {"leads"})
 @EqualsAndHashCode(callSuper = true, exclude = {"leads"})
-@Entity(name = "Status")
+@Entity
 @Table(name = "statuses")
 @AttributeOverride(name = "id", column = @Column(name = "status_id", updatable = false, nullable = false))
 public class Status extends AbstractEntity {

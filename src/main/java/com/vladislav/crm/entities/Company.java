@@ -15,7 +15,7 @@ import java.util.List;
 @Accessors(chain = true)
 @ToString(callSuper = true, exclude = "contacts")
 @EqualsAndHashCode(callSuper = true, exclude = "contacts")
-@Entity(name = "Company")
+@Entity
 @Table(name = "companies")
 @AttributeOverride(name = "id", column = @Column(name = "company_id", updatable = false, nullable = false))
 public class Company extends AbstractEntity {

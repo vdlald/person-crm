@@ -15,7 +15,7 @@ import java.util.Objects;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true, exclude = {"user", "statuses"})
 @ToString(callSuper = true, exclude = {"user", "statuses"})
-@Entity(name = "Pipeline")
+@Entity
 @Table(name = "pipelines")
 @AttributeOverride(name = "id", column = @Column(name = "pipeline_id", updatable = false, nullable = false))
 public class Pipeline extends AbstractEntity {
