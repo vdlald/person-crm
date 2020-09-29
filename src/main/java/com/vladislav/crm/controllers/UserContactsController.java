@@ -1,32 +1,26 @@
 package com.vladislav.crm.controllers;
 
 import com.vladislav.crm.controllers.assemblers.ReadContactResponseAssembler;
-import com.vladislav.crm.controllers.assemblers.ReadUserContactsResponseAssembler;
+import com.vladislav.crm.controllers.requesthandlers.ReadUserContactsRequestHandler;
 import com.vladislav.crm.controllers.requests.CreateContactRequest;
 import com.vladislav.crm.controllers.requests.UpdateContactRequest;
 import com.vladislav.crm.controllers.responses.ReadContactResponse;
-import com.vladislav.crm.controllers.responses.ReadUserContactsResponse;
 import com.vladislav.crm.entities.Company;
 import com.vladislav.crm.entities.Contact;
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.operations.companies.ReadCompanyOperation;
-import com.vladislav.crm.services.operations.contacts.*;
+import com.vladislav.crm.services.operations.contacts.CreateContactOperation;
+import com.vladislav.crm.services.operations.contacts.DeleteContactOperation;
+import com.vladislav.crm.services.operations.contacts.ReadContactOperation;
+import com.vladislav.crm.services.operations.contacts.UpdateContactOperation;
 import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.RepresentationModel;
-import org.springframework.hateoas.mediatype.hal.HalModelBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api/v1/contacts")
@@ -34,11 +28,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class UserContactsController {
 
     // уже много зависимостей, возможно стоит вынести некоторую логику в отдельный класс
-    private final ReadUserContactsResponseAssembler readUserContactsResponseAssembler;
     private final ReadContactResponseAssembler readContactResponseAssembler;
 
     // refactor candidate: CrudContactsHandler ?
-    private final ReadUserContactsOperation readUserContactsOperation;
     private final ReadContactOperation readContactOperation;
     private final CreateContactOperation createContactOperation;
     private final UpdateContactOperation updateContactOperation;
@@ -48,19 +40,11 @@ public class UserContactsController {
 
     private final ReadCompanyOperation readCompanyOperation;
 
+    private final ReadUserContactsRequestHandler readUserContactsRequestHandler;
+
     @GetMapping("/")
     public RepresentationModel<?> readUserContacts() {
-        final User user = getCurrentUserOperation.execute();
-
-        final List<EntityModel<ReadUserContactsResponse>> models = readUserContactsOperation.execute(user.getId())
-                .stream()
-                .map(readUserContactsResponseAssembler::toModel)
-                .collect(Collectors.toUnmodifiableList());
-
-        return HalModelBuilder.emptyHalModel()
-                .embed(models, LinkRelation.of("contacts"))
-                .link(linkTo(methodOn(UserContactsController.class).readUserContacts()).withSelfRel())
-                .build();
+        return readUserContactsRequestHandler.handle();
     }
 
     // вопрос: Domain object security. Стоит ли каждой сущности добавлять поле userId (owner) чтобы иметь возможность легко проверить владение объектом
