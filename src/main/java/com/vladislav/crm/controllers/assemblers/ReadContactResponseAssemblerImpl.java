@@ -1,6 +1,7 @@
 package com.vladislav.crm.controllers.assemblers;
 
 import com.vladislav.crm.controllers.UserContactsController;
+import com.vladislav.crm.controllers.responses.CompanyResponse;
 import com.vladislav.crm.controllers.responses.ReadContactResponse;
 import com.vladislav.crm.entities.Contact;
 import org.springframework.hateoas.EntityModel;
@@ -17,7 +18,7 @@ public class ReadContactResponseAssemblerImpl implements ReadContactResponseAsse
         final ReadContactResponse response = new ReadContactResponse()
                 .setId(entity.getId())
                 .setName(entity.getName())
-                .setCompany(entity.getCompany())
+                .setCompany(new CompanyResponse().setName(entity.getCompany().getName()))
                 .setUserId(entity.getUser().getId());
 
         final Link selfRel = linkTo(methodOn(UserContactsController.class)

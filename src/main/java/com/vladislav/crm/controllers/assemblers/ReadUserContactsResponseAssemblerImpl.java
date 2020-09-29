@@ -1,6 +1,7 @@
 package com.vladislav.crm.controllers.assemblers;
 
 import com.vladislav.crm.controllers.UserContactsController;
+import com.vladislav.crm.controllers.responses.CompanyResponse;
 import com.vladislav.crm.controllers.responses.ReadUserContactsResponse;
 import com.vladislav.crm.entities.Contact;
 import org.springframework.hateoas.EntityModel;
@@ -21,7 +22,7 @@ public class ReadUserContactsResponseAssemblerImpl implements ReadUserContactsRe
         final ReadUserContactsResponse response = new ReadUserContactsResponse()
                 .setContactId(contact.getId())
                 .setName(contact.getName())
-                .setCompany(contact.getCompany());
+                .setCompany(new CompanyResponse().setName(contact.getCompany().getName()));
 
         return EntityModel.of(response, selfRel);
     }
