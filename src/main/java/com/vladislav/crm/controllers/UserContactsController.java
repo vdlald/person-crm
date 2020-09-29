@@ -1,6 +1,7 @@
 package com.vladislav.crm.controllers;
 
 import com.vladislav.crm.controllers.assemblers.ReadContactResponseAssembler;
+import com.vladislav.crm.controllers.requesthandlers.ReadContactRequestHandler;
 import com.vladislav.crm.controllers.requesthandlers.ReadUserContactsRequestHandler;
 import com.vladislav.crm.controllers.requests.CreateContactRequest;
 import com.vladislav.crm.controllers.requests.UpdateContactRequest;
@@ -41,6 +42,7 @@ public class UserContactsController {
     private final ReadCompanyOperation readCompanyOperation;
 
     private final ReadUserContactsRequestHandler readUserContactsRequestHandler;
+    private final ReadContactRequestHandler readContactRequestHandler;
 
     @GetMapping("/")
     public RepresentationModel<?> readUserContacts() {
@@ -52,14 +54,7 @@ public class UserContactsController {
     public ResponseEntity<EntityModel<ReadContactResponse>> readContact(
             @PathVariable("id") Long contactId
     ) {
-        final User user = getCurrentUserOperation.execute();
-
-        final Contact contact = readContactOperation.execute(contactId);
-        if (isUserOwner(user, contact)) {
-            return ResponseEntity.ok(readContactResponseAssembler.toModel(contact));
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+        return readContactRequestHandler.handle(contactId);
     }
 
     // refactor candidate
