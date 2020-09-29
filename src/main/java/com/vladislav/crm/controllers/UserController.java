@@ -22,7 +22,7 @@ public class UserController {
     private final ReadUserOperation readUserOperation;
     private final UserAssembler userAssembler;
 
-    @GetMapping("/")
+    @GetMapping("/current")
     public EntityModel<User> readUser(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return userAssembler.toModel(readUserOperation.execute(user.getId()));
