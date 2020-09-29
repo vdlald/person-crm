@@ -59,57 +59,66 @@ public class User extends AbstractEntity implements UserDetails {
     private List<Lead> leads = new ArrayList<>();
 
     public void setInfo(UserInfo newInfo) {
-        if (Objects.equals(info, newInfo))
+        if (Objects.equals(info, newInfo)) {
             return;
+        }
 
         final UserInfo oldInfo = this.info;
         info = newInfo;
 
-        if (oldInfo != null)
+        if (oldInfo != null) {
             oldInfo.setUser(null);
+        }
 
-        if (info != null)
+        if (info != null) {
             info.setUser(this);
+        }
     }
 
     public void addContact(Contact contact) {
-        if (contacts.contains(contact))
+        if (contacts.contains(contact)) {
             return;
+        }
         contacts.add(contact);
         contact.setUser(this);
     }
 
     public void removeContact(Contact contact) {
-        if (!contacts.contains(contact))
+        if (!contacts.contains(contact)) {
             return;
+        }
         contacts.remove(contact);
         contact.setUser(null);
     }
 
     public void addPipeline(Pipeline pipeline) {
-        if (pipelines.contains(pipeline))
+        if (pipelines.contains(pipeline)) {
             return;
+        }
         pipelines.add(pipeline);
         pipeline.setUser(this);
     }
 
     public void removePipeline(Pipeline pipeline) {
-        if (!pipelines.contains(pipeline))
+        if (!pipelines.contains(pipeline)) {
             return;
+        }
         pipelines.remove(pipeline);
         pipeline.setUser(null);
     }
 
     public void addLead(Lead lead) {
-        if (leads.contains(lead))
+        if (leads.contains(lead)) {
             return;
+        }
         leads.add(lead);
         lead.setUser(this);
     }
 
     public void removeLead(Lead lead) {
-        if (!leads.contains(lead))
+        if (!leads.contains(lead)) {
             return;
+        }
         leads.remove(lead);
         lead.setUser(null);
     }

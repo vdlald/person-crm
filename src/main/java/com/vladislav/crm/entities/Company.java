@@ -29,15 +29,17 @@ public class Company extends AbstractEntity {
     private List<Contact> contacts = new ArrayList<>();
 
     public void addContact(Contact contact) {
-        if (contacts.contains(contact))
+        if (contacts.contains(contact)) {
             return;
+        }
         contacts.add(contact);
         contact.setCompany(this);
     }
 
     public void removeContact(Contact contact) {
-        if (!contacts.contains(contact))
+        if (!contacts.contains(contact)) {
             return;
+        }
         contacts.remove(contact);
         contact.setCompany(null);
     }

@@ -41,43 +41,51 @@ public class Lead extends AbstractEntity {
     private List<Contact> contacts = new ArrayList<>();
 
     public void setUser(User newUser) {
-        if (Objects.equals(user, newUser))
+        if (Objects.equals(user, newUser)) {
             return;
+        }
 
         final User oldUser = this.user;
         user = newUser;
 
-        if (oldUser != null)
+        if (oldUser != null) {
             oldUser.removeLead(this);
+        }
 
-        if (user != null)
+        if (user != null) {
             user.addLead(this);
+        }
     }
 
     public void setStatus(Status newStatus) {
-        if (Objects.equals(status, newStatus))
+        if (Objects.equals(status, newStatus)) {
             return;
+        }
 
         final Status oldStatus = this.status;
         status = newStatus;
 
-        if (oldStatus != null)
+        if (oldStatus != null) {
             oldStatus.removeLead(this);
+        }
 
-        if (newStatus != null)
+        if (newStatus != null) {
             status.addLead(this);
+        }
     }
 
     public void addContact(Contact contact) {
-        if (contacts.contains(contact))
+        if (contacts.contains(contact)) {
             return;
+        }
         contacts.add(contact);
         contact.addLead(this);
     }
 
     public void removeContact(Contact contact) {
-        if (!contacts.contains(contact))
+        if (!contacts.contains(contact)) {
             return;
+        }
         contacts.remove(contact);
         contact.removeLead(this);
     }

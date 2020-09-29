@@ -40,17 +40,20 @@ public class Contact extends AbstractEntity {
     private List<Lead> leads = new ArrayList<>();
 
     public Contact setUser(User newUser) {
-        if (Objects.equals(user, newUser))
+        if (Objects.equals(user, newUser)) {
             return this;
+        }
 
         final User oldUser = this.user;
         user = newUser;
 
-        if (oldUser != null)
+        if (oldUser != null) {
             oldUser.removeContact(this);
+        }
 
-        if (user != null)
+        if (user != null) {
             user.addContact(this);
+        }
         return this;
     }
 
@@ -61,23 +64,27 @@ public class Contact extends AbstractEntity {
         final Company oldCompany = this.company;
         company = newCompany;
 
-        if (oldCompany != null)
+        if (oldCompany != null) {
             oldCompany.removeContact(this);
+        }
 
-        if (company != null)
+        if (company != null) {
             newCompany.addContact(this);
+        }
     }
 
     public void addLead(Lead lead) {
-        if (leads.contains(lead))
+        if (leads.contains(lead)) {
             return;
+        }
         leads.add(lead);
         lead.addContact(this);
     }
 
     public void removeLead(Lead lead) {
-        if (!leads.contains(lead))
+        if (!leads.contains(lead)) {
             return;
+        }
         leads.remove(lead);
         lead.removeContact(this);
     }

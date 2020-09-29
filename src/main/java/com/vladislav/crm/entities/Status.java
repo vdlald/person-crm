@@ -33,29 +33,34 @@ public class Status extends AbstractEntity {
     private List<Lead> leads = new ArrayList<>();
 
     public void setPipeline(Pipeline newPipeline) {
-        if (Objects.equals(pipeline, newPipeline))
+        if (Objects.equals(pipeline, newPipeline)) {
             return;
+        }
 
         final Pipeline oldPipeline = this.pipeline;
         pipeline = newPipeline;
 
-        if (oldPipeline != null)
+        if (oldPipeline != null) {
             oldPipeline.removeStatus(this);
+        }
 
-        if (pipeline != null)
+        if (pipeline != null) {
             pipeline.addStatus(this);
+        }
     }
 
     public void addLead(Lead lead) {
-        if (leads.contains(lead))
+        if (leads.contains(lead)) {
             return;
+        }
         leads.add(lead);
         lead.setStatus(this);
     }
 
     public void removeLead(Lead lead) {
-        if (!leads.contains(lead))
+        if (!leads.contains(lead)) {
             return;
+        }
         leads.remove(lead);
         lead.setStatus(null);
     }

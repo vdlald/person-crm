@@ -33,29 +33,34 @@ public class Pipeline extends AbstractEntity {
     private List<Status> statuses = new ArrayList<>();
 
     public void setUser(User newUser) {
-        if (Objects.equals(user, newUser))
+        if (Objects.equals(user, newUser)) {
             return;
+        }
 
         final User oldUser = this.user;
         user = newUser;
 
-        if (oldUser != null)
+        if (oldUser != null) {
             oldUser.removePipeline(this);
+        }
 
-        if (user != null)
+        if (user != null) {
             user.addPipeline(this);
+        }
     }
 
     public void addStatus(Status status) {
-        if (statuses.contains(status))
+        if (statuses.contains(status)) {
             return;
+        }
         statuses.add(status);
         status.setPipeline(this);
     }
 
     public void removeStatus(Status status) {
-        if (!statuses.contains(status))
+        if (!statuses.contains(status)) {
             return;
+        }
         statuses.remove(status);
         status.setPipeline(null);
     }
