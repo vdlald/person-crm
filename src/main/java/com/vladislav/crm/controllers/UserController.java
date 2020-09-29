@@ -4,11 +4,10 @@ import com.vladislav.crm.controllers.assemblers.UserAssembler;
 import com.vladislav.crm.controllers.requests.CreateUserRequest;
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.operations.users.CreateUserOperation;
-import com.vladislav.crm.services.operations.users.ReadUserOperation;
+import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,14 +17,13 @@ import javax.validation.Valid;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
 
+    private final GetCurrentUserOperation getCurrentUserOperation;
     private final CreateUserOperation createUserOperation;
-    private final ReadUserOperation readUserOperation;
     private final UserAssembler userAssembler;
 
     @GetMapping("/current")
-    public EntityModel<User> readUser(Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
-        return userAssembler.toModel(readUserOperation.execute(user.getId()));
+    public EntityModel<User> currentUser() {
+        return userAssembler.toModel(getCurrentUserOperation.execute());
     }
 
     @PostMapping("/")

@@ -21,7 +21,7 @@ public class ReadContactResponseAssemblerImpl implements ReadContactResponseAsse
                 .setUserId(entity.getUser().getId());
 
         final Link selfRel = linkTo(methodOn(UserContactsController.class)
-                .readContact(null, entity.getId()))
+                .readContact(entity.getId()))
                 .withSelfRel();
 
         return EntityModel.of(response, selfRel);

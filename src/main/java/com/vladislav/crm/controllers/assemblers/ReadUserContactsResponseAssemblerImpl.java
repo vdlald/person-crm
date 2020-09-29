@@ -15,7 +15,7 @@ public class ReadUserContactsResponseAssemblerImpl implements ReadUserContactsRe
     @Override
     public EntityModel<ReadUserContactsResponse> toModel(Contact contact) {
         final Link selfRel = linkTo(methodOn(UserContactsController.class)
-                .readContact(null, contact.getId()))
+                .readContact(contact.getId()))
                 .withSelfRel();
 
         final ReadUserContactsResponse response = new ReadUserContactsResponse()

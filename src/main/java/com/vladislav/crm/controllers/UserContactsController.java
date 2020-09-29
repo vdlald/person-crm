@@ -11,6 +11,7 @@ import com.vladislav.crm.entities.Contact;
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.operations.companies.ReadCompanyOperation;
 import com.vladislav.crm.services.operations.contacts.*;
+import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
@@ -19,7 +20,6 @@ import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.mediatype.hal.HalModelBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,11 +44,13 @@ public class UserContactsController {
     private final UpdateContactOperation updateContactOperation;
     private final DeleteContactOperation deleteContactOperation;
 
+    private final GetCurrentUserOperation getCurrentUserOperation;
+
     private final ReadCompanyOperation readCompanyOperation;
 
     @GetMapping("/")
-    public RepresentationModel<?> readUserContacts(Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
+    public RepresentationModel<?> readUserContacts() {
+        final User user = getCurrentUserOperation.execute();
 
         final List<EntityModel<ReadUserContactsResponse>> models = readUserContactsOperation.execute(user.getId())
                 .stream()
@@ -57,17 +59,16 @@ public class UserContactsController {
 
         return HalModelBuilder.emptyHalModel()
                 .embed(models, LinkRelation.of("contacts"))
-                .link(linkTo(methodOn(UserContactsController.class).readUserContacts(authentication)).withSelfRel())
+                .link(linkTo(methodOn(UserContactsController.class).readUserContacts()).withSelfRel())
                 .build();
     }
 
     // вопрос: Domain object security. Стоит ли каждой сущности добавлять поле userId (owner) чтобы иметь возможность легко проверить владение объектом
     @GetMapping("/{id}")
     public ResponseEntity<EntityModel<ReadContactResponse>> readContact(
-            Authentication authentication,
             @PathVariable("id") Long contactId
     ) {
-        User user = (User) authentication.getPrincipal();
+        final User user = getCurrentUserOperation.execute();
 
         final Contact contact = readContactOperation.execute(contactId);
         if (isUserOwner(user, contact)) {
@@ -80,10 +81,9 @@ public class UserContactsController {
     // refactor candidate
     @PostMapping("/")  // вопрос: не слишком ли много кода здесь? может вынести его в отдельный Handler?
     public EntityModel<ReadContactResponse> createContact(
-            Authentication authentication,
             @RequestBody CreateContactRequest request
     ) {
-        User user = (User) authentication.getPrincipal();
+        final User user = getCurrentUserOperation.execute();
 
         final Contact contact = new Contact();
         contact.setUser(stubUser(user)).setName(request.getName());
@@ -108,11 +108,10 @@ public class UserContactsController {
     // refactor candidate
     @PutMapping("/{id}")  // вопрос: не слишком ли много кода здесь? может вынести его в отдельный Handler?
     public ResponseEntity<EntityModel<ReadContactResponse>> updateContact(
-            Authentication authentication,
             @PathVariable("id") Long contactId,
             @RequestBody UpdateContactRequest request
     ) {
-        User user = (User) authentication.getPrincipal();
+        final User user = getCurrentUserOperation.execute();
 
         final Contact contact = readContactOperation.execute(contactId);
         if (isUserOwner(user, contact)) {
@@ -144,10 +143,9 @@ public class UserContactsController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteContact(
-            Authentication authentication,
             @PathVariable("id") Long contactId
     ) {
-        User user = (User) authentication.getPrincipal();
+        final User user = getCurrentUserOperation.execute();
 
         final Contact contact = readContactOperation.execute(contactId);
         if (isUserOwner(user, contact)) {
