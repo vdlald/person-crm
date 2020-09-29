@@ -1,10 +1,9 @@
 package com.vladislav.crm.controllers;
 
-import com.vladislav.crm.controllers.assemblers.UserAssembler;
+import com.vladislav.crm.controllers.requesthandlers.CreateUserRequestHandler;
+import com.vladislav.crm.controllers.requesthandlers.CurrentUserRequestHandler;
 import com.vladislav.crm.controllers.requests.CreateUserRequest;
 import com.vladislav.crm.entities.User;
-import com.vladislav.crm.services.operations.users.CreateUserOperation;
-import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
@@ -17,18 +16,16 @@ import javax.validation.Valid;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
 
-    private final GetCurrentUserOperation getCurrentUserOperation;
-    private final CreateUserOperation createUserOperation;
-    private final UserAssembler userAssembler;
+    private final CreateUserRequestHandler createUserRequestHandler;
+    private final CurrentUserRequestHandler currentUserRequestHandler;
 
     @GetMapping("/current")
     public EntityModel<User> currentUser() {
-        return userAssembler.toModel(getCurrentUserOperation.execute());
+        return currentUserRequestHandler.handle();
     }
 
     @PostMapping("/")
     public EntityModel<User> createUser(@Valid @RequestBody CreateUserRequest request) {
-        final User newUser = new User().setUsername(request.getUsername()).setPassword(request.getPassword());
-        return userAssembler.toModel(createUserOperation.execute(newUser));
+        return createUserRequestHandler.handle(request);
     }
 }
