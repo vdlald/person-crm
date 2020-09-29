@@ -1,7 +1,8 @@
-package com.vladislav.crm.services.operations.companies;
+package com.vladislav.crm.services.operations.companies.impl;
 
 import com.vladislav.crm.entities.Company;
 import com.vladislav.crm.repositories.CompanyRepository;
+import com.vladislav.crm.services.operations.companies.ReadCompanyOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
