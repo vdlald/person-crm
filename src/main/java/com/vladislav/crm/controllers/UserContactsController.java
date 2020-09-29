@@ -1,6 +1,7 @@
 package com.vladislav.crm.controllers;
 
 import com.vladislav.crm.controllers.assemblers.ReadContactResponseAssembler;
+import com.vladislav.crm.controllers.requesthandlers.CreateContactRequestHandler;
 import com.vladislav.crm.controllers.requesthandlers.ReadContactRequestHandler;
 import com.vladislav.crm.controllers.requesthandlers.ReadUserContactsRequestHandler;
 import com.vladislav.crm.controllers.requests.CreateContactRequest;
@@ -10,7 +11,6 @@ import com.vladislav.crm.entities.Company;
 import com.vladislav.crm.entities.Contact;
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.operations.companies.ReadCompanyOperation;
-import com.vladislav.crm.services.operations.contacts.CreateContactOperation;
 import com.vladislav.crm.services.operations.contacts.DeleteContactOperation;
 import com.vladislav.crm.services.operations.contacts.ReadContactOperation;
 import com.vladislav.crm.services.operations.contacts.UpdateContactOperation;
@@ -33,7 +33,6 @@ public class UserContactsController {
 
     // refactor candidate: CrudContactsHandler ?
     private final ReadContactOperation readContactOperation;
-    private final CreateContactOperation createContactOperation;
     private final UpdateContactOperation updateContactOperation;
     private final DeleteContactOperation deleteContactOperation;
 
@@ -43,6 +42,7 @@ public class UserContactsController {
 
     private final ReadUserContactsRequestHandler readUserContactsRequestHandler;
     private final ReadContactRequestHandler readContactRequestHandler;
+    private final CreateContactRequestHandler createContactRequestHandler;
 
     @GetMapping("/")
     public RepresentationModel<?> readUserContacts() {
@@ -62,26 +62,7 @@ public class UserContactsController {
     public EntityModel<ReadContactResponse> createContact(
             @RequestBody CreateContactRequest request
     ) {
-        final User user = getCurrentUserOperation.execute();
-
-        final Contact contact = new Contact();
-        contact.setUser(stubUser(user)).setName(request.getName());
-
-        final CreateContactRequest.CompanyRequest companyRequest = request.getCompany();
-        if (companyRequest != null) {
-            if (companyRequest.getId() != null) {
-                final Company company = readCompanyOperation.execute(companyRequest.getId());
-                contact.setCompany(company);
-            } else {
-                final String companyRequestName = companyRequest.getName();
-                if (!companyRequestName.isEmpty() && !companyRequestName.isBlank()) {
-                    final Company company = new Company().setName(companyRequestName);
-                    contact.setCompany(company);
-                }
-            }
-        }
-
-        return readContactResponseAssembler.toModel(createContactOperation.execute(contact));
+        return createContactRequestHandler.handle(request);
     }
 
     // refactor candidate
