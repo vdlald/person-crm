@@ -1,8 +1,8 @@
 package com.vladislav.crm.controllers.impl;
 
 import com.vladislav.crm.controllers.UserController;
-import com.vladislav.crm.controllers.requesthandlers.CreateUserRequestHandler;
-import com.vladislav.crm.controllers.requesthandlers.CurrentUserRequestHandler;
+import com.vladislav.crm.controllers.requesthandlers.users.CreateUserRequestHandler;
+import com.vladislav.crm.controllers.requesthandlers.users.CurrentUserRequestHandler;
 import com.vladislav.crm.controllers.requests.CreateUserRequest;
 import com.vladislav.crm.entities.User;
 import lombok.RequiredArgsConstructor;

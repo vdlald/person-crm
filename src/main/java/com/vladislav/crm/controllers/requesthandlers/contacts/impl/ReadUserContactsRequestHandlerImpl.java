@@ -1,8 +1,8 @@
-package com.vladislav.crm.controllers.requesthandlers.impl;
+package com.vladislav.crm.controllers.requesthandlers.contacts.impl;
 
 import com.vladislav.crm.controllers.impl.UserContactsControllerImpl;
 import com.vladislav.crm.controllers.assemblers.ReadUserContactsResponseAssembler;
-import com.vladislav.crm.controllers.requesthandlers.ReadUserContactsRequestHandler;
+import com.vladislav.crm.controllers.requesthandlers.contacts.ReadUserContactsRequestHandler;
 import com.vladislav.crm.controllers.responses.ReadUserContactsResponse;
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.operations.contacts.ReadUserContactsOperation;

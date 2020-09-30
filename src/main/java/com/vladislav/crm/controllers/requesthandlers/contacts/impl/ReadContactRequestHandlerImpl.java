@@ -1,7 +1,7 @@
-package com.vladislav.crm.controllers.requesthandlers.impl;
+package com.vladislav.crm.controllers.requesthandlers.contacts.impl;
 
 import com.vladislav.crm.controllers.assemblers.ReadContactResponseAssembler;
-import com.vladislav.crm.controllers.requesthandlers.ReadContactRequestHandler;
+import com.vladislav.crm.controllers.requesthandlers.contacts.ReadContactRequestHandler;
 import com.vladislav.crm.controllers.responses.ReadContactResponse;
 import com.vladislav.crm.services.operations.contacts.ReadContactOperation;
 import lombok.RequiredArgsConstructor;

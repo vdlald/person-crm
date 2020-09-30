@@ -1,6 +1,6 @@
-package com.vladislav.crm.controllers.requesthandlers.impl;
+package com.vladislav.crm.controllers.requesthandlers.contacts.impl;
 
-import com.vladislav.crm.controllers.requesthandlers.DeleteContactRequestHandler;
+import com.vladislav.crm.controllers.requesthandlers.contacts.DeleteContactRequestHandler;
 import com.vladislav.crm.services.operations.contacts.DeleteContactOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

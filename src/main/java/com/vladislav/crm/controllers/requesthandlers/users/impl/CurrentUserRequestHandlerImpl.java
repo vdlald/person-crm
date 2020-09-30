@@ -1,7 +1,7 @@
-package com.vladislav.crm.controllers.requesthandlers.impl;
+package com.vladislav.crm.controllers.requesthandlers.users.impl;
 
 import com.vladislav.crm.controllers.assemblers.UserAssembler;
-import com.vladislav.crm.controllers.requesthandlers.CurrentUserRequestHandler;
+import com.vladislav.crm.controllers.requesthandlers.users.CurrentUserRequestHandler;
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
-package com.vladislav.crm.controllers.requesthandlers.impl;
+package com.vladislav.crm.controllers.requesthandlers.users.impl;
 
 import com.vladislav.crm.controllers.assemblers.UserAssembler;
-import com.vladislav.crm.controllers.requesthandlers.CreateUserRequestHandler;
+import com.vladislav.crm.controllers.requesthandlers.users.CreateUserRequestHandler;
 import com.vladislav.crm.controllers.requests.CreateUserRequest;
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.operations.users.CreateUserOperation;
