@@ -1,5 +1,6 @@
-package com.vladislav.crm.services.operations;
+package com.vladislav.crm.services.operations.abstractions;
 
+import com.vladislav.crm.services.operations.ReadOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
