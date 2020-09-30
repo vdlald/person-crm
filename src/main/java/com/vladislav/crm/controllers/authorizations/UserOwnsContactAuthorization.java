@@ -1,9 +1,8 @@
 package com.vladislav.crm.controllers.authorizations;
 
-import com.vladislav.crm.entities.Contact;
 import com.vladislav.crm.entities.User;
-import com.vladislav.crm.services.operations.contacts.ReadContactOperation;
-import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
+import com.vladislav.crm.services.operations.contacts.GetUserIdByContactIdOperation;
+import com.vladislav.crm.services.operations.users.GetCurrentUserStubOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,13 +11,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserOwnsContactAuthorization {
 
-    private final GetCurrentUserOperation getCurrentUserOperation;
-    private final ReadContactOperation readContactOperation;
+    private final GetCurrentUserStubOperation getCurrentUserStubOperation;
+    private final GetUserIdByContactIdOperation getUserIdByContactIdOperation;
 
     public boolean hasAuthorization(Long contactId) {
-        final Contact contact = readContactOperation.execute(contactId);
-        final User user = getCurrentUserOperation.execute();
+        final User user = getCurrentUserStubOperation.execute();
+        final long contactUserId = getUserIdByContactIdOperation.execute(contactId);
 
-        return contact.getUser().getId().equals(user.getId());
+        return user.getId().equals(contactUserId);
     }
 }
