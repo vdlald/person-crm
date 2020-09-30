@@ -22,7 +22,7 @@ public class ReadUserContactsResponseAssemblerImpl implements ReadUserContactsRe
                 .withSelfRel();
 
         final ReadUserContactsResponse response = new ReadUserContactsResponse()
-                .setContactId(contact.getId())
+                .setId(contact.getId())
                 .setName(contact.getName());
 
         final Company company = contact.getCompany();
