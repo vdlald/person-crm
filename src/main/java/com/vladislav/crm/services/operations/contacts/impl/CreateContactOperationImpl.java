@@ -15,7 +15,7 @@ public class CreateContactOperationImpl implements CreateContactOperation {
 
     @Override
     public Contact execute(Contact contact) {
-        contact.setId(null);  // вопрос: правилен ли такой подход? не лучше ли проверять наличие записи с таким id? по идее при создании нам не важно какой id приходит снаружи поэтому его можно спокойно занулить
+        contact.setId(null);
         return contactRepository.save(contact);
     }
 }
