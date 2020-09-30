@@ -16,6 +16,7 @@ public class ReadPipelineResponse {
 
     private Long id;
     private String name;
+    private Long userId;
     private List<StatusResponse> statuses = new ArrayList<>();
 
     @Data

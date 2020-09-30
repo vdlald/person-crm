@@ -28,6 +28,7 @@ public class ReadPipelineResponseAssemblerImpl implements ReadPipelineResponseAs
         final ReadPipelineResponse response = new ReadPipelineResponse()
                 .setId(entity.getId())
                 .setName(entity.getName())
+                .setUserId(entity.getUser().getId())
                 .setStatuses(statuses);
 
         final Link selfRel = linkTo(methodOn(UserPipelinesControllerImpl.class)

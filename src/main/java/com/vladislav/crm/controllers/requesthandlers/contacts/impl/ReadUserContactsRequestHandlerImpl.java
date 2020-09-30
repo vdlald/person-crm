@@ -1,12 +1,12 @@
 package com.vladislav.crm.controllers.requesthandlers.contacts.impl;
 
-import com.vladislav.crm.controllers.impl.UserContactsControllerImpl;
 import com.vladislav.crm.controllers.assemblers.ReadUserContactsResponseAssembler;
+import com.vladislav.crm.controllers.impl.UserContactsControllerImpl;
 import com.vladislav.crm.controllers.requesthandlers.contacts.ReadUserContactsRequestHandler;
 import com.vladislav.crm.controllers.responses.ReadUserContactsResponse;
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.operations.contacts.ReadUserContactsOperation;
-import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
+import com.vladislav.crm.services.operations.users.GetCurrentUserStubOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
@@ -25,13 +25,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ReadUserContactsRequestHandlerImpl implements ReadUserContactsRequestHandler {
 
-    private final GetCurrentUserOperation getCurrentUserOperation;
+    private final GetCurrentUserStubOperation getCurrentUserStubOperation;
     private final ReadUserContactsOperation readUserContactsOperation;
     private final ReadUserContactsResponseAssembler readUserContactsResponseAssembler;
 
     @Override
     public RepresentationModel<?> handle(Void unused) {
-        final User user = getCurrentUserOperation.execute();
+        final User user = getCurrentUserStubOperation.execute();
 
         final List<EntityModel<ReadUserContactsResponse>> models = readUserContactsOperation.execute(user.getId())
                 .stream()
