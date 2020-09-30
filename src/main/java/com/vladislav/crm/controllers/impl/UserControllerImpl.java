@@ -8,6 +8,7 @@ import com.vladislav.crm.entities.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,6 +29,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @PostMapping("/")
+    @ResponseStatus(HttpStatus.CREATED)
     public EntityModel<User> createUser(@Valid @RequestBody CreateUserRequest request) {
         return createUserRequestHandler.handle(request);
     }
