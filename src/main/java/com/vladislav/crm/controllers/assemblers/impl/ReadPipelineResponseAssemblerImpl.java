@@ -20,16 +20,15 @@ public class ReadPipelineResponseAssemblerImpl implements ReadPipelineResponseAs
 
     @Override
     public EntityModel<ReadPipelineResponse> toModel(Pipeline entity) {
-        final List<ReadPipelineResponse.StatusResponse> statuses = entity.getStatuses().stream()
+        final List<Long> statuses = entity.getStatuses().stream()
                 .map(AbstractEntity::getId)
-                .map(ReadPipelineResponse.StatusResponse::new)
                 .collect(Collectors.toUnmodifiableList());
 
         final ReadPipelineResponse response = new ReadPipelineResponse()
                 .setId(entity.getId())
                 .setName(entity.getName())
                 .setUserId(entity.getUser().getId())
-                .setStatuses(statuses);
+                .setStatusesId(statuses);
 
         final Link selfRel = linkTo(methodOn(UserPipelinesControllerImpl.class)
                 .readPipeline(entity.getId()))

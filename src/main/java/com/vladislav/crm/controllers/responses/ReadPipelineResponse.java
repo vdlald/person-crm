@@ -17,13 +17,6 @@ public class ReadPipelineResponse {
     private Long id;
     private String name;
     private Long userId;
-    private List<StatusResponse> statuses = new ArrayList<>();
+    private List<Long> statusesId = new ArrayList<>();
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Accessors(chain = true)
-    public static class StatusResponse {
-        private Long id;
-    }
 }
