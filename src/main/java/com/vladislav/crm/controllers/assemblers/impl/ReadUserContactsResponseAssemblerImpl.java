@@ -1,5 +1,6 @@
-package com.vladislav.crm.controllers.assemblers;
+package com.vladislav.crm.controllers.assemblers.impl;
 
+import com.vladislav.crm.controllers.assemblers.ReadUserContactsResponseAssembler;
 import com.vladislav.crm.controllers.impl.UserContactsControllerImpl;
 import com.vladislav.crm.controllers.responses.CompanyResponse;
 import com.vladislav.crm.controllers.responses.ReadUserContactsResponse;

@@ -1,5 +1,6 @@
-package com.vladislav.crm.controllers.assemblers;
+package com.vladislav.crm.controllers.assemblers.impl;
 
+import com.vladislav.crm.controllers.assemblers.UserAssembler;
 import com.vladislav.crm.controllers.impl.UserControllerImpl;
 import com.vladislav.crm.entities.User;
 import org.springframework.hateoas.EntityModel;
