@@ -1,7 +1,8 @@
-package com.vladislav.crm.services.operations.contacts;
+package com.vladislav.crm.services.operations.contacts.impl;
 
 import com.vladislav.crm.entities.Contact;
 import com.vladislav.crm.repositories.ContactRepository;
+import com.vladislav.crm.services.operations.contacts.ReadContactOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,16 +11,12 @@ import javax.persistence.EntityNotFoundException;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UpdateContactOperationImpl implements UpdateContactOperation {
+public class ReadContactOperationImpl implements ReadContactOperation {
 
     private final ContactRepository contactRepository;
 
     @Override
-    public Contact execute(Contact contact) {
-        if (contactRepository.existsById(contact.getId())) {
-            return contactRepository.save(contact);
-        } else {
-            throw new EntityNotFoundException();
-        }
+    public Contact execute(Long contactId) {
+        return contactRepository.findById(contactId).orElseThrow(EntityNotFoundException::new);
     }
 }

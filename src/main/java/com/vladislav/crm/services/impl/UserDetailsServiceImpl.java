@@ -1,4 +1,4 @@
-package com.vladislav.crm.services;
+package com.vladislav.crm.services.impl;
 
 import com.vladislav.crm.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;

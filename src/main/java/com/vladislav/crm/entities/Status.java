@@ -15,7 +15,7 @@ import java.util.Objects;
 @Accessors(chain = true)
 @ToString(callSuper = true, exclude = {"leads"})
 @EqualsAndHashCode(callSuper = true, exclude = {"leads"})
-@Entity(name = "Status")
+@Entity
 @Table(name = "statuses")
 @AttributeOverride(name = "id", column = @Column(name = "status_id", updatable = false, nullable = false))
 public class Status extends AbstractEntity {
@@ -32,32 +32,40 @@ public class Status extends AbstractEntity {
     @OneToMany(mappedBy = "status", fetch = FetchType.LAZY)
     private List<Lead> leads = new ArrayList<>();
 
-    public void setPipeline(Pipeline newPipeline) {
-        if (Objects.equals(pipeline, newPipeline))
-            return;
+    public Status setPipeline(Pipeline newPipeline) {
+        if (Objects.equals(pipeline, newPipeline)) {
+            return this;
+        }
 
         final Pipeline oldPipeline = this.pipeline;
         pipeline = newPipeline;
 
-        if (oldPipeline != null)
+        if (oldPipeline != null) {
             oldPipeline.removeStatus(this);
+        }
 
-        if (pipeline != null)
+        if (pipeline != null) {
             pipeline.addStatus(this);
+        }
+        return this;
     }
 
-    public void addLead(Lead lead) {
-        if (leads.contains(lead))
-            return;
+    public Status addLead(Lead lead) {
+        if (leads.contains(lead)) {
+            return this;
+        }
         leads.add(lead);
         lead.setStatus(this);
+        return this;
     }
 
-    public void removeLead(Lead lead) {
-        if (!leads.contains(lead))
-            return;
+    public Status removeLead(Lead lead) {
+        if (!leads.contains(lead)) {
+            return this;
+        }
         leads.remove(lead);
         lead.setStatus(null);
+        return this;
     }
 
     public List<Lead> getLeads() {

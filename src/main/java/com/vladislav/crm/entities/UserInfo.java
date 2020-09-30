@@ -14,7 +14,7 @@ import java.util.Objects;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true, exclude = "user")
 @ToString(callSuper = true, exclude = "user")
-@Entity(name = "UserInfo")
+@Entity
 @Table(name = "usersinfo")
 @AttributeOverride(name = "id", column = @Column(name = "userinfo_id", updatable = false, nullable = false))
 public class UserInfo extends AbstractEntity {
@@ -36,17 +36,21 @@ public class UserInfo extends AbstractEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public void setUser(User newUser) {
-        if (Objects.equals(user, newUser))
-            return;
+    public UserInfo setUser(User newUser) {
+        if (Objects.equals(user, newUser)) {
+            return this;
+        }
 
         final User oldInfo = this.user;
         user = newUser;
 
-        if (oldInfo != null)
+        if (oldInfo != null) {
             oldInfo.setInfo(null);
+        }
 
-        if (user != null)
+        if (user != null) {
             user.setInfo(this);
+        }
+        return this;
     }
 }

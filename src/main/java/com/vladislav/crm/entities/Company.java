@@ -15,7 +15,7 @@ import java.util.List;
 @Accessors(chain = true)
 @ToString(callSuper = true, exclude = "contacts")
 @EqualsAndHashCode(callSuper = true, exclude = "contacts")
-@Entity(name = "Company")
+@Entity
 @Table(name = "companies")
 @AttributeOverride(name = "id", column = @Column(name = "company_id", updatable = false, nullable = false))
 public class Company extends AbstractEntity {
@@ -28,18 +28,22 @@ public class Company extends AbstractEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
     private List<Contact> contacts = new ArrayList<>();
 
-    public void addContact(Contact contact) {
-        if (contacts.contains(contact))
-            return;
+    public Company addContact(Contact contact) {
+        if (contacts.contains(contact)) {
+            return null;
+        }
         contacts.add(contact);
         contact.setCompany(this);
+        return this;
     }
 
-    public void removeContact(Contact contact) {
-        if (!contacts.contains(contact))
-            return;
+    public Company removeContact(Contact contact) {
+        if (!contacts.contains(contact)) {
+            return null;
+        }
         contacts.remove(contact);
         contact.setCompany(null);
+        return this;
     }
 
     public List<Contact> getContacts() {

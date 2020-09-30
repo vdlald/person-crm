@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,6 +14,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,9 +25,10 @@ import java.util.Objects;
 @Accessors(chain = true)
 @ToString(callSuper = true, exclude = {"password", "contacts", "pipelines", "leads"})
 @EqualsAndHashCode(callSuper = true, exclude = {"info", "authorities", "contacts", "pipelines", "leads"})
-@Entity(name = "User")
+@Entity
 @Table(name = "users")
 @AttributeOverride(name = "id", column = @Column(name = "user_id", updatable = false, nullable = false))
+@EntityListeners(AuditingEntityListener.class)
 public class User extends AbstractEntity implements UserDetails {
 
     @Pattern(regexp = "^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$")
@@ -58,60 +63,86 @@ public class User extends AbstractEntity implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Lead> leads = new ArrayList<>();
 
-    public void setInfo(UserInfo newInfo) {
-        if (Objects.equals(info, newInfo))
-            return;
+    @Column(name = "createdAt", nullable = false, updatable = false)
+    @Setter(AccessLevel.PRIVATE)
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    @Column(name = "updatedAt")
+    @Setter(AccessLevel.PRIVATE)
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+
+    public User setInfo(UserInfo newInfo) {
+        if (Objects.equals(info, newInfo)) {
+            return this;
+        }
 
         final UserInfo oldInfo = this.info;
         info = newInfo;
 
-        if (oldInfo != null)
+        if (oldInfo != null) {
             oldInfo.setUser(null);
+        }
 
-        if (info != null)
+        if (info != null) {
             info.setUser(this);
+        }
+        return this;
     }
 
-    public void addContact(Contact contact) {
-        if (contacts.contains(contact))
-            return;
+    public User addContact(Contact contact) {
+        if (contacts.contains(contact)) {
+            return this;
+        }
         contacts.add(contact);
         contact.setUser(this);
+        return this;
     }
 
-    public void removeContact(Contact contact) {
-        if (!contacts.contains(contact))
-            return;
+    public User removeContact(Contact contact) {
+        if (!contacts.contains(contact)) {
+            return this;
+        }
         contacts.remove(contact);
         contact.setUser(null);
+        return this;
     }
 
-    public void addPipeline(Pipeline pipeline) {
-        if (pipelines.contains(pipeline))
-            return;
+    public User addPipeline(Pipeline pipeline) {
+        if (pipelines.contains(pipeline)) {
+            return this;
+        }
         pipelines.add(pipeline);
         pipeline.setUser(this);
+        return this;
     }
 
-    public void removePipeline(Pipeline pipeline) {
-        if (!pipelines.contains(pipeline))
-            return;
+    public User removePipeline(Pipeline pipeline) {
+        if (!pipelines.contains(pipeline)) {
+            return this;
+        }
         pipelines.remove(pipeline);
         pipeline.setUser(null);
+        return this;
     }
 
-    public void addLead(Lead lead) {
-        if (leads.contains(lead))
-            return;
+    public User addLead(Lead lead) {
+        if (leads.contains(lead)) {
+            return this;
+        }
         leads.add(lead);
         lead.setUser(this);
+        return this;
     }
 
-    public void removeLead(Lead lead) {
-        if (!leads.contains(lead))
-            return;
+    public User removeLead(Lead lead) {
+        if (!leads.contains(lead)) {
+            return this;
+        }
         leads.remove(lead);
         lead.setUser(null);
+        return this;
     }
 
     public List<Contact> getContacts() {

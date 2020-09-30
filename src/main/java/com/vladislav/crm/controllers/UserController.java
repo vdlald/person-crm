@@ -1,36 +1,11 @@
 package com.vladislav.crm.controllers;
 
-import com.vladislav.crm.controllers.assemblers.UserAssembler;
 import com.vladislav.crm.controllers.requests.CreateUserRequest;
 import com.vladislav.crm.entities.User;
-import com.vladislav.crm.services.operations.users.CreateUserOperation;
-import com.vladislav.crm.services.operations.users.ReadUserOperation;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+public interface UserController {
+    EntityModel<User> currentUser();
 
-@RestController
-@RequestMapping("/api/v1/users")
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserController {
-
-    private final CreateUserOperation createUserOperation;
-    private final ReadUserOperation readUserOperation;
-    private final UserAssembler userAssembler;
-
-    @GetMapping("/")
-    public EntityModel<User> readUser(Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
-        return userAssembler.toModel(readUserOperation.execute(user.getId()));
-    }
-
-    @PostMapping("/")
-    public EntityModel<User> createUser(@Valid @RequestBody CreateUserRequest request) {
-        final User newUser = new User().setUsername(request.getUsername()).setPassword(request.getPassword());
-        return userAssembler.toModel(createUserOperation.execute(newUser));
-    }
+    EntityModel<User> createUser(CreateUserRequest request);
 }

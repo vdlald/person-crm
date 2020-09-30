@@ -1,6 +1,6 @@
 package com.vladislav.crm.controllers.assemblers;
 
-import com.vladislav.crm.controllers.UserController;
+import com.vladislav.crm.controllers.impl.UserControllerImpl;
 import com.vladislav.crm.entities.User;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
@@ -13,7 +13,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class UserAssemblerImpl implements UserAssembler {
     @Override
     public EntityModel<User> toModel(User entity) {
-        final Link selfRel = linkTo(methodOn(UserController.class).readUser(null)).withSelfRel();
+        final Link selfRel = linkTo(methodOn(UserControllerImpl.class).currentUser()).withSelfRel();
         return EntityModel.of(entity, selfRel);
     }
 }

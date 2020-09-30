@@ -15,7 +15,7 @@ import java.util.Objects;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true, exclude = {"user", "statuses"})
 @ToString(callSuper = true, exclude = {"user", "statuses"})
-@Entity(name = "Pipeline")
+@Entity
 @Table(name = "pipelines")
 @AttributeOverride(name = "id", column = @Column(name = "pipeline_id", updatable = false, nullable = false))
 public class Pipeline extends AbstractEntity {
@@ -32,32 +32,40 @@ public class Pipeline extends AbstractEntity {
     @OneToMany(mappedBy = "pipeline", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Status> statuses = new ArrayList<>();
 
-    public void setUser(User newUser) {
-        if (Objects.equals(user, newUser))
-            return;
+    public Pipeline setUser(User newUser) {
+        if (Objects.equals(user, newUser)) {
+            return this;
+        }
 
         final User oldUser = this.user;
         user = newUser;
 
-        if (oldUser != null)
+        if (oldUser != null) {
             oldUser.removePipeline(this);
+        }
 
-        if (user != null)
+        if (user != null) {
             user.addPipeline(this);
+        }
+        return this;
     }
 
-    public void addStatus(Status status) {
-        if (statuses.contains(status))
-            return;
+    public Pipeline addStatus(Status status) {
+        if (statuses.contains(status)) {
+            return this;
+        }
         statuses.add(status);
         status.setPipeline(this);
+        return this;
     }
 
-    public void removeStatus(Status status) {
-        if (!statuses.contains(status))
-            return;
+    public Pipeline removeStatus(Status status) {
+        if (!statuses.contains(status)) {
+            return this;
+        }
         statuses.remove(status);
         status.setPipeline(null);
+        return this;
     }
 
     public List<Status> getStatuses() {

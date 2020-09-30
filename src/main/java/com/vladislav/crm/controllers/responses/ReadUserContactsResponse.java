@@ -1,7 +1,6 @@
 package com.vladislav.crm.controllers.responses;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.vladislav.crm.entities.Company;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +15,7 @@ public class ReadUserContactsResponse {
     private Long contactId;
     private String name;
 
-    @JsonIgnoreProperties("contacts")
-    private Company company;
+    @JsonIgnoreProperties("contactsId")
+    private CompanyResponse company;
 
 }

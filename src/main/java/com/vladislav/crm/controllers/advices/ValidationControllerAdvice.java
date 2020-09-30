@@ -19,16 +19,26 @@ public class ValidationControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(TransactionSystemException.class)
     public ErrorResponse constraintViolationHandler(TransactionSystemException exception) {
-        final ConstraintViolationException cause = (ConstraintViolationException) exception.getRootCause();
-        assert cause != null;
+        final String message;
+        final HttpStatus status;
 
-        final String message = cause.getConstraintViolations().stream()
-                .map(constraintViolation -> String.format("%s: %s", constraintViolation.getPropertyPath(),
-                        constraintViolation.getMessage()))
-                .collect(Collectors.joining("\n"));
+        final Throwable rootCause = exception.getRootCause();
+        if (rootCause instanceof ConstraintViolationException) {
+            final ConstraintViolationException cause = (ConstraintViolationException) rootCause;
 
+            message = cause.getConstraintViolations().stream()
+                    .map(constraintViolation -> String.format("%s: %s",
+                            constraintViolation.getPropertyPath(), constraintViolation.getMessage()))
+                    .collect(Collectors.joining("\n"));
+
+            status = HttpStatus.BAD_REQUEST;
+        } else {
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            message = exception.getMessage();
+        }
+        
         return ErrorResponse.builder()
-                .setStatus(HttpStatus.BAD_REQUEST.value())
+                .setStatus(status)
                 .setMessage(message)
                 .build();
     }
@@ -48,7 +58,7 @@ public class ValidationControllerAdvice {
                 .collect(Collectors.joining("; "));
 
         return ErrorResponse.builder()
-                .setStatus(HttpStatus.BAD_REQUEST.value())
+                .setStatus(HttpStatus.BAD_REQUEST)
                 .setMessage(message)
                 .build();
     }

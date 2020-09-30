@@ -18,7 +18,7 @@ public class EntityNotFoundControllerAdvice {
     @ExceptionHandler(EntityNotFoundException.class)
     public ErrorResponse entityNotFoundHandler(EntityNotFoundException e) {
         return ErrorResponse.builder()
-                .setStatus(HttpStatus.NOT_FOUND.value())
+                .setStatus(HttpStatus.NOT_FOUND)
                 .setMessage(Optional.ofNullable(e.getMessage()).orElse(""))
                 .build();
     }
