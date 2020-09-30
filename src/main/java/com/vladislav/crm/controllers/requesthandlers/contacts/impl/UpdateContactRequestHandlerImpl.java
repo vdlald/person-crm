@@ -6,8 +6,7 @@ import com.vladislav.crm.controllers.requests.UpdateContactRequest;
 import com.vladislav.crm.controllers.responses.ReadContactResponse;
 import com.vladislav.crm.entities.Company;
 import com.vladislav.crm.entities.Contact;
-import com.vladislav.crm.services.operations.companies.ReadCompanyOperation;
-import com.vladislav.crm.services.operations.contacts.ReadContactOperation;
+import com.vladislav.crm.services.operations.ReadOperation;
 import com.vladislav.crm.services.operations.contacts.UpdateContactOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +18,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UpdateContactRequestHandlerImpl implements UpdateContactRequestHandler {
 
-    private final ReadContactOperation readContactOperation;
+    private final ReadOperation<Contact> readContactOperation;
     private final ReadContactResponseAssembler readContactResponseAssembler;
-    private final ReadCompanyOperation readCompanyOperation;
+    private final ReadOperation<Company> readCompanyOperation;
     private final UpdateContactOperation updateContactOperation;
 
     @Override
