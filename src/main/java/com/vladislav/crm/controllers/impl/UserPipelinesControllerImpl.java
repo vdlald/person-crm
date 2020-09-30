@@ -2,10 +2,12 @@ package com.vladislav.crm.controllers.impl;
 
 import com.vladislav.crm.controllers.UserPipelinesController;
 import com.vladislav.crm.controllers.requesthandlers.pipelines.ReadPipelineRequestHandler;
+import com.vladislav.crm.controllers.requesthandlers.pipelines.ReadUserPipelinesRequestHandler;
 import com.vladislav.crm.controllers.responses.ReadPipelineResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.RepresentationModel;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserPipelinesControllerImpl implements UserPipelinesController {
 
     private final ReadPipelineRequestHandler readPipelineRequestHandler;
+    private final ReadUserPipelinesRequestHandler readUserPipelinesRequestHandler;
+
+    @Override
+    @GetMapping("/")
+    public RepresentationModel<?> readUserPipelines() {
+        return readUserPipelinesRequestHandler.handle();
+    }
 
     @Override
     @GetMapping("/{id}")
