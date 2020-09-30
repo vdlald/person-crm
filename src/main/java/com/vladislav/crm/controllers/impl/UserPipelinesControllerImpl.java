@@ -5,6 +5,7 @@ import com.vladislav.crm.entities.Pipeline;
 import com.vladislav.crm.services.operations.pipelines.ReadPipelineOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,8 @@ public class UserPipelinesControllerImpl implements UserPipelinesController {
     private final ReadPipelineOperation readPipelineOperation;
 
     @GetMapping("/{id}")
-    public Pipeline readPipeline(@PathVariable("id") Long id) {
-        return readPipelineOperation.execute(id);
+    @PreAuthorize("@userOwnsPipelineAuthorization.hasAuthorization(#pipelineId)")
+    public Pipeline readPipeline(@PathVariable("id") Long pipelineId) {
+        return readPipelineOperation.execute(pipelineId);
     }
 }
