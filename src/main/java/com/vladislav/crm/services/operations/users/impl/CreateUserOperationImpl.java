@@ -3,7 +3,7 @@ package com.vladislav.crm.services.operations.users.impl;
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.entities.UserInfo;
 import com.vladislav.crm.repositories.UserRepository;
-import com.vladislav.crm.services.operations.users.CreateUserOperation;
+import com.vladislav.crm.services.operations.CreateOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class CreateUserOperationImpl implements CreateUserOperation {
+public class CreateUserOperationImpl implements CreateOperation<User> {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

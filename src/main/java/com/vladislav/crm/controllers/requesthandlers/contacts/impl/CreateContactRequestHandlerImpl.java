@@ -7,8 +7,8 @@ import com.vladislav.crm.controllers.responses.ReadContactResponse;
 import com.vladislav.crm.entities.Company;
 import com.vladislav.crm.entities.Contact;
 import com.vladislav.crm.entities.User;
+import com.vladislav.crm.services.operations.CreateOperation;
 import com.vladislav.crm.services.operations.ReadOperation;
-import com.vladislav.crm.services.operations.contacts.CreateContactOperation;
 import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class CreateContactRequestHandlerImpl implements CreateContactRequestHand
 
     private final GetCurrentUserOperation getCurrentUserOperation;
     private final ReadContactResponseAssembler readContactResponseAssembler;
-    private final CreateContactOperation createContactOperation;
+    private final CreateOperation<Contact> createContactOperation;
     private final ReadOperation<Company> readCompanyOperation;
 
     @Override
