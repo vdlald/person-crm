@@ -4,7 +4,7 @@ import com.vladislav.crm.controllers.assemblers.UserAssembler;
 import com.vladislav.crm.controllers.requesthandlers.users.CreateUserRequestHandler;
 import com.vladislav.crm.controllers.requests.CreateUserRequest;
 import com.vladislav.crm.entities.User;
-import com.vladislav.crm.services.operations.users.CreateUserOperation;
+import com.vladislav.crm.services.operations.CreateOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class CreateUserRequestHandlerImpl implements CreateUserRequestHandler {
 
     private final UserAssembler userAssembler;
-    private final CreateUserOperation createUserOperation;
+    private final CreateOperation<User> createUserOperation;
 
     @Override
     public EntityModel<User> handle(CreateUserRequest request) {

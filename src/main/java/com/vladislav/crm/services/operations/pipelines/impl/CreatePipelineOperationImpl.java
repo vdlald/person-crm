@@ -1,21 +1,15 @@
 package com.vladislav.crm.services.operations.pipelines.impl;
 
 import com.vladislav.crm.entities.Pipeline;
-import com.vladislav.crm.repositories.PipelineRepository;
-import com.vladislav.crm.services.operations.pipelines.CreatePipelineOperation;
-import lombok.RequiredArgsConstructor;
+import com.vladislav.crm.services.operations.abstractions.AbstractCreateOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class CreatePipelineOperationImpl implements CreatePipelineOperation {
-    
-    private final PipelineRepository pipelineRepository;
-    
-    @Override
-    public Pipeline execute(Pipeline pipeline) {
-        pipeline.setId(null);
-        return pipelineRepository.save(pipeline);
+public class CreatePipelineOperationImpl extends AbstractCreateOperation<Pipeline> {
+    @Autowired
+    public CreatePipelineOperationImpl(JpaRepository<Pipeline, Long> repository) {
+        super(repository);
     }
 }

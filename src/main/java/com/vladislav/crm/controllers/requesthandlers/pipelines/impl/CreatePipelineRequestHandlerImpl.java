@@ -5,7 +5,7 @@ import com.vladislav.crm.controllers.requesthandlers.pipelines.CreatePipelineReq
 import com.vladislav.crm.controllers.requests.CreatePipelineRequest;
 import com.vladislav.crm.controllers.responses.ReadPipelineResponse;
 import com.vladislav.crm.entities.Pipeline;
-import com.vladislav.crm.services.operations.pipelines.CreatePipelineOperation;
+import com.vladislav.crm.services.operations.CreateOperation;
 import com.vladislav.crm.services.operations.users.GetCurrentUserStubOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CreatePipelineRequestHandlerImpl implements CreatePipelineRequestHandler {
 
-    private final CreatePipelineOperation createPipelineOperation;
+    private final CreateOperation<Pipeline> createPipelineOperation;
     private final GetCurrentUserStubOperation getCurrentUserStubOperation;
     private final ReadPipelineResponseAssembler readPipelineResponseAssembler;
 
