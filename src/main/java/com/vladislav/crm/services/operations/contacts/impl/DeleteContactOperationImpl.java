@@ -2,21 +2,24 @@ package com.vladislav.crm.services.operations.contacts.impl;
 
 import com.vladislav.crm.entities.Company;
 import com.vladislav.crm.entities.Contact;
-import com.vladislav.crm.repositories.CompanyRepository;
 import com.vladislav.crm.repositories.ContactRepository;
-import com.vladislav.crm.services.operations.contacts.DeleteContactOperation;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.vladislav.crm.services.operations.DeleteOperation;
+import com.vladislav.crm.services.operations.abstractions.AbstractDeleteOperation;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class DeleteContactOperationImpl implements DeleteContactOperation {
+public class DeleteContactOperationImpl extends AbstractDeleteOperation<Contact> {
 
     private final ContactRepository contactRepository;
-    private final CompanyRepository companyRepository;  // refactor candidate
+    private final DeleteOperation<Company> companyDeleteOperation;
+
+    public DeleteContactOperationImpl(ContactRepository repository, DeleteOperation<Company> companyDeleteOperation) {
+        super(repository);
+        this.companyDeleteOperation = companyDeleteOperation;
+        contactRepository = repository;
+    }
 
     @Override
     public void execute(Long id) {
@@ -28,7 +31,7 @@ public class DeleteContactOperationImpl implements DeleteContactOperation {
         final Company company = contact.getCompany();
         if (company != null)
             if (company.getContacts().isEmpty())
-                companyRepository.delete(company);
+                companyDeleteOperation.execute(company);
             else
                 contact.setCompany(null);
 
