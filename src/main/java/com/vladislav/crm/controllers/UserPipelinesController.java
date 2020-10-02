@@ -1,6 +1,7 @@
 package com.vladislav.crm.controllers;
 
 import com.vladislav.crm.controllers.requests.CreatePipelineRequest;
+import com.vladislav.crm.controllers.requests.UpdatePipelineRequest;
 import com.vladislav.crm.controllers.responses.ReadPipelineResponse;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.RepresentationModel;
@@ -19,4 +20,11 @@ public interface UserPipelinesController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     EntityModel<ReadPipelineResponse> createPipeline(@RequestBody CreatePipelineRequest request);
+
+    @PostMapping("/{id}")
+    @PreAuthorize("@userOwnsPipelineAuthorization.hasAuthorization(#pipelineId)")
+    EntityModel<ReadPipelineResponse> updatePipeline(
+            @PathVariable("id") Long pipelineId,
+            @RequestBody UpdatePipelineRequest request
+    );
 }
