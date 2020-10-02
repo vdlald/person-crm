@@ -1,24 +1,25 @@
 package com.vladislav.crm.controllers.requesthandlers.contacts.impl;
 
-import com.vladislav.crm.controllers.assemblers.ReadContactResponseAssembler;
+import com.vladislav.crm.controllers.requesthandlers.AbstractReadEntityRequestHandler;
 import com.vladislav.crm.controllers.requesthandlers.contacts.ReadContactRequestHandler;
 import com.vladislav.crm.controllers.responses.ReadContactResponse;
 import com.vladislav.crm.entities.Contact;
 import com.vladislav.crm.services.operations.ReadOperation;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ReadContactRequestHandlerImpl implements ReadContactRequestHandler {
-    
-    private final ReadContactResponseAssembler readContactResponseAssembler;
-    private final ReadOperation<Contact> readContactOperation;
+public class ReadContactRequestHandlerImpl
+        extends AbstractReadEntityRequestHandler<Contact, ReadContactResponse>
+        implements ReadContactRequestHandler {
 
-    @Override
-    public EntityModel<ReadContactResponse> handle(Long contactId) {
-        return readContactResponseAssembler.toModel(readContactOperation.execute(contactId));
+    @Autowired
+    public ReadContactRequestHandlerImpl(
+            RepresentationModelAssembler<Contact, EntityModel<ReadContactResponse>> assembler,
+            ReadOperation<Contact> readOperation
+    ) {
+        super(assembler, readOperation);
     }
 }
