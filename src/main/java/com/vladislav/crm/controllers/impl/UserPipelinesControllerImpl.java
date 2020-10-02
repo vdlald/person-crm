@@ -1,10 +1,7 @@
 package com.vladislav.crm.controllers.impl;
 
 import com.vladislav.crm.controllers.UserPipelinesController;
-import com.vladislav.crm.controllers.requesthandlers.pipelines.CreatePipelineRequestHandler;
-import com.vladislav.crm.controllers.requesthandlers.pipelines.ReadPipelineRequestHandler;
-import com.vladislav.crm.controllers.requesthandlers.pipelines.ReadUserPipelinesRequestHandler;
-import com.vladislav.crm.controllers.requesthandlers.pipelines.UpdatePipelineRequestHandler;
+import com.vladislav.crm.controllers.requesthandlers.pipelines.*;
 import com.vladislav.crm.controllers.requests.CreatePipelineRequest;
 import com.vladislav.crm.controllers.requests.UpdatePipelineRequest;
 import com.vladislav.crm.controllers.responses.ReadPipelineResponse;
@@ -14,6 +11,7 @@ import org.springframework.data.util.Pair;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +24,7 @@ public class UserPipelinesControllerImpl implements UserPipelinesController {
     private final ReadUserPipelinesRequestHandler readUserPipelinesRequestHandler;
     private final CreatePipelineRequestHandler createPipelineRequestHandler;
     private final UpdatePipelineRequestHandler updatePipelineRequestHandler;
+    private final DeletePipelineRequestHandler deletePipelineRequestHandler;
 
     @Override
     @GetMapping("/")
@@ -55,5 +54,15 @@ public class UserPipelinesControllerImpl implements UserPipelinesController {
             @RequestBody UpdatePipelineRequest request
     ) {
         return updatePipelineRequestHandler.handle(Pair.of(pipelineId, request));
+    }
+
+    @Override
+    @DeleteMapping("/{id}")
+    @PreAuthorize("@userOwnsPipelineAuthorization.hasAuthorization(#pipelineId)")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> deletePipeline(
+            @PathVariable("id") Long pipelineId
+    ) {
+        return deletePipelineRequestHandler.handle(pipelineId);
     }
 }
