@@ -8,7 +8,6 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-// Нужна ли связь с User ?
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,7 +24,7 @@ public class Company extends AbstractEntity {
     private String name;
 
     @Setter(AccessLevel.PRIVATE)
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company", cascade = CascadeType.DETACH)
     private List<Contact> contacts = new ArrayList<>();
 
     public Company addContact(Contact contact) {
@@ -48,5 +47,9 @@ public class Company extends AbstractEntity {
 
     public List<Contact> getContacts() {
         return new ArrayList<>(contacts);
+    }
+
+    private void preRemove() {
+        contacts.forEach(contact -> contact.setCompany(null));
     }
 }

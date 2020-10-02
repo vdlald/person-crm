@@ -1,7 +1,7 @@
 package com.vladislav.crm.controllers.impl;
 
 import com.vladislav.crm.controllers.UserContactsController;
-import com.vladislav.crm.controllers.requesthandlers.*;
+import com.vladislav.crm.controllers.requesthandlers.contacts.*;
 import com.vladislav.crm.controllers.requests.CreateContactRequest;
 import com.vladislav.crm.controllers.requests.UpdateContactRequest;
 import com.vladislav.crm.controllers.responses.ReadContactResponse;
@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +43,7 @@ public class UserContactsControllerImpl implements UserContactsController {
 
     @Override
     @PostMapping("/")
+    @ResponseStatus(HttpStatus.CREATED)
     public EntityModel<ReadContactResponse> createContact(
             @RequestBody CreateContactRequest request
     ) {
@@ -61,6 +63,7 @@ public class UserContactsControllerImpl implements UserContactsController {
     @Override
     @DeleteMapping("/{id}")
     @PreAuthorize("@userOwnsContactAuthorization.hasAuthorization(#contactId)")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> deleteContact(
             @PathVariable("id") Long contactId
     ) {
