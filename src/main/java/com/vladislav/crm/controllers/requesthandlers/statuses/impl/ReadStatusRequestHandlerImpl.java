@@ -1,6 +1,7 @@
-package com.vladislav.crm.controllers.requesthandlers.statuses;
+package com.vladislav.crm.controllers.requesthandlers.statuses.impl;
 
 import com.vladislav.crm.controllers.requesthandlers.AbstractReadEntityRequestHandler;
+import com.vladislav.crm.controllers.requesthandlers.statuses.ReadStatusRequestHandler;
 import com.vladislav.crm.controllers.responses.ReadStatusResponse;
 import com.vladislav.crm.entities.Status;
 import com.vladislav.crm.services.operations.ReadOperation;
