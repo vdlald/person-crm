@@ -1,6 +1,7 @@
-package com.vladislav.crm.controllers.requesthandlers.leads;
+package com.vladislav.crm.controllers.requesthandlers.leads.impl;
 
 import com.vladislav.crm.controllers.requesthandlers.AbstractReadEntityRequestHandler;
+import com.vladislav.crm.controllers.requesthandlers.leads.ReadLeadRequestHandler;
 import com.vladislav.crm.controllers.responses.ReadLeadResponse;
 import com.vladislav.crm.entities.Lead;
 import com.vladislav.crm.services.operations.ReadOperation;

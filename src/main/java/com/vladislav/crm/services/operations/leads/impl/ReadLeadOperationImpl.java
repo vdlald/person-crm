@@ -7,10 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ReadLeadOperation extends AbstractReadOperation<Lead> {
+public class ReadLeadOperationImpl extends AbstractReadOperation<Lead> {
 
     @Autowired
-    public ReadLeadOperation(JpaRepository<Lead, Long> repository) {
+    public ReadLeadOperationImpl(JpaRepository<Lead, Long> repository) {
         super(repository);
     }
 }

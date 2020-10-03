@@ -1,7 +1,7 @@
 package com.vladislav.crm.controllers.authorizations;
 
 import com.vladislav.crm.entities.User;
-import com.vladislav.crm.services.operations.leads.impl.GetUserIdByLeadIdOperation;
+import com.vladislav.crm.services.operations.leads.GetUserIdByLeadIdOperation;
 import com.vladislav.crm.services.operations.users.GetCurrentUserStubOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
