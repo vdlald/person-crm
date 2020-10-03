@@ -32,6 +32,10 @@ public class Status extends AbstractEntity {
     @OneToMany(mappedBy = "status", fetch = FetchType.LAZY)
     private List<Lead> leads = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Status setPipeline(Pipeline newPipeline) {
         if (Objects.equals(pipeline, newPipeline)) {
             return this;
@@ -70,5 +74,23 @@ public class Status extends AbstractEntity {
 
     public List<Lead> getLeads() {
         return new ArrayList<>(leads);
+    }
+
+    public Status setUser(User newUser) {
+        if (Objects.equals(user, newUser)) {
+            return this;
+        }
+
+        final User oldUser = this.user;
+        user = newUser;
+
+        if (oldUser != null) {
+            oldUser.removeStatus(this);
+        }
+
+        if (user != null) {
+            user.addStatus(this);
+        }
+        return this;
     }
 }
