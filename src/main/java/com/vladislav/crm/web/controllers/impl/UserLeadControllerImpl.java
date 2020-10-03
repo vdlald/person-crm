@@ -1,8 +1,8 @@
 package com.vladislav.crm.web.controllers.impl;
 
 import com.vladislav.crm.web.controllers.UserLeadController;
-import com.vladislav.crm.web.requesthandlers.leads.DeleteLeadRequestHandler;
-import com.vladislav.crm.web.requesthandlers.leads.ReadLeadRequestHandler;
+import com.vladislav.crm.web.handlers.leads.DeleteLeadRequestHandler;
+import com.vladislav.crm.web.handlers.leads.ReadLeadRequestHandler;
 import com.vladislav.crm.web.responses.ReadLeadResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

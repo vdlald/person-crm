@@ -1,10 +1,10 @@
 package com.vladislav.crm.web.controllers.impl;
 
 import com.vladislav.crm.web.controllers.UserStatusController;
-import com.vladislav.crm.web.requesthandlers.statuses.CreateStatusRequestHandler;
-import com.vladislav.crm.web.requesthandlers.statuses.DeleteStatusRequestHandler;
-import com.vladislav.crm.web.requesthandlers.statuses.ReadStatusRequestHandler;
-import com.vladislav.crm.web.requesthandlers.statuses.UpdateStatusRequestHandler;
+import com.vladislav.crm.web.handlers.statuses.CreateStatusRequestHandler;
+import com.vladislav.crm.web.handlers.statuses.DeleteStatusRequestHandler;
+import com.vladislav.crm.web.handlers.statuses.ReadStatusRequestHandler;
+import com.vladislav.crm.web.handlers.statuses.UpdateStatusRequestHandler;
 import com.vladislav.crm.web.requests.CreateStatusRequest;
 import com.vladislav.crm.web.requests.UpdateStatusRequest;
 import com.vladislav.crm.web.responses.ReadStatusResponse;

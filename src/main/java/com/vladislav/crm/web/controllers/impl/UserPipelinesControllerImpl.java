@@ -1,7 +1,7 @@
 package com.vladislav.crm.web.controllers.impl;
 
 import com.vladislav.crm.web.controllers.UserPipelinesController;
-import com.vladislav.crm.web.requesthandlers.pipelines.*;
+import com.vladislav.crm.web.handlers.pipelines.*;
 import com.vladislav.crm.web.requests.CreatePipelineRequest;
 import com.vladislav.crm.web.requests.UpdatePipelineRequest;
 import com.vladislav.crm.web.responses.ReadPipelineResponse;
