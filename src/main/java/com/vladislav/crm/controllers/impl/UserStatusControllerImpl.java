@@ -4,10 +4,13 @@ import com.vladislav.crm.controllers.UserStatusController;
 import com.vladislav.crm.controllers.requesthandlers.statuses.CreateStatusRequestHandler;
 import com.vladislav.crm.controllers.requesthandlers.statuses.DeleteStatusRequestHandler;
 import com.vladislav.crm.controllers.requesthandlers.statuses.ReadStatusRequestHandler;
+import com.vladislav.crm.controllers.requesthandlers.statuses.UpdateStatusRequestHandler;
 import com.vladislav.crm.controllers.requests.CreateStatusRequest;
+import com.vladislav.crm.controllers.requests.UpdateStatusRequest;
 import com.vladislav.crm.controllers.responses.ReadStatusResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,7 @@ public class UserStatusControllerImpl implements UserStatusController {
 
     private final ReadStatusRequestHandler readStatusRequestHandler;
     private final CreateStatusRequestHandler createStatusRequestHandler;
+    private final UpdateStatusRequestHandler updateStatusRequestHandler;
     private final DeleteStatusRequestHandler deleteStatusRequestHandler;
 
     @Override
@@ -35,6 +39,16 @@ public class UserStatusControllerImpl implements UserStatusController {
     @ResponseStatus(HttpStatus.CREATED)
     public EntityModel<ReadStatusResponse> createStatus(@RequestBody CreateStatusRequest request) {
         return createStatusRequestHandler.handle(request);
+    }
+
+    @Override
+    @PostMapping("/{id}")
+    @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#statusId)")
+    public EntityModel<ReadStatusResponse> updatePipeline(
+            @PathVariable("id") Long statusId,
+            @RequestBody UpdateStatusRequest request
+    ) {
+        return updateStatusRequestHandler.handle(Pair.of(statusId, request));
     }
 
     @Override
