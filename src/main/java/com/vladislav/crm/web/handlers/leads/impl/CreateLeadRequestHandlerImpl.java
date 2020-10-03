@@ -1,6 +1,5 @@
 package com.vladislav.crm.web.handlers.leads.impl;
 
-import com.vladislav.crm.entities.Contact;
 import com.vladislav.crm.entities.Lead;
 import com.vladislav.crm.entities.Status;
 import com.vladislav.crm.services.operations.CreateOperation;
@@ -32,15 +31,6 @@ public class CreateLeadRequestHandlerImpl implements CreateLeadRequestHandler {
                 .setSale(request.getSale())
                 .setStatus(statusStub)
                 .setUser(getCurrentUserStubOperation.execute());
-
-        request.getContactsId()
-                .stream()
-                .map(id -> {
-                    final Contact contactStub = new Contact();
-                    contactStub.setId(id);
-                    return contactStub;
-                })
-                .forEach(lead::addContact); // вопрос: появится ли связь с данными контактами ?
 
         return readLeadResponseAssembler.toModel(leadCreateOperation.execute(lead));
     }

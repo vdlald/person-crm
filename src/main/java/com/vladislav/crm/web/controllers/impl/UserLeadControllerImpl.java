@@ -4,10 +4,13 @@ import com.vladislav.crm.web.controllers.UserLeadController;
 import com.vladislav.crm.web.handlers.leads.CreateLeadRequestHandler;
 import com.vladislav.crm.web.handlers.leads.DeleteLeadRequestHandler;
 import com.vladislav.crm.web.handlers.leads.ReadLeadRequestHandler;
+import com.vladislav.crm.web.handlers.leads.UpdateLeadRequestHandler;
 import com.vladislav.crm.web.requests.CreateLeadRequest;
+import com.vladislav.crm.web.requests.UpdateLeadRequest;
 import com.vladislav.crm.web.responses.ReadLeadResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,7 @@ public class UserLeadControllerImpl implements UserLeadController {
 
     private final ReadLeadRequestHandler readLeadRequestHandler;
     private final CreateLeadRequestHandler createLeadRequestHandler;
+    private final UpdateLeadRequestHandler updateLeadRequestHandler;
     private final DeleteLeadRequestHandler deleteLeadRequestHandler;
 
     @Override
@@ -37,6 +41,16 @@ public class UserLeadControllerImpl implements UserLeadController {
             @RequestBody CreateLeadRequest request
     ) {
         return createLeadRequestHandler.handle(request);
+    }
+
+    @Override
+    @PostMapping("/{id}")
+    @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#leadId)")
+    public EntityModel<ReadLeadResponse> updateContact(
+            @PathVariable("id") Long leadId,
+            @RequestBody UpdateLeadRequest request
+    ) {
+        return updateLeadRequestHandler.handle(Pair.of(leadId, request));
     }
 
     @Override

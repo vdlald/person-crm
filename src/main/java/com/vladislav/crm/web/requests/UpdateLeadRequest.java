@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class CreateLeadRequest {
+public class UpdateLeadRequest {
 
     private String name;
     private BigDecimal sale;
