@@ -12,6 +12,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class ReadStatusResponse {
 
+    // todo: Дополнить поля
     private String name;
 
 }
