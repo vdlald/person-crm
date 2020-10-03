@@ -2,7 +2,7 @@ package com.vladislav.crm.controllers.impl;
 
 import com.vladislav.crm.controllers.UserStatusController;
 import com.vladislav.crm.controllers.requesthandlers.statuses.ReadStatusRequestHandler;
-import com.vladislav.crm.controllers.requesthandlers.statuses.impl.DeleteStatusRequestHandler;
+import com.vladislav.crm.controllers.requesthandlers.statuses.DeleteStatusRequestHandler;
 import com.vladislav.crm.controllers.responses.ReadStatusResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
