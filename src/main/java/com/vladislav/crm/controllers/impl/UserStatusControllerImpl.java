@@ -1,8 +1,10 @@
 package com.vladislav.crm.controllers.impl;
 
 import com.vladislav.crm.controllers.UserStatusController;
-import com.vladislav.crm.controllers.requesthandlers.statuses.ReadStatusRequestHandler;
+import com.vladislav.crm.controllers.requesthandlers.statuses.CreateStatusRequestHandler;
 import com.vladislav.crm.controllers.requesthandlers.statuses.DeleteStatusRequestHandler;
+import com.vladislav.crm.controllers.requesthandlers.statuses.ReadStatusRequestHandler;
+import com.vladislav.crm.controllers.requests.CreateStatusRequest;
 import com.vladislav.crm.controllers.responses.ReadStatusResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserStatusControllerImpl implements UserStatusController {
 
     private final ReadStatusRequestHandler readStatusRequestHandler;
+    private final CreateStatusRequestHandler createStatusRequestHandler;
     private final DeleteStatusRequestHandler deleteStatusRequestHandler;
 
     @Override
@@ -25,6 +28,13 @@ public class UserStatusControllerImpl implements UserStatusController {
     @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#statusId)")
     public EntityModel<ReadStatusResponse> readStatus(@PathVariable("id") Long statusId) {
         return readStatusRequestHandler.handle(statusId);
+    }
+
+    @Override
+    @PostMapping("/")
+    @ResponseStatus(HttpStatus.CREATED)
+    public EntityModel<ReadStatusResponse> createStatus(@RequestBody CreateStatusRequest request) {
+        return createStatusRequestHandler.handle(request);
     }
 
     @Override
