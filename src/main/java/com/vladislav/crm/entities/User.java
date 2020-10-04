@@ -11,7 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -35,7 +35,7 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(name = "username", updatable = false, nullable = false, unique = true, length = 32)
     private String username;
 
-    @NotEmpty
+    @NotBlank
     @Size(min = 8, max = 64)
     @Column(name = "password", nullable = false, length = 64)
     @JsonIgnore

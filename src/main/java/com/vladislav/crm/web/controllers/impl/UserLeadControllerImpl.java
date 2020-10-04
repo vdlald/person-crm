@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/leads")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -38,7 +40,7 @@ public class UserLeadControllerImpl implements UserLeadController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public EntityModel<ReadLeadResponse> createLead(
-            @RequestBody CreateLeadRequest request
+            @Valid @RequestBody CreateLeadRequest request
     ) {
         return createLeadRequestHandler.handle(request);
     }
@@ -48,7 +50,7 @@ public class UserLeadControllerImpl implements UserLeadController {
     @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#leadId)")
     public EntityModel<ReadLeadResponse> updateContact(
             @PathVariable("id") Long leadId,
-            @RequestBody UpdateLeadRequest request
+            @Valid @RequestBody UpdateLeadRequest request
     ) {
         return updateLeadRequestHandler.handle(Pair.of(leadId, request));
     }

@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/contacts")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -45,7 +47,7 @@ public class UserContactsControllerImpl implements UserContactsController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public EntityModel<ReadContactResponse> createContact(
-            @RequestBody CreateContactRequest request
+            @Valid @RequestBody CreateContactRequest request
     ) {
         return createContactRequestHandler.handle(request);
     }
@@ -55,7 +57,7 @@ public class UserContactsControllerImpl implements UserContactsController {
     @PreAuthorize("@userOwnsContactAuthorization.hasAuthorization(#contactId)")
     public EntityModel<ReadContactResponse> updateContact(
             @PathVariable("id") Long contactId,
-            @RequestBody UpdateContactRequest request
+            @Valid @RequestBody UpdateContactRequest request
     ) {
         return updateContactRequestHandler.handle(Pair.of(contactId, request));
     }

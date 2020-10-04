@@ -7,6 +7,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -26,10 +28,12 @@ import java.util.Objects;
 @EntityListeners(AuditingEntityListener.class)
 public class Lead extends AbstractEntity {
 
+    @NotBlank
     @Size(min = 1, max = 32)
     @Column(name = "name", length = 32)
     private String name;
 
+    @DecimalMin("0.0")
     @Column(name = "sale")
     private BigDecimal sale;
 
@@ -45,14 +49,14 @@ public class Lead extends AbstractEntity {
     @ManyToMany(mappedBy = "leads", fetch = FetchType.LAZY)
     private List<Contact> contacts = new ArrayList<>();
 
+    @CreatedDate
     @Column(name = "createdAt", nullable = false, updatable = false)
     @Setter(AccessLevel.PRIVATE)
-    @CreatedDate
     private LocalDateTime createdAt;
 
+    @LastModifiedDate
     @Column(name = "updatedAt")
     @Setter(AccessLevel.PRIVATE)
-    @LastModifiedDate
     private LocalDateTime updatedAt;
 
     public Lead setUser(User newUser) {

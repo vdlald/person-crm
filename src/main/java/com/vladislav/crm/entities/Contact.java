@@ -7,6 +7,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import java.util.Objects;
 @EntityListeners(AuditingEntityListener.class)
 public class Contact extends AbstractEntity {
 
+    @NotBlank
     @Size(min = 1, max = 32)
     @Column(name = "name", length = 32)
     private String name;
