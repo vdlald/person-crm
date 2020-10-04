@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/statuses")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -37,7 +39,7 @@ public class UserStatusControllerImpl implements UserStatusController {
     @Override
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    public EntityModel<ReadStatusResponse> createStatus(@RequestBody CreateStatusRequest request) {
+    public EntityModel<ReadStatusResponse> createStatus(@Valid @RequestBody CreateStatusRequest request) {
         return createStatusRequestHandler.handle(request);
     }
 
@@ -46,7 +48,7 @@ public class UserStatusControllerImpl implements UserStatusController {
     @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#statusId)")
     public EntityModel<ReadStatusResponse> updatePipeline(
             @PathVariable("id") Long statusId,
-            @RequestBody UpdateStatusRequest request
+            @Valid @RequestBody UpdateStatusRequest request
     ) {
         return updateStatusRequestHandler.handle(Pair.of(statusId, request));
     }
