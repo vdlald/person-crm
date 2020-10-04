@@ -2,8 +2,8 @@ package com.vladislav.crm.services.operations.contacts;
 
 import com.vladislav.crm.entities.Contact;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface ReadUserContactsOperation {
-    List<Contact> execute(Long userId);
+    Collection<Contact> execute(Long userId);
 }

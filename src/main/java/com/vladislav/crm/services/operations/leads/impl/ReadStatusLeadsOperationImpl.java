@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Collection;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -16,7 +16,7 @@ public class ReadStatusLeadsOperationImpl implements ReadStatusLeadsOperation {
     private final LeadRepository leadRepository;
 
     @Override
-    public List<Lead> execute(Long statusId) {
+    public Collection<Lead> execute(Long statusId) {
         return leadRepository.findAllByStatusId(statusId);
     }
 }

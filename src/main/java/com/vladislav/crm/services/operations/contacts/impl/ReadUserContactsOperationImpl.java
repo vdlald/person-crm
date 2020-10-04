@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Collection;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -16,7 +16,7 @@ public class ReadUserContactsOperationImpl implements ReadUserContactsOperation 
     private final ContactRepository contactRepository;
 
     @Override
-    public List<Contact> execute(Long userId) {
+    public Collection<Contact> execute(Long userId) {
         return contactRepository.findAllByUserId(userId);
     }
 }
