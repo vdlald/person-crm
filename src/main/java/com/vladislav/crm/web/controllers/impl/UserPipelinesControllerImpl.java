@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/pipelines")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -42,7 +44,7 @@ public class UserPipelinesControllerImpl implements UserPipelinesController {
     @Override
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    public EntityModel<ReadPipelineResponse> createPipeline(@RequestBody CreatePipelineRequest request) {
+    public EntityModel<ReadPipelineResponse> createPipeline(@Valid @RequestBody CreatePipelineRequest request) {
         return createPipelineRequestHandler.handle(request);
     }
 
@@ -51,7 +53,7 @@ public class UserPipelinesControllerImpl implements UserPipelinesController {
     @PreAuthorize("@userOwnsPipelineAuthorization.hasAuthorization(#pipelineId)")
     public EntityModel<ReadPipelineResponse> updatePipeline(
             @PathVariable("id") Long pipelineId,
-            @RequestBody UpdatePipelineRequest request
+            @Valid @RequestBody UpdatePipelineRequest request
     ) {
         return updatePipelineRequestHandler.handle(Pair.of(pipelineId, request));
     }
