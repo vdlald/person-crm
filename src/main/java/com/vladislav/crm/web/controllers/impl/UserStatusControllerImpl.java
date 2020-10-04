@@ -1,10 +1,7 @@
 package com.vladislav.crm.web.controllers.impl;
 
 import com.vladislav.crm.web.controllers.UserStatusController;
-import com.vladislav.crm.web.handlers.statuses.CreateStatusRequestHandler;
-import com.vladislav.crm.web.handlers.statuses.DeleteStatusRequestHandler;
-import com.vladislav.crm.web.handlers.statuses.ReadStatusRequestHandler;
-import com.vladislav.crm.web.handlers.statuses.UpdateStatusRequestHandler;
+import com.vladislav.crm.web.handlers.statuses.*;
 import com.vladislav.crm.web.requests.CreateStatusRequest;
 import com.vladislav.crm.web.requests.UpdateStatusRequest;
 import com.vladislav.crm.web.responses.ReadStatusResponse;
@@ -12,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,6 +24,7 @@ public class UserStatusControllerImpl implements UserStatusController {
     private final CreateStatusRequestHandler createStatusRequestHandler;
     private final UpdateStatusRequestHandler updateStatusRequestHandler;
     private final DeleteStatusRequestHandler deleteStatusRequestHandler;
+    private final ReadStatusLeadsRequestHandler readStatusLeadsRequestHandler;
 
     // todo: добавить запрос на чтение всех статусов из pipeline
     @Override
@@ -58,5 +57,11 @@ public class UserStatusControllerImpl implements UserStatusController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> deleteStatus(@PathVariable("id") Long statusId) {
         return deleteStatusRequestHandler.handle(statusId);
+    }
+
+    @GetMapping("/{id}/leads")
+    @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#statusId)")
+    public RepresentationModel<?> readStatusLeads(@PathVariable("id") Long statusId) {
+        return readStatusLeadsRequestHandler.handle(statusId);
     }
 }
