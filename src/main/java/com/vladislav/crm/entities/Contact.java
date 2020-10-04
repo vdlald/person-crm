@@ -7,9 +7,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -41,7 +39,7 @@ public class Contact extends AbstractEntityWithTime {
     @JoinTable(name = "leads_contacts",
             joinColumns = @JoinColumn(name = "contact_id", referencedColumnName = "contact_id"),
             inverseJoinColumns = @JoinColumn(name = "lead_id", referencedColumnName = "lead_id"))
-    private List<Lead> leads = new ArrayList<>();
+    private Set<Lead> leads = new HashSet<>();
 
     public Contact setUser(User newUser) {
         if (Objects.equals(user, newUser)) {

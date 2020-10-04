@@ -9,9 +9,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -44,7 +42,7 @@ public class Lead extends AbstractEntityWithTime {
 
     @Setter(AccessLevel.PRIVATE)
     @ManyToMany(mappedBy = "leads", fetch = FetchType.LAZY)
-    private List<Contact> contacts = new ArrayList<>();
+    private Set<Contact> contacts = new HashSet<>();
 
     public Lead setUser(User newUser) {
         if (Objects.equals(user, newUser)) {
