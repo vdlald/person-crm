@@ -2,14 +2,11 @@ package com.vladislav.crm.entities;
 
 import lombok.*;
 import lombok.experimental.Accessors;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,7 +21,7 @@ import java.util.Objects;
 @Table(name = "contacts")
 @AttributeOverride(name = "id", column = @Column(name = "contact_id", updatable = false, nullable = false))
 @EntityListeners(AuditingEntityListener.class)
-public class Contact extends AbstractEntity {
+public class Contact extends AbstractEntityWithTime {
 
     @NotBlank
     @Size(min = 1, max = 32)
@@ -45,16 +42,6 @@ public class Contact extends AbstractEntity {
             joinColumns = @JoinColumn(name = "contact_id", referencedColumnName = "contact_id"),
             inverseJoinColumns = @JoinColumn(name = "lead_id", referencedColumnName = "lead_id"))
     private List<Lead> leads = new ArrayList<>();
-
-    @Column(name = "createdAt", nullable = false, updatable = false)
-    @Setter(AccessLevel.PRIVATE)
-    @CreatedDate
-    private LocalDateTime createdAt;
-
-    @Column(name = "updatedAt")
-    @Setter(AccessLevel.PRIVATE)
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
 
     public Contact setUser(User newUser) {
         if (Objects.equals(user, newUser)) {
