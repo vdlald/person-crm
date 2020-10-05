@@ -52,10 +52,6 @@ public class User extends AbstractEntityWithTime implements UserDetails {
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
     private List<Pipeline> pipelines = new ArrayList<>();
 
-    @Setter(AccessLevel.PRIVATE)
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
-    private List<Status> statuses = new ArrayList<>();
-
     @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("user")
     private UserInfo info;
@@ -118,24 +114,6 @@ public class User extends AbstractEntityWithTime implements UserDetails {
         return this;
     }
 
-    public User addStatus(Status status) {
-        if (statuses.contains(status)) {
-            return this;
-        }
-        statuses.add(status);
-        status.setUser(this);
-        return this;
-    }
-
-    public User removeStatus(Status status) {
-        if (!statuses.contains(status)) {
-            return this;
-        }
-        statuses.remove(status);
-        status.setUser(null);
-        return this;
-    }
-
     public User addLead(Lead lead) {
         if (leads.contains(lead)) {
             return this;
@@ -164,10 +142,6 @@ public class User extends AbstractEntityWithTime implements UserDetails {
 
     public List<Pipeline> getPipelines() {
         return new ArrayList<>(pipelines);
-    }
-
-    public List<Status> getStatuses() {
-        return new ArrayList<>(statuses);
     }
 
     @Override

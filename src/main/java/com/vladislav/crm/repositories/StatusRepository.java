@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface StatusRepository extends JpaRepository<Status, Long> {
 
-    @Query("SELECT user.id from Status where id = :id")
+    @Query("SELECT pipeline.user.id from Status where id = :id")
     Optional<Long> findUserIdById(Long id);
 }
