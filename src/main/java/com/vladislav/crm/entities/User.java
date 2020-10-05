@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.Accessors;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +12,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,7 +26,7 @@ import java.util.Objects;
 @Table(name = "users")
 @AttributeOverride(name = "id", column = @Column(name = "user_id", updatable = false, nullable = false))
 @EntityListeners(AuditingEntityListener.class)
-public class User extends AbstractEntity implements UserDetails {
+public class User extends AbstractEntityWithTime implements UserDetails {
 
     @Pattern(regexp = "^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$")
     @Column(name = "username", updatable = false, nullable = false, unique = true, length = 32)
@@ -55,10 +52,6 @@ public class User extends AbstractEntity implements UserDetails {
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
     private List<Pipeline> pipelines = new ArrayList<>();
 
-    @Setter(AccessLevel.PRIVATE)
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
-    private List<Status> statuses = new ArrayList<>();
-
     @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("user")
     private UserInfo info;
@@ -66,16 +59,6 @@ public class User extends AbstractEntity implements UserDetails {
     @Setter(AccessLevel.PRIVATE)
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Lead> leads = new ArrayList<>();
-
-    @Column(name = "createdAt", nullable = false, updatable = false)
-    @Setter(AccessLevel.PRIVATE)
-    @CreatedDate
-    private LocalDateTime createdAt;
-
-    @Column(name = "updatedAt")
-    @Setter(AccessLevel.PRIVATE)
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
 
     public User setInfo(UserInfo newInfo) {
         if (Objects.equals(info, newInfo)) {
@@ -131,24 +114,6 @@ public class User extends AbstractEntity implements UserDetails {
         return this;
     }
 
-    public User addStatus(Status status) {
-        if (statuses.contains(status)) {
-            return this;
-        }
-        statuses.add(status);
-        status.setUser(this);
-        return this;
-    }
-
-    public User removeStatus(Status status) {
-        if (!statuses.contains(status)) {
-            return this;
-        }
-        statuses.remove(status);
-        status.setUser(null);
-        return this;
-    }
-
     public User addLead(Lead lead) {
         if (leads.contains(lead)) {
             return this;
@@ -177,10 +142,6 @@ public class User extends AbstractEntity implements UserDetails {
 
     public List<Pipeline> getPipelines() {
         return new ArrayList<>(pipelines);
-    }
-
-    public List<Status> getStatuses() {
-        return new ArrayList<>(statuses);
     }
 
     @Override

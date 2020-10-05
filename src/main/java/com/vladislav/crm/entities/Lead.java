@@ -2,8 +2,6 @@ package com.vladislav.crm.entities;
 
 import lombok.*;
 import lombok.experimental.Accessors;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -11,10 +9,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -26,7 +21,7 @@ import java.util.Objects;
 @Table(name = "leads")
 @AttributeOverride(name = "id", column = @Column(name = "lead_id", updatable = false, nullable = false))
 @EntityListeners(AuditingEntityListener.class)
-public class Lead extends AbstractEntity {
+public class Lead extends AbstractEntityWithTime {
 
     @NotBlank
     @Size(min = 1, max = 32)
@@ -47,17 +42,7 @@ public class Lead extends AbstractEntity {
 
     @Setter(AccessLevel.PRIVATE)
     @ManyToMany(mappedBy = "leads", fetch = FetchType.LAZY)
-    private List<Contact> contacts = new ArrayList<>();
-
-    @CreatedDate
-    @Column(name = "createdAt", nullable = false, updatable = false)
-    @Setter(AccessLevel.PRIVATE)
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    @Column(name = "updatedAt")
-    @Setter(AccessLevel.PRIVATE)
-    private LocalDateTime updatedAt;
+    private Set<Contact> contacts = new HashSet<>();
 
     public Lead setUser(User newUser) {
         if (Objects.equals(user, newUser)) {

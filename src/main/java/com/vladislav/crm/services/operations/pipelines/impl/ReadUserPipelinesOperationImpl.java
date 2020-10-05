@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Collection;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -17,7 +17,7 @@ public class ReadUserPipelinesOperationImpl implements ReadUserPipelinesOperatio
     private final PipelineRepository pipelineRepository;
 
     @Override
-    public List<Pipeline> execute(Long userId) {
+    public Collection<Pipeline> execute(Long userId) {
         return pipelineRepository.findAllByUserId(userId);
     }
 }
