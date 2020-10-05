@@ -17,15 +17,5 @@ public class CreateContactRequest {
     @NotBlank
     @Size(min = 1, max = 32)
     private String name;
-    private CompanyRequest company;
 
-    // refactor candidate: может лучше сделать отдельный запрос на присоединение компании ?
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Accessors(chain = true)
-    public static class CompanyRequest {
-        private Long id;
-        private String name;
-    }
 }

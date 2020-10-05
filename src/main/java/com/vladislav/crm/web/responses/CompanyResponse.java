@@ -11,8 +11,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class CompanyResponse {
+public class CompanyResponse {  // todo: разделить на два класса - ReadCompanyResponse, Contact.CompanyResponse
 
+    private Long id;
     private String name;
     private List<Long> contactsId;
 

@@ -17,14 +17,5 @@ public class UpdateContactRequest {
     @NotBlank
     @Size(min = 1, max = 32)
     private String name;
-    private CompanyRequest company;
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Accessors(chain = true)
-    public static class CompanyRequest {
-        private Long id;
-        private String name;
-    }
 }
