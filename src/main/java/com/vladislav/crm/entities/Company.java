@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -24,6 +25,10 @@ public class Company extends AbstractEntity {
     @Size(min = 1, max = 32)
     @Column(name = "name", length = 32, nullable = false)
     private String name;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Setter(AccessLevel.PRIVATE)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "company", cascade = CascadeType.DETACH)
@@ -51,7 +56,26 @@ public class Company extends AbstractEntity {
         return new ArrayList<>(contacts);
     }
 
+    @PreRemove
     private void preRemove() {
         contacts.forEach(contact -> contact.setCompany(null));
+    }
+
+    public Company setUser(User newUser) {
+        if (Objects.equals(user, newUser)) {
+            return this;
+        }
+
+        final User oldUser = this.user;
+        user = newUser;
+
+        if (oldUser != null) {
+            oldUser.removeCompany(this);
+        }
+
+        if (user != null) {
+            user.addCompany(this);
+        }
+        return this;
     }
 }
