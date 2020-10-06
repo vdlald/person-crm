@@ -53,4 +53,11 @@ public class UserInfo extends AbstractEntity {
         }
         return this;
     }
+
+    @PreRemove
+    private void preRemove() {
+        if (user != null) {
+            throw new EntityExistsException("Can' t remove \"usersinfo\" entity as long as \"user\" entity exists");
+        }
+    }
 }

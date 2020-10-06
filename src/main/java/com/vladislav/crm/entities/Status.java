@@ -73,4 +73,10 @@ public class Status extends AbstractEntity {
     public List<Lead> getLeads() {
         return new ArrayList<>(leads);
     }
+
+    @PreRemove
+    private void preRemove() {
+        pipeline.removeStatus(this);
+        leads.forEach(lead -> lead.setStatus(null));
+    }
 }

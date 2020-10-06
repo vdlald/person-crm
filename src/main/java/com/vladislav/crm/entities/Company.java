@@ -59,6 +59,7 @@ public class Company extends AbstractEntity {
     @PreRemove
     private void preRemove() {
         contacts.forEach(contact -> contact.setCompany(null));
+        user.removeCompany(this);
     }
 
     public Company setUser(User newUser) {

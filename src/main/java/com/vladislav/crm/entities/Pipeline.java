@@ -73,4 +73,9 @@ public class Pipeline extends AbstractEntity {
     public List<Status> getStatuses() {
         return new ArrayList<>(statuses);
     }
+
+    @PreRemove
+    private void preRemove() {
+        user.removePipeline(this);
+    }
 }

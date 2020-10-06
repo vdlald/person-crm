@@ -97,4 +97,11 @@ public class Contact extends AbstractEntityWithTime {
     public List<Lead> getLeads() {
         return new ArrayList<>(leads);
     }
+
+    @PreRemove
+    private void preRemove() {
+        user.removeContact(this);
+        company.removeContact(this);
+        leads.forEach(lead -> lead.removeContact(this));
+    }
 }
