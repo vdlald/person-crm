@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class CreateContactRequest {
+public class CreateCompanyRequest {
 
     @NotBlank
     @Size(min = 1, max = 32)

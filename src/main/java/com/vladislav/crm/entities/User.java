@@ -60,6 +60,10 @@ public class User extends AbstractEntityWithTime implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Lead> leads = new ArrayList<>();
 
+    @Setter(AccessLevel.PRIVATE)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Company> companies = new ArrayList<>();
+
     public User setInfo(UserInfo newInfo) {
         if (Objects.equals(info, newInfo)) {
             return this;
@@ -132,6 +136,24 @@ public class User extends AbstractEntityWithTime implements UserDetails {
         return this;
     }
 
+    public User addCompany(Company company) {
+        if (companies.contains(company)) {
+            return this;
+        }
+        companies.add(company);
+        company.setUser(this);
+        return this;
+    }
+
+    public User removeCompany(Company company) {
+        if (!companies.contains(company)) {
+            return this;
+        }
+        companies.remove(company);
+        company.setUser(null);
+        return this;
+    }
+
     public List<Contact> getContacts() {
         return new ArrayList<>(contacts);
     }
@@ -142,6 +164,10 @@ public class User extends AbstractEntityWithTime implements UserDetails {
 
     public List<Pipeline> getPipelines() {
         return new ArrayList<>(pipelines);
+    }
+
+    public List<Company> getCompanies() {
+        return new ArrayList<>(companies);
     }
 
     @Override

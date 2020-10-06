@@ -19,7 +19,9 @@ public class ReadContactResponseAssemblerImpl implements ReadContactResponseAsse
         final ReadContactResponse response = new ReadContactResponse()
                 .setId(entity.getId())
                 .setName(entity.getName())
-                .setCompany(new CompanyResponse().setName(entity.getCompany().getName()))
+                .setCompany(new CompanyResponse()
+                        .setName(entity.getCompany().getName())
+                        .setId(entity.getId()))
                 .setUserId(entity.getUser().getId());
 
         final Link selfRel = linkTo(methodOn(UserContactsControllerImpl.class)

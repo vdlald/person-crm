@@ -1,13 +1,12 @@
 package com.vladislav.crm.web.handlers.contacts.impl;
 
+import com.vladislav.crm.entities.Contact;
+import com.vladislav.crm.services.operations.ReadOperation;
+import com.vladislav.crm.services.operations.UpdateOperation;
 import com.vladislav.crm.web.assemblers.ReadContactResponseAssembler;
 import com.vladislav.crm.web.handlers.contacts.UpdateContactRequestHandler;
 import com.vladislav.crm.web.requests.UpdateContactRequest;
 import com.vladislav.crm.web.responses.ReadContactResponse;
-import com.vladislav.crm.entities.Company;
-import com.vladislav.crm.entities.Contact;
-import com.vladislav.crm.services.operations.ReadOperation;
-import com.vladislav.crm.services.operations.UpdateOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
@@ -20,7 +19,6 @@ public class UpdateContactRequestHandlerImpl implements UpdateContactRequestHand
 
     private final ReadOperation<Contact> readContactOperation;
     private final ReadContactResponseAssembler readContactResponseAssembler;
-    private final ReadOperation<Company> readCompanyOperation;
     private final UpdateOperation<Contact> updateContactOperation;
 
     @Override
@@ -31,30 +29,6 @@ public class UpdateContactRequestHandlerImpl implements UpdateContactRequestHand
         final Contact contact = readContactOperation.execute(contactId)
                 .setName(request.getName());
 
-        final UpdateContactRequest.CompanyRequest companyRequest = request.getCompany();
-        if (companyRequest == null) {
-            contact.setCompany(null);
-        } else {
-            updateCompany(contact, companyRequest);
-        }
-
         return readContactResponseAssembler.toModel(updateContactOperation.execute(contact));
-    }
-
-    private void updateCompany(Contact contact, UpdateContactRequest.CompanyRequest companyRequest) {
-        final Long companyId = companyRequest.getId();
-        final String companyName = companyRequest.getName();
-
-        if (companyId != null) {
-            if (contact.getCompany() == null || !contact.getCompany().getId().equals(companyId)) {
-                contact.setCompany(readCompanyOperation.execute(companyId));
-            }
-        } else if (companyName != null) {
-            if (contact.getCompany() == null) {
-                contact.setCompany(new Company().setName(companyName));
-            } else {
-                contact.getCompany().setName(companyName);
-            }
-        }
     }
 }
