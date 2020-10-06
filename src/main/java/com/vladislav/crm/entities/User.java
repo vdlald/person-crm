@@ -46,6 +46,7 @@ public class User extends AbstractEntityWithTime implements UserDetails {
 
     @Setter(AccessLevel.PRIVATE)
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
+    @JsonIgnoreProperties("user")
     private List<Contact> contacts = new ArrayList<>();
 
     @Setter(AccessLevel.PRIVATE)
@@ -58,10 +59,12 @@ public class User extends AbstractEntityWithTime implements UserDetails {
 
     @Setter(AccessLevel.PRIVATE)
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnoreProperties("user")
     private List<Lead> leads = new ArrayList<>();
 
     @Setter(AccessLevel.PRIVATE)
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnoreProperties("user")
     private List<Company> companies = new ArrayList<>();
 
     public User setInfo(UserInfo newInfo) {

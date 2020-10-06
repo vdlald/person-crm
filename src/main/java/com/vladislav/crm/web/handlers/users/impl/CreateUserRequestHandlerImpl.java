@@ -1,10 +1,11 @@
 package com.vladislav.crm.web.handlers.users.impl;
 
-import com.vladislav.crm.web.assemblers.UserAssembler;
+import com.vladislav.crm.web.assemblers.GetCurrentUserResponseAssembler;
 import com.vladislav.crm.web.handlers.users.CreateUserRequestHandler;
 import com.vladislav.crm.web.requests.CreateUserRequest;
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.operations.CreateOperation;
+import com.vladislav.crm.web.responses.GetCurrentUserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
@@ -14,11 +15,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CreateUserRequestHandlerImpl implements CreateUserRequestHandler {
 
-    private final UserAssembler userAssembler;
+    private final GetCurrentUserResponseAssembler userAssembler;
     private final CreateOperation<User> createUserOperation;
 
     @Override
-    public EntityModel<User> handle(CreateUserRequest request) {
+    public EntityModel<GetCurrentUserResponse> handle(CreateUserRequest request) {
         final User newUser = new User()
                 .setUsername(request.getUsername())
                 .setPassword(request.getPassword());

@@ -4,7 +4,7 @@ import com.vladislav.crm.web.controllers.UserController;
 import com.vladislav.crm.web.handlers.users.CreateUserRequestHandler;
 import com.vladislav.crm.web.handlers.users.CurrentUserRequestHandler;
 import com.vladislav.crm.web.requests.CreateUserRequest;
-import com.vladislav.crm.entities.User;
+import com.vladislav.crm.web.responses.GetCurrentUserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
@@ -23,14 +23,14 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @GetMapping("/current")
-    public EntityModel<User> currentUser() {
+    public EntityModel<GetCurrentUserResponse> currentUser() {
         return currentUserRequestHandler.handle();
     }
 
     @Override
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    public EntityModel<User> createUser(@Valid @RequestBody CreateUserRequest request) {
+    public EntityModel<GetCurrentUserResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
         return createUserRequestHandler.handle(request);
     }
 }
