@@ -4,10 +4,13 @@ import com.vladislav.crm.web.controllers.UserCompaniesController;
 import com.vladislav.crm.web.handlers.companies.CreateCompanyRequestHandler;
 import com.vladislav.crm.web.handlers.companies.DeleteCompanyRequestHandler;
 import com.vladislav.crm.web.handlers.companies.ReadCompanyRequestHandler;
+import com.vladislav.crm.web.handlers.companies.UpdateCompanyRequestHandler;
 import com.vladislav.crm.web.requests.CreateCompanyRequest;
+import com.vladislav.crm.web.requests.UpdateCompanyRequest;
 import com.vladislav.crm.web.responses.CompanyResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,7 @@ public class UserCompaniesControllerImpl implements UserCompaniesController {
 
     private final ReadCompanyRequestHandler readCompanyRequestHandler;
     private final CreateCompanyRequestHandler createCompanyRequestHandler;
+    private final UpdateCompanyRequestHandler updateCompanyRequestHandler;
     private final DeleteCompanyRequestHandler deleteCompanyRequestHandler;
 
     @Override
@@ -41,6 +45,16 @@ public class UserCompaniesControllerImpl implements UserCompaniesController {
             @Valid @RequestBody CreateCompanyRequest request
     ) {
         return createCompanyRequestHandler.handle(request);
+    }
+
+    @Override
+    @PostMapping("/{id}")
+    @PreAuthorize("@userOwnsCompanyAuthorization.hasAuthorization(#companyId)")
+    public EntityModel<CompanyResponse> updateCompany(
+            @PathVariable("id") Long companyId,
+            @Valid @RequestBody UpdateCompanyRequest request
+    ) {
+        return updateCompanyRequestHandler.handle(Pair.of(companyId, request));
     }
 
     @Override
