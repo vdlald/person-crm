@@ -1,7 +1,9 @@
 package com.vladislav.crm.configurations;
 
-import com.vladislav.crm.entities.User;
-import io.grpc.*;
+import io.grpc.BindableService;
+import io.grpc.Server;
+import io.grpc.ServerBuilder;
+import io.grpc.ServerInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -26,11 +28,6 @@ public class GrpcConfig {
             services.forEach(serverBuilder::addService);
         }
         return serverBuilder.build();
-    }
-
-    @Bean
-    public Context.Key<User> userKey() {
-        return Context.key("user");
     }
 }
 
