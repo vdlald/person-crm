@@ -8,6 +8,6 @@
 >
 
     <include file="db/changelog/v-1.0/2020-09-22--01-initial-schema-import.sql"/>
-    <include file="db/changelog/v-1.0/2020-09-22--02-add-test-data.xml"/>
+    <include file="db/changelog/v-1.0/2020-10-07--02-add-test-data.xml"/>
 
 </databaseChangeLog>

@@ -198,14 +198,14 @@
         </insert>
     </changeSet>
 
-    <changeSet id="22" author="vdlald">
+    <changeSet id="23" author="vdlald">
         <insert tableName="leads_contacts">
             <column name="contact_id" valueNumeric="2"/>
             <column name="lead_id" valueNumeric="6"/>
         </insert>
     </changeSet>
 
-    <changeSet id="22" author="vdlald">
+    <changeSet id="24" author="vdlald">
         <insert tableName="leads_contacts">
             <column name="contact_id" valueNumeric="3"/>
             <column name="lead_id" valueNumeric="7"/>
