@@ -12,7 +12,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true, exclude = "user")
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @ToString(callSuper = true, exclude = "user")
 @Entity
 @Table(name = "usersinfo")
@@ -52,5 +52,12 @@ public class UserInfo extends AbstractEntity {
             user.setInfo(this);
         }
         return this;
+    }
+
+    @PreRemove
+    private void preRemove() {
+        if (user != null) {
+            throw new EntityExistsException("Can' t remove \"usersinfo\" entity as long as \"user\" entity exists");
+        }
     }
 }

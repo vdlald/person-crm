@@ -4,10 +4,10 @@ import com.vladislav.crm.entities.Company;
 import com.vladislav.crm.services.operations.DeleteOperation;
 import com.vladislav.crm.web.handlers.AbstractDeleteEntityRequestHandler;
 import com.vladislav.crm.web.handlers.companies.DeleteCompanyRequestHandler;
-import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@Server
+@Service
 public class DeleteCompanyRequestHandlerImpl
         extends AbstractDeleteEntityRequestHandler<Company>
         implements DeleteCompanyRequestHandler {

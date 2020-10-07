@@ -20,14 +20,15 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@ToString(callSuper = true, exclude = {"password", "contacts", "pipelines", "leads"})
-@EqualsAndHashCode(callSuper = true, exclude = {"info", "authorities", "contacts", "pipelines", "leads"})
+@ToString(callSuper = true, onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "users")
 @AttributeOverride(name = "id", column = @Column(name = "user_id", updatable = false, nullable = false))
 @EntityListeners(AuditingEntityListener.class)
 public class User extends AbstractEntityWithTime implements UserDetails {
 
+    @ToString.Include
     @Pattern(regexp = "^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$")
     @Column(name = "username", updatable = false, nullable = false, unique = true, length = 32)
     private String username;
@@ -40,12 +41,14 @@ public class User extends AbstractEntityWithTime implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
+    @ToString.Include
     private List<Authority> authorities = new ArrayList<>() {{
         add(Authority.ROLE_USER);
     }};
 
     @Setter(AccessLevel.PRIVATE)
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
+    @JsonIgnoreProperties("user")
     private List<Contact> contacts = new ArrayList<>();
 
     @Setter(AccessLevel.PRIVATE)
@@ -58,10 +61,12 @@ public class User extends AbstractEntityWithTime implements UserDetails {
 
     @Setter(AccessLevel.PRIVATE)
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnoreProperties("user")
     private List<Lead> leads = new ArrayList<>();
 
     @Setter(AccessLevel.PRIVATE)
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnoreProperties("user")
     private List<Company> companies = new ArrayList<>();
 
     public User setInfo(UserInfo newInfo) {

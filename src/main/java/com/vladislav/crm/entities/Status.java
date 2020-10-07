@@ -14,8 +14,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@ToString(callSuper = true, exclude = {"leads"})
-@EqualsAndHashCode(callSuper = true, exclude = {"leads"})
+@ToString(callSuper = true, onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "statuses")
 @AttributeOverride(name = "id", column = @Column(name = "status_id", updatable = false, nullable = false))
@@ -24,10 +24,12 @@ public class Status extends AbstractEntity {
     @NotBlank
     @Size(min = 1, max = 32)
     @Column(name = "name", length = 32)
+    @ToString.Include
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pipeline_id")
+    @ToString.Include
     private Pipeline pipeline;
 
     @Setter(AccessLevel.PRIVATE)
@@ -72,5 +74,11 @@ public class Status extends AbstractEntity {
 
     public List<Lead> getLeads() {
         return new ArrayList<>(leads);
+    }
+
+    @PreRemove
+    private void preRemove() {
+        pipeline.removeStatus(this);
+        leads.forEach(lead -> lead.setStatus(null));
     }
 }
