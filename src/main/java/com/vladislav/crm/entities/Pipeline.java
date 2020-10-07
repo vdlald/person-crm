@@ -14,8 +14,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true, exclude = {"user", "statuses"})
-@ToString(callSuper = true, exclude = {"user", "statuses"})
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+@ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "pipelines")
 @AttributeOverride(name = "id", column = @Column(name = "pipeline_id", updatable = false, nullable = false))
@@ -24,10 +24,12 @@ public class Pipeline extends AbstractEntity {
     @NotBlank
     @Size(min = 1, max = 32)
     @Column(name = "name", length = 32)
+    @ToString.Include
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @ToString.Include
     private User user;
 
     @Setter(AccessLevel.PRIVATE)

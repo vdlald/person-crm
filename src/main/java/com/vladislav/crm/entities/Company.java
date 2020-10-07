@@ -14,8 +14,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@ToString(callSuper = true, exclude = "contacts")
-@EqualsAndHashCode(callSuper = true, exclude = "contacts")
+@ToString(callSuper = true, onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "companies")
 @AttributeOverride(name = "id", column = @Column(name = "company_id", updatable = false, nullable = false))
@@ -24,10 +24,12 @@ public class Company extends AbstractEntity {
     @NotBlank
     @Size(min = 1, max = 32)
     @Column(name = "name", length = 32, nullable = false)
+    @ToString.Include
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @ToString.Include
     private User user;
 
     @Setter(AccessLevel.PRIVATE)
