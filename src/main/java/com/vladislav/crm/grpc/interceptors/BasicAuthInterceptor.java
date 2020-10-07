@@ -23,14 +23,26 @@ public class BasicAuthInterceptor implements ServerInterceptor {
     public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(
             ServerCall<ReqT, RespT> serverCall, Metadata metadata, ServerCallHandler<ReqT, RespT> serverCallHandler
     ) {
+        final Context context = Context.current();
+
         final String basicAuth = metadata.get(Metadata.Key.of("Authorization", Metadata.ASCII_STRING_MARSHALLER));
 
         if (basicAuth == null) {
-            serverCall.close(Status.UNAUTHENTICATED.withDescription("No credentials was provided"), new Metadata());
+            return Contexts.interceptCall(context, serverCall, metadata, serverCallHandler);
+        }
+
+        try {
+            authUser(basicAuth);
+        } catch (BadCredentialsException e) {
+            serverCall.close(Status.UNAUTHENTICATED.withDescription(e.getLocalizedMessage()), new Metadata());
             return new ServerCall.Listener<>() {
             };
         }
 
+        return Contexts.interceptCall(context, serverCall, metadata, serverCallHandler);
+    }
+
+    private void authUser(String basicAuth) {
         final String base64Credentials = basicAuth.substring("Basic".length()).trim();
         final String credentials = new String(Base64Utils.decodeFromString(base64Credentials), StandardCharsets.UTF_8);
         final String[] values = credentials.split(":", 2);
@@ -40,18 +52,7 @@ public class BasicAuthInterceptor implements ServerInterceptor {
 
         final UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
 
-        final Authentication auth;
-        try {
-            auth = authenticationManager.authenticate(token);
-        } catch (BadCredentialsException e) {
-            serverCall.close(Status.UNAUTHENTICATED.withDescription(e.getLocalizedMessage()), new Metadata());
-            return new ServerCall.Listener<>() {
-            };
-        }
+        final Authentication auth = authenticationManager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(auth);
-
-        final Context context = Context.current();
-
-        return Contexts.interceptCall(context, serverCall, metadata, serverCallHandler);
     }
 }

@@ -16,7 +16,8 @@ public class GetCurrentUserStubOperationImpl implements GetCurrentUserStubOperat
 
     @Override
     public User execute() {
-        return Optional.ofNullable((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                .orElseThrow(() -> new AccessDeniedException("No credentials was provided"));
+        return (User) Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
+                .orElseThrow(() -> new AccessDeniedException("No credentials was provided"))
+                .getPrincipal();
     }
 }

@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import com.proto.users.*;
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.entities.UserInfo;
+import com.vladislav.crm.services.operations.CreateOperation;
 import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.Optional;
 public class UserService extends UserServiceGrpc.UserServiceImplBase {
 
     private final GetCurrentUserOperation getCurrentUserOperation;
+    private final CreateOperation<User> userCreateOperation;
 
     @Override
     public void currentUser(CurrentUserRequest request, StreamObserver<CurrentUserResponse> responseObserver) {
@@ -37,6 +39,19 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
                         .build())
                 .build();
 
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void createUser(CreateUserRequest request, StreamObserver<UserResponse> responseObserver) {
+        final User newUser = new User().setUsername(request.getUsername()).setPassword(request.getPassword());
+        final User user = userCreateOperation.execute(newUser);
+
+        final UserResponse response = UserResponse.newBuilder()
+                .setId(user.getId())
+                .setUsername(user.getUsername())
+                .build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
