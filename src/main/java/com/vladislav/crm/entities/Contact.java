@@ -13,8 +13,8 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true, exclude = {"user", "leads"})
-@ToString(callSuper = true, exclude = {"user", "leads"})
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+@ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "contacts")
 @AttributeOverride(name = "id", column = @Column(name = "contact_id", updatable = false, nullable = false))
@@ -24,10 +24,12 @@ public class Contact extends AbstractEntityWithTime {
     @NotBlank
     @Size(min = 1, max = 32)
     @Column(name = "name", length = 32)
+    @ToString.Include
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @ToString.Include
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

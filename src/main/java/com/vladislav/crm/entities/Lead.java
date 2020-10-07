@@ -15,8 +15,8 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@ToString(callSuper = true, exclude = {"contacts", "user"})
-@EqualsAndHashCode(callSuper = true, exclude = {"contacts", "user"})
+@ToString(callSuper = true, onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "leads")
 @AttributeOverride(name = "id", column = @Column(name = "lead_id", updatable = false, nullable = false))
@@ -26,18 +26,22 @@ public class Lead extends AbstractEntityWithTime {
     @NotBlank
     @Size(min = 1, max = 32)
     @Column(name = "name", length = 32)
+    @ToString.Include
     private String name;
 
     @DecimalMin("0.0")
     @Column(name = "sale")
+    @ToString.Include
     private BigDecimal sale;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @ToString.Include
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "status_id")
+    @ToString.Include
     private Status status;
 
     @Setter(AccessLevel.PRIVATE)
