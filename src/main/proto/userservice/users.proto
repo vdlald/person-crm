@@ -29,8 +29,12 @@ message CreateUserRequest {
   string password = 2;
 }
 
+message CreateUserResponse {
+  UserResponse user = 1;
+}
+
 service UserService {
   rpc CurrentUser(CurrentUserRequest) returns (CurrentUserResponse) {};
 
-  rpc CreateUser(CreateUserRequest) returns (UserResponse) {};
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {};
 }
