@@ -34,17 +34,17 @@ public class User extends AbstractEntityWithTime implements UserDetails {
     private String username;
 
     @NotBlank
-    @Size(min = 8, max = 64)
-    @Column(name = "password", nullable = false, length = 64)
+    @Size(min = 60, max = 60)
+    @Column(name = "password", nullable = false, length = 60)
     @JsonIgnore
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "authority")
     @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_authorities", joinColumns = @JoinColumn(name = "user_id"))
     @ToString.Include
-    private List<Authority> authorities = new ArrayList<>() {{
-        add(Authority.ROLE_USER);
-    }};
+    private List<Authority> authorities = new ArrayList<>();
 
     @Setter(AccessLevel.PRIVATE)
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
@@ -197,7 +197,7 @@ public class User extends AbstractEntityWithTime implements UserDetails {
 
     @AllArgsConstructor
     public enum Authority implements GrantedAuthority {
-        ROLE_USER("role_user");
+        ALL("all");
 
         @Getter
         private final String authority;
