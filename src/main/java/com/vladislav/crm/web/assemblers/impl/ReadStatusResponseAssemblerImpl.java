@@ -15,7 +15,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class ReadStatusResponseAssemblerImpl implements ReadStatusResponseAssembler {
     @Override
     public EntityModel<ReadStatusResponse> toModel(Status entity) {
-        final ReadStatusResponse response = new ReadStatusResponse().setName(entity.getName());
+        final ReadStatusResponse response = new ReadStatusResponse()
+                .setId(entity.getId())
+                .setName(entity.getName())
+                .setPipelineId(entity.getPipeline().getId());  // refactor candidate: возможно здесь лучше сделать отдельный запрос на получение id ?
 
         final Link selfRel = linkTo(methodOn(UserStatusControllerImpl.class)
                 .readStatus(entity.getId()))

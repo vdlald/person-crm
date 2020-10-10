@@ -27,6 +27,7 @@ public class UserPipelinesControllerImpl implements UserPipelinesController {
     private final CreatePipelineRequestHandler createPipelineRequestHandler;
     private final UpdatePipelineRequestHandler updatePipelineRequestHandler;
     private final DeletePipelineRequestHandler deletePipelineRequestHandler;
+    private final ReadPipelineStatusesRequestHandler readPipelineStatusesRequestHandler;
 
     @Override
     @GetMapping("/")
@@ -37,14 +38,18 @@ public class UserPipelinesControllerImpl implements UserPipelinesController {
     @Override
     @GetMapping("/{id}")
     @PreAuthorize("@userOwnsPipelineAuthorization.hasAuthorization(#pipelineId)")
-    public EntityModel<ReadPipelineResponse> readPipeline(@PathVariable("id") Long pipelineId) {
+    public EntityModel<ReadPipelineResponse> readPipeline(
+            @PathVariable("id") Long pipelineId
+    ) {
         return readPipelineRequestHandler.handle(pipelineId);
     }
 
     @Override
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    public EntityModel<ReadPipelineResponse> createPipeline(@Valid @RequestBody CreatePipelineRequest request) {
+    public EntityModel<ReadPipelineResponse> createPipeline(
+            @Valid @RequestBody CreatePipelineRequest request
+    ) {
         return createPipelineRequestHandler.handle(request);
     }
 
@@ -66,5 +71,14 @@ public class UserPipelinesControllerImpl implements UserPipelinesController {
             @PathVariable("id") Long pipelineId
     ) {
         return deletePipelineRequestHandler.handle(pipelineId);
+    }
+
+    @Override
+    @GetMapping("/{id}/statuses")
+    @PreAuthorize("@userOwnsPipelineAuthorization.hasAuthorization(#pipelineId)")
+    public RepresentationModel<?> readPipelineStatuses(
+            @PathVariable("id") Long pipelineId
+    ) {
+        return readPipelineStatusesRequestHandler.handle(pipelineId);
     }
 }

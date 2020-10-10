@@ -28,7 +28,6 @@ public class UserStatusControllerImpl implements UserStatusController {
     private final DeleteStatusRequestHandler deleteStatusRequestHandler;
     private final ReadStatusLeadsRequestHandler readStatusLeadsRequestHandler;
 
-    // todo: добавить запрос на чтение всех статусов из pipeline
     @Override
     @GetMapping("/{id}")
     @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#statusId)")
