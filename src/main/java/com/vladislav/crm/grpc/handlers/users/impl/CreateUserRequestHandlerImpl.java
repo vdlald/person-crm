@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("grpcCreateUserRequestHandler")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CreateUserRequestHandlerImpl implements CreateUserRequestHandler {
 

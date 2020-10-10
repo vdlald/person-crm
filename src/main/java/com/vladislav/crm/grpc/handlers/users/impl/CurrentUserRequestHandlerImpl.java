@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
-@Component
+@Component("grpcCurrentUserRequestHandler")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CurrentUserRequestHandlerImpl implements CurrentUserRequestHandler {
 

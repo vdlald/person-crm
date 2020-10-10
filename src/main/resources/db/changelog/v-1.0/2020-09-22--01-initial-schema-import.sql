@@ -62,8 +62,8 @@ create table statuses
 --changeset vdlald:7
 create table user_authorities
 (
-    user_user_id bigint not null,
-    authorities  varchar(255)
+    user_id   bigint not null,
+    authority varchar(255)
 );
 
 --changeset vdlald:8
@@ -120,7 +120,7 @@ alter table statuses
     add constraint FKkw8ywp80vnvotmhg0wgv8jv46 foreign key (pipeline_id) references pipelines;
 
 alter table user_authorities
-    add constraint FKswqqnqcyqob25xy8l2iw1mi9 foreign key (user_user_id) references users;
+    add constraint FKswqqnqcyqob25xy8l2iw1mi9 foreign key (user_id) references users;
 
 alter table usersinfo
     add constraint FKhjn8m05kaw7ln6i1t4njjfr0s foreign key (user_id) references users;

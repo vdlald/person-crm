@@ -40,11 +40,11 @@ public class User extends AbstractEntityWithTime implements UserDetails {
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "authority")
     @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_authorities", joinColumns = @JoinColumn(name = "user_id"))
     @ToString.Include
-    private List<Authority> authorities = new ArrayList<>() {{
-        add(Authority.ROLE_USER);
-    }};
+    private List<Authority> authorities = new ArrayList<>();
 
     @Setter(AccessLevel.PRIVATE)
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
@@ -197,7 +197,7 @@ public class User extends AbstractEntityWithTime implements UserDetails {
 
     @AllArgsConstructor
     public enum Authority implements GrantedAuthority {
-        ROLE_USER("role_user");
+        ALL("all");
 
         @Getter
         private final String authority;
