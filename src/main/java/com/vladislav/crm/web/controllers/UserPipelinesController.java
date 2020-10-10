@@ -17,4 +17,6 @@ public interface UserPipelinesController {
     EntityModel<ReadPipelineResponse> updatePipeline(Long pipelineId, UpdatePipelineRequest request);
 
     ResponseEntity<Void> deletePipeline(Long pipelineId);
+
+    RepresentationModel<?> readPipelineStatuses(Long pipelineId);
 }
