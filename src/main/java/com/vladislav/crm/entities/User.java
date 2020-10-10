@@ -34,8 +34,8 @@ public class User extends AbstractEntityWithTime implements UserDetails {
     private String username;
 
     @NotBlank
-    @Size(min = 8, max = 64)
-    @Column(name = "password", nullable = false, length = 64)
+    @Size(min = 60, max = 60)
+    @Column(name = "password", nullable = false, length = 60)
     @JsonIgnore
     private String password;
 
