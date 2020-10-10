@@ -1,10 +1,7 @@
 package com.vladislav.crm.web.controllers.impl;
 
 import com.vladislav.crm.web.controllers.UserLeadController;
-import com.vladislav.crm.web.handlers.leads.CreateLeadRequestHandler;
-import com.vladislav.crm.web.handlers.leads.DeleteLeadRequestHandler;
-import com.vladislav.crm.web.handlers.leads.ReadLeadRequestHandler;
-import com.vladislav.crm.web.handlers.leads.UpdateLeadRequestHandler;
+import com.vladislav.crm.web.handlers.leads.*;
 import com.vladislav.crm.web.requests.CreateLeadRequest;
 import com.vladislav.crm.web.requests.UpdateLeadRequest;
 import com.vladislav.crm.web.responses.ReadLeadResponse;
@@ -28,6 +25,7 @@ public class UserLeadControllerImpl implements UserLeadController {
     private final CreateLeadRequestHandler createLeadRequestHandler;
     private final UpdateLeadRequestHandler updateLeadRequestHandler;
     private final DeleteLeadRequestHandler deleteLeadRequestHandler;
+    private final MoveLeadToAnotherStatusRequestHandler moveLeadToAnotherStatusRequestHandler;
 
     @Override
     @GetMapping("/{id}")
@@ -63,5 +61,17 @@ public class UserLeadControllerImpl implements UserLeadController {
             @PathVariable("id") Long leadId
     ) {
         return deleteLeadRequestHandler.handle(leadId);
+    }
+
+    @Override
+    @GetMapping("/{id}/moveTo/{statusId}")
+    @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#leadId) || " +
+            "@userOwnsStatusAuthorization.hasAuthorization(#statusId)")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> moveLeadToAnotherStatus(
+            @PathVariable("id") Long leadId,
+            @PathVariable("statusId") Long statusId
+    ) {
+        return moveLeadToAnotherStatusRequestHandler.handle(Pair.of(leadId, statusId));
     }
 }
