@@ -1,10 +1,7 @@
 package com.vladislav.crm.web.controllers.impl;
 
 import com.vladislav.crm.web.controllers.UserCompaniesController;
-import com.vladislav.crm.web.handlers.companies.CreateCompanyRequestHandler;
-import com.vladislav.crm.web.handlers.companies.DeleteCompanyRequestHandler;
-import com.vladislav.crm.web.handlers.companies.ReadCompanyRequestHandler;
-import com.vladislav.crm.web.handlers.companies.UpdateCompanyRequestHandler;
+import com.vladislav.crm.web.handlers.companies.*;
 import com.vladislav.crm.web.requests.CreateCompanyRequest;
 import com.vladislav.crm.web.requests.UpdateCompanyRequest;
 import com.vladislav.crm.web.responses.CompanyResponse;
@@ -12,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,10 +22,17 @@ import javax.validation.Valid;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserCompaniesControllerImpl implements UserCompaniesController {
 
+    private final ReadUserCompaniesRequestHandler readUserCompaniesRequestHandler;
     private final ReadCompanyRequestHandler readCompanyRequestHandler;
     private final CreateCompanyRequestHandler createCompanyRequestHandler;
     private final UpdateCompanyRequestHandler updateCompanyRequestHandler;
     private final DeleteCompanyRequestHandler deleteCompanyRequestHandler;
+
+    @Override
+    @GetMapping("/")
+    public RepresentationModel<?> readUserCompanies() {
+        return readUserCompaniesRequestHandler.handle();
+    }
 
     @Override
     @GetMapping("/{id}")
