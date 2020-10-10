@@ -60,6 +60,7 @@ public class UserStatusControllerImpl implements UserStatusController {
         return deleteStatusRequestHandler.handle(statusId);
     }
 
+    @Override
     @GetMapping("/{id}/leads")
     @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#statusId)")
     public RepresentationModel<?> readStatusLeads(@PathVariable("id") Long statusId) {
