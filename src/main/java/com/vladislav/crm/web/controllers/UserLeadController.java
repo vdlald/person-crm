@@ -14,4 +14,6 @@ public interface UserLeadController {
     EntityModel<ReadLeadResponse> updateContact(Long leadId, UpdateLeadRequest request);
 
     ResponseEntity<Void> deleteLead(Long leadId);
+
+    ResponseEntity<Void> moveLeadToAnotherStatus(Long leadId, Long statusId);
 }
