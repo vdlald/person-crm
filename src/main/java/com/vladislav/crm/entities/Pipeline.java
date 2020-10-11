@@ -43,12 +43,11 @@ public class Pipeline extends AbstractEntity {
             return this;
         }
 
-        final User oldUser = this.user;
-        user = newUser;
-
-        if (oldUser != null) {
-            oldUser.removePipeline(this);
+        if (user != null) {
+            user.removePipeline(this);
         }
+
+        user = newUser;
 
         if (user != null) {
             user.addPipeline(this);

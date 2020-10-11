@@ -12,8 +12,9 @@ public class TestUserAndPipelineRelationshipsConsistency {
 
     @BeforeEach
     public void setUp() {
-        user = new User();
         pipeline = new Pipeline();
+        user = new User();
+        user.setId(1L);
     }
 
     @Test
@@ -21,8 +22,15 @@ public class TestUserAndPipelineRelationshipsConsistency {
         pipeline.setUser(user);
         checkAdd();
 
+        final User user2 = new User();
+        user2.setId(2L);
+        pipeline.setUser(user2);
+        assertTrue(user.getPipelines().isEmpty());
+        assertEquals(pipeline, user2.getPipelines().get(0));
+
         pipeline.setUser(null);
-        checkRemove();
+        assertTrue(user2.getPipelines().isEmpty());
+        assertNull(pipeline.getUser());
     }
 
     @Test

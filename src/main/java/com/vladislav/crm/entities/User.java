@@ -74,12 +74,13 @@ public class User extends AbstractEntityWithTime implements UserDetails {
             return this;
         }
 
-        final UserInfo oldInfo = this.info;
-        info = newInfo;
-
-        if (oldInfo != null) {
+        if (info != null) {
+            final UserInfo oldInfo = info;
+            info = null;
             oldInfo.setUser(null);
         }
+
+        info = newInfo;
 
         if (info != null) {
             info.setUser(this);

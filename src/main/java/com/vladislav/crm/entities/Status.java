@@ -43,12 +43,11 @@ public class Status extends AbstractEntity {
             return this;
         }
 
-        final Pipeline oldPipeline = this.pipeline;
-        pipeline = newPipeline;
-
-        if (oldPipeline != null) {
-            oldPipeline.removeStatus(this);
+        if (pipeline != null) {
+            pipeline.removeStatus(this);
         }
+
+        pipeline = newPipeline;
 
         if (pipeline != null) {
             pipeline.addStatus(this);
