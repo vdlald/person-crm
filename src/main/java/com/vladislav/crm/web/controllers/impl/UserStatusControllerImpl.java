@@ -38,6 +38,7 @@ public class UserStatusControllerImpl implements UserStatusController {
     @Override
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("@userOwnsPipelineAuthorization.hasAuthorization(#request.pipelineId)")
     public EntityModel<ReadStatusResponse> createStatus(@Valid @RequestBody CreateStatusRequest request) {
         return createStatusRequestHandler.handle(request);
     }
@@ -60,6 +61,7 @@ public class UserStatusControllerImpl implements UserStatusController {
         return deleteStatusRequestHandler.handle(statusId);
     }
 
+    @Override
     @GetMapping("/{id}/leads")
     @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#statusId)")
     public RepresentationModel<?> readStatusLeads(@PathVariable("id") Long statusId) {

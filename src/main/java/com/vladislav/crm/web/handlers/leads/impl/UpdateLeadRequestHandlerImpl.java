@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class UpdateLeadRequestHandlerImpl implements UpdateLeadRequestHandler {
 
     private final ReadOperation<Lead> leadReadOperation;
+    private final ReadOperation<Status> statusReadOperation;
     private final UpdateOperation<Lead> leadUpdateOperation;
     private final ReadLeadResponseAssembler readLeadResponseAssembler;
 
@@ -27,13 +28,14 @@ public class UpdateLeadRequestHandlerImpl implements UpdateLeadRequestHandler {
         final Long id = requestPair.getFirst();
         final UpdateLeadRequest request = requestPair.getSecond();
 
-        final Status newStatus = new Status();
-        newStatus.setId(request.getStatusId());
-
         final Lead lead = leadReadOperation.execute(id);
         lead.setName(request.getName())
-                .setSale(request.getSale())
-                .setStatus(newStatus);
+                .setSale(request.getSale());
+
+        final Long statusId = request.getStatusId();
+        if (statusId != null) {
+            lead.setStatus(statusReadOperation.execute(statusId));
+        }
 
         return readLeadResponseAssembler.toModel(leadUpdateOperation.execute(lead));
     }

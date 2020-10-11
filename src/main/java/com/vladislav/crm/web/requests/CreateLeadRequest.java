@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
@@ -23,6 +24,7 @@ public class CreateLeadRequest {
     @DecimalMin("0.0")
     private BigDecimal sale;
 
+    @NotNull
     private Long statusId;
 
 }
