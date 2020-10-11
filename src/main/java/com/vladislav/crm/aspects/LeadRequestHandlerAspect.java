@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UpdateLeadRequestHandlerAspect {
+public class LeadRequestHandlerAspect {
 
     private final UserOwnsStatusAuthorization userOwnsStatusAuthorization;
 
