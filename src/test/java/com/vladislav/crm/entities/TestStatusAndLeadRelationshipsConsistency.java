@@ -12,14 +12,15 @@ public class TestStatusAndLeadRelationshipsConsistency {
 
     @BeforeEach
     public void setUp() {
-        status = new Status();
+        status = new Status().setName("status1");
+        status.setId(1L);
         lead = new Lead();
     }
 
     @Test
-    public void setUser() {
+    public void setStatus() {
         lead.setStatus(status);
-        checkAdd();
+        checkAdd(status);
 
         lead.setStatus(null);
         checkRemove();
@@ -28,13 +29,24 @@ public class TestStatusAndLeadRelationshipsConsistency {
     @Test
     public void addAndRemoveLead() {
         status.addLead(lead);
-        checkAdd();
+        checkAdd(status);
 
         status.removeLead(lead);
         checkRemove();
     }
 
-    private void checkAdd() {
+    @Test
+    public void moveLead() {
+        final Status status2 = new Status().setName("status2");
+        status2.setId(2L);
+
+        lead.setStatus(status);
+        lead.setStatus(status2);
+
+        checkAdd(status2);
+    }
+
+    private void checkAdd(Status status) {
         assertEquals(status, lead.getStatus());
         assertEquals(lead, status.getLeads().get(0));
     }

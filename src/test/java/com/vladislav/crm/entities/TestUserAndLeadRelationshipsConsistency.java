@@ -12,8 +12,9 @@ public class TestUserAndLeadRelationshipsConsistency {
 
     @BeforeEach
     public void setUp() {
-        user = new User();
         lead = new Lead();
+        user = new User();
+        user.setId(1L);
     }
 
     @Test
@@ -21,8 +22,15 @@ public class TestUserAndLeadRelationshipsConsistency {
         lead.setUser(user);
         checkAdd();
 
+        final User user2 = new User();
+        user2.setId(2L);
+        lead.setUser(user2);
+        assertTrue(user.getLeads().isEmpty());
+        assertEquals(lead, user2.getLeads().get(0));
+
         lead.setUser(null);
-        checkRemove();
+        assertTrue(user2.getLeads().isEmpty());
+        assertNull(lead.getUser());
     }
 
     @Test
