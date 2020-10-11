@@ -29,11 +29,13 @@ public class DeleteContactOperationImpl extends AbstractDeleteOperation<Contact>
         contact.setUser(null);
 
         final Company company = contact.getCompany();
-        if (company != null)
-            if (company.getContacts().isEmpty())
+        if (company != null) {
+            if (company.getContacts().isEmpty()) {
                 companyDeleteOperation.execute(company);
-            else
+            } else {
                 contact.setCompany(null);
+            }
+        }
 
         contactRepository.delete(contact);
     }
