@@ -14,10 +14,10 @@ public class UserOwnsCompanyAuthorization {
     private final GetCurrentUserStubOperation getCurrentUserStubOperation;
     private final GetUserIdByCompanyIdOperation getUserIdByCompanyIdOperation;
 
-    public boolean hasAuthorization(Long contactId) {
+    public boolean hasAuthorization(Long companyId) {
         final User user = getCurrentUserStubOperation.execute();
-        final long contactUserId = getUserIdByCompanyIdOperation.execute(contactId);
+        final long companyUserId = getUserIdByCompanyIdOperation.execute(companyId);
 
-        return user.getId().equals(contactUserId);
+        return user.getId().equals(companyUserId);
     }
 }
