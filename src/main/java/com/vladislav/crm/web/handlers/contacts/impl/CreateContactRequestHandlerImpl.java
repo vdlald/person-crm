@@ -5,7 +5,7 @@ import com.vladislav.crm.entities.Contact;
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.operations.CreateOperation;
 import com.vladislav.crm.services.operations.ReadOperation;
-import com.vladislav.crm.services.operations.users.GetCurrentUserStubOperation;
+import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
 import com.vladislav.crm.web.assemblers.ReadContactResponseAssembler;
 import com.vladislav.crm.web.handlers.contacts.CreateContactRequestHandler;
 import com.vladislav.crm.web.requests.CreateContactRequest;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CreateContactRequestHandlerImpl implements CreateContactRequestHandler {
 
-    private final GetCurrentUserStubOperation getCurrentUserOperation;
+    private final GetCurrentUserOperation getCurrentUserOperation;
     private final ReadContactResponseAssembler readContactResponseAssembler;
     private final CreateOperation<Contact> createContactOperation;
     private final ReadOperation<Company> companyReadOperation;

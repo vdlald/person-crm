@@ -29,10 +29,12 @@
         <insert tableName="companies">
             <column name="company_id" valueNumeric="1"/>
             <column name="name" value="demo_company1"/>
+            <column name="user_id" valueNumeric="1"/>
         </insert>
         <insert tableName="companies">
             <column name="company_id" valueNumeric="2"/>
             <column name="name" value="demo_company2"/>
+            <column name="user_id" valueNumeric="1"/>
         </insert>
     </changeSet>
 

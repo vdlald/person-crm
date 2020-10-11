@@ -9,11 +9,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserOwnsCompanyAuthorization {
+public class UserOwnsCompanyAuthorization implements UserOwnsEntityAuthorization {
 
     private final GetCurrentUserStubOperation getCurrentUserStubOperation;
     private final GetUserIdByCompanyIdOperation getUserIdByCompanyIdOperation;
 
+    @Override
     public boolean hasAuthorization(Long companyId) {
         final User user = getCurrentUserStubOperation.execute();
         final long companyUserId = getUserIdByCompanyIdOperation.execute(companyId);

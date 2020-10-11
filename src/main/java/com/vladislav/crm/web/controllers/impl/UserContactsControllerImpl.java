@@ -46,6 +46,7 @@ public class UserContactsControllerImpl implements UserContactsController {
     @Override
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("@userOwnsCompanyAuthorization.hasAuthorization(#request.companyId)")
     public EntityModel<ReadContactResponse> createContact(
             @Valid @RequestBody CreateContactRequest request
     ) {
