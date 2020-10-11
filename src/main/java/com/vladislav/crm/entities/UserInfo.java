@@ -43,12 +43,13 @@ public class UserInfo extends AbstractEntity {
             return this;
         }
 
-        final User oldInfo = this.user;
-        user = newUser;
-
-        if (oldInfo != null) {
-            oldInfo.setInfo(null);
+        if (user != null) {
+            final User oldUser = user;
+            user = null;
+            oldUser.setInfo(null);
         }
+
+        user = newUser;
 
         if (user != null) {
             user.setInfo(this);

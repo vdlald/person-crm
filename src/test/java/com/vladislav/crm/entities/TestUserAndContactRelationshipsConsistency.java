@@ -13,6 +13,7 @@ public class TestUserAndContactRelationshipsConsistency {
     @BeforeEach
     public void setUp() {
         user = new User();
+        user.setId(1L);
         contact = new Contact();
     }
 
@@ -21,8 +22,15 @@ public class TestUserAndContactRelationshipsConsistency {
         contact.setUser(user);
         checkAdd();
 
+        final User user2 = new User();
+        user2.setId(2L);
+        contact.setUser(user2);
+        assertTrue(user.getContacts().isEmpty());
+        assertEquals(contact, user2.getContacts().get(0));
+
         contact.setUser(null);
-        checkRemove();
+        assertTrue(user2.getContacts().isEmpty());
+        assertNull(contact.getUser());
     }
 
     @Test

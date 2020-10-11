@@ -50,12 +50,11 @@ public class Contact extends AbstractEntityWithTime {
             return this;
         }
 
-        final User oldUser = this.user;
-        user = newUser;
-
-        if (oldUser != null) {
-            oldUser.removeContact(this);
+        if (user != null) {
+            user.removeContact(this);
         }
+
+        user = newUser;
 
         if (user != null) {
             user.addContact(this);
@@ -64,15 +63,15 @@ public class Contact extends AbstractEntityWithTime {
     }
 
     public Contact setCompany(Company newCompany) {
-        if (Objects.equals(company, newCompany))
+        if (Objects.equals(company, newCompany)) {
             return this;
-
-        final Company oldCompany = this.company;
-        company = newCompany;
-
-        if (oldCompany != null) {
-            oldCompany.removeContact(this);
         }
+
+        if (company != null) {
+            company.removeContact(this);
+        }
+
+        company = newCompany;
 
         if (company != null) {
             newCompany.addContact(this);
