@@ -14,6 +14,7 @@ public class TestStatusAndPipelineRelationshipsConsistency {
     public void setUp() {
         status = new Status();
         pipeline = new Pipeline();
+        pipeline.setId(1L);
     }
 
     @Test
@@ -21,8 +22,15 @@ public class TestStatusAndPipelineRelationshipsConsistency {
         status.setPipeline(pipeline);
         checkAdd();
 
+        final Pipeline pipeline2 = new Pipeline();
+        pipeline2.setId(2L);
+        status.setPipeline(pipeline2);
+        assertTrue(pipeline.getStatuses().isEmpty());
+        assertEquals(pipeline2, status.getPipeline());
+
         status.setPipeline(null);
-        checkRemove();
+        assertTrue(pipeline2.getStatuses().isEmpty());
+        assertNull(status.getPipeline());
     }
 
     @Test

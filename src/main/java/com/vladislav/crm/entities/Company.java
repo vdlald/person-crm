@@ -71,12 +71,11 @@ public class Company extends AbstractEntity {
             return this;
         }
 
-        final User oldUser = this.user;
-        user = newUser;
-
-        if (oldUser != null) {
-            oldUser.removeCompany(this);
+        if (user != null) {
+            user.removeCompany(this);
         }
+
+        user = newUser;
 
         if (user != null) {
             user.addCompany(this);

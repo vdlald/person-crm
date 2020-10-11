@@ -53,15 +53,14 @@ public class Lead extends AbstractEntityWithTime {
 
     public Lead setUser(User newUser) {
         if (Objects.equals(user, newUser)) {
-            return null;
+            return this;
         }
 
-        final User oldUser = this.user;
+        if (user != null) {
+            user.removeLead(this);
+        }
+
         user = newUser;
-
-        if (oldUser != null) {
-            oldUser.removeLead(this);
-        }
 
         if (user != null) {
             user.addLead(this);
@@ -74,12 +73,11 @@ public class Lead extends AbstractEntityWithTime {
             return this;
         }
 
-        final Status oldStatus = this.status;
-        status = newStatus;
-
-        if (oldStatus != null) {
-            oldStatus.removeLead(this);
+        if (status != null) {
+            status.removeLead(this);
         }
+
+        status = newStatus;
 
         if (newStatus != null) {
             status.addLead(this);
