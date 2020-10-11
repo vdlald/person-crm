@@ -37,6 +37,7 @@ public class UserLeadControllerImpl implements UserLeadController {
     @Override
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#request.statusId)")
     public EntityModel<ReadLeadResponse> createLead(
             @Valid @RequestBody CreateLeadRequest request
     ) {
@@ -45,7 +46,8 @@ public class UserLeadControllerImpl implements UserLeadController {
 
     @Override
     @PostMapping("/{id}")
-    @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#leadId)")
+    @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#leadId) && " +
+            " @userOwnsStatusAuthorization.hasAuthorization(#request.statusId)")
     public EntityModel<ReadLeadResponse> updateContact(
             @PathVariable("id") Long leadId,
             @Valid @RequestBody UpdateLeadRequest request
@@ -65,7 +67,7 @@ public class UserLeadControllerImpl implements UserLeadController {
 
     @Override
     @GetMapping("/{id}/moveTo/{statusId}")
-    @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#leadId) || " +
+    @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#leadId) && " +
             "@userOwnsStatusAuthorization.hasAuthorization(#statusId)")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> moveLeadToAnotherStatus(
