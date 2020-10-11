@@ -4,7 +4,7 @@ import com.vladislav.crm.entities.Lead;
 import com.vladislav.crm.entities.Status;
 import com.vladislav.crm.services.operations.CreateOperation;
 import com.vladislav.crm.services.operations.ReadOperation;
-import com.vladislav.crm.services.operations.users.GetCurrentUserStubOperation;
+import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
 import com.vladislav.crm.web.assemblers.ReadLeadResponseAssembler;
 import com.vladislav.crm.web.handlers.leads.CreateLeadRequestHandler;
 import com.vladislav.crm.web.requests.CreateLeadRequest;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CreateLeadRequestHandlerImpl implements CreateLeadRequestHandler {
 
-    private final GetCurrentUserStubOperation getCurrentUserStubOperation;
+    private final GetCurrentUserOperation getCurrentUserStubOperation;
     private final CreateOperation<Lead> leadCreateOperation;
     private final ReadLeadResponseAssembler readLeadResponseAssembler;
     private final ReadOperation<Status> statusReadOperation;
