@@ -18,7 +18,7 @@ public class ReadStatusResponseAssemblerImpl implements ReadStatusResponseAssemb
         final ReadStatusResponse response = new ReadStatusResponse()
                 .setId(entity.getId())
                 .setName(entity.getName())
-                .setPipelineId(entity.getPipeline().getId());  // refactor candidate: возможно здесь лучше сделать отдельный запрос на получение id ?
+                .setPipelineId(entity.getPipeline().getId());
 
         final Link selfRel = linkTo(methodOn(UserStatusControllerImpl.class)
                 .readStatus(entity.getId()))
