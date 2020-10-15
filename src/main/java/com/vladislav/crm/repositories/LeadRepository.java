@@ -23,4 +23,9 @@ public interface LeadRepository extends JpaRepository<Lead, Long> {
     @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE leads SET status_id = :statusId WHERE lead_id = :leadId", nativeQuery = true)
     void moveLeadToStatus(@Param("leadId") Long leadId, @Param("statusId") Long statusId);
+
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query(value = "INSERT INTO leads_contacts VALUES (:contactId, :leadId)", nativeQuery = true)
+    void attachLeadToContact(Long leadId, Long contactId);
 }
