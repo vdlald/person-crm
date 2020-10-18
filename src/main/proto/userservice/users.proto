@@ -33,8 +33,19 @@ message CreateUserResponse {
   UserResponse user = 1;
 }
 
+message GetUserRequest {
+  int64 userId = 1;
+}
+
+message GetUserResponse {
+  UserResponse user = 1;
+  UserInfoResponse info = 2;
+}
+
 service UserService {
   rpc CurrentUser(CurrentUserRequest) returns (CurrentUserResponse) {};
 
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {};
+
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {};
 }
