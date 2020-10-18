@@ -23,6 +23,4 @@ public class UpdateLeadRequest {
     @DecimalMin("0.0")
     private BigDecimal sale;
 
-    private Long statusId;
-
 }

@@ -26,6 +26,7 @@ public class UserLeadControllerImpl implements UserLeadController {
     private final UpdateLeadRequestHandler updateLeadRequestHandler;
     private final DeleteLeadRequestHandler deleteLeadRequestHandler;
     private final MoveLeadToAnotherStatusRequestHandler moveLeadToAnotherStatusRequestHandler;
+    private final AttachLeadToContactRequestHandler attachLeadToContactRequestHandler;
 
     @Override
     @GetMapping("/{id}")
@@ -46,8 +47,7 @@ public class UserLeadControllerImpl implements UserLeadController {
 
     @Override
     @PostMapping("/{id}")
-    @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#leadId) && " +
-            " @userOwnsStatusAuthorization.hasAuthorization(#request.statusId)")
+    @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#leadId)")
     public EntityModel<ReadLeadResponse> updateContact(
             @PathVariable("id") Long leadId,
             @Valid @RequestBody UpdateLeadRequest request
@@ -75,5 +75,17 @@ public class UserLeadControllerImpl implements UserLeadController {
             @PathVariable("statusId") Long statusId
     ) {
         return moveLeadToAnotherStatusRequestHandler.handle(Pair.of(leadId, statusId));
+    }
+
+    @Override
+    @GetMapping("/{id}/attachTo/{contactId}")
+    @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#leadId) && " +
+            "@userOwnsContactAuthorization.hasAuthorization(#contactId)")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> attachLeadToContact(
+            @PathVariable("id") Long leadId,
+            @PathVariable("contactId") Long contactId
+    ) {
+        return attachLeadToContactRequestHandler.handle(Pair.of(leadId, contactId));
     }
 }

@@ -1,7 +1,6 @@
 package com.vladislav.crm.web.handlers.leads.impl;
 
 import com.vladislav.crm.entities.Lead;
-import com.vladislav.crm.entities.Status;
 import com.vladislav.crm.services.operations.ReadOperation;
 import com.vladislav.crm.services.operations.UpdateOperation;
 import com.vladislav.crm.web.assemblers.ReadLeadResponseAssembler;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 public class UpdateLeadRequestHandlerImpl implements UpdateLeadRequestHandler {
 
     private final ReadOperation<Lead> leadReadOperation;
-    private final ReadOperation<Status> statusReadOperation;
     private final UpdateOperation<Lead> leadUpdateOperation;
     private final ReadLeadResponseAssembler readLeadResponseAssembler;
 
@@ -31,11 +29,6 @@ public class UpdateLeadRequestHandlerImpl implements UpdateLeadRequestHandler {
         final Lead lead = leadReadOperation.execute(id);
         lead.setName(request.getName())
                 .setSale(request.getSale());
-
-        final Long statusId = request.getStatusId();
-        if (statusId != null) {
-            lead.setStatus(statusReadOperation.execute(statusId));
-        }
 
         return readLeadResponseAssembler.toModel(leadUpdateOperation.execute(lead));
     }
