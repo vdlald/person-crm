@@ -1,6 +1,7 @@
 package com.vladislav.crm.grpc.services;
 
 import com.proto.users.*;
+import com.vladislav.crm.grpc.GrpcServiceUtils;
 import com.vladislav.crm.grpc.handlers.users.CreateUserRequestHandler;
 import com.vladislav.crm.grpc.handlers.users.CurrentUserRequestHandler;
 import com.vladislav.crm.grpc.handlers.users.GetUserRequestHandler;
@@ -19,25 +20,16 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
 
     @Override
     public void currentUser(CurrentUserRequest request, StreamObserver<CurrentUserResponse> responseObserver) {
-        final CurrentUserResponse response = currentUserRequestHandler.handle(request);
-
-        responseObserver.onNext(response);
-        responseObserver.onCompleted();
+        GrpcServiceUtils.handle(currentUserRequestHandler, request, responseObserver);
     }
 
     @Override
     public void createUser(CreateUserRequest request, StreamObserver<CreateUserResponse> responseObserver) {
-        final CreateUserResponse response = createUserRequestHandler.handle(request);
-
-        responseObserver.onNext(response);
-        responseObserver.onCompleted();
+        GrpcServiceUtils.handle(createUserRequestHandler, request, responseObserver);
     }
 
     @Override
     public void getUser(GetUserRequest request, StreamObserver<GetUserResponse> responseObserver) {
-        final GetUserResponse response = getUserRequestHandler.handle(request);
-
-        responseObserver.onNext(response);
-        responseObserver.onCompleted();
+        GrpcServiceUtils.handle(getUserRequestHandler, request, responseObserver);
     }
 }
