@@ -103,8 +103,12 @@ public class Contact extends AbstractEntityWithTime {
 
     @PreRemove
     private void preRemove() {
-        user.removeContact(this);
-        company.removeContact(this);
+        if (user != null) {
+            user.removeContact(this);
+        }
+        if (company != null) {
+            company.removeContact(this);
+        }
         leads.forEach(lead -> lead.removeContact(this));
     }
 }
