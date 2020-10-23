@@ -1,11 +1,11 @@
 package com.vladislav.crm.web.assemblers.impl;
 
+import com.vladislav.crm.entities.Company;
+import com.vladislav.crm.entities.Contact;
 import com.vladislav.crm.web.assemblers.ReadUserContactsResponseAssembler;
 import com.vladislav.crm.web.controllers.impl.UserContactsControllerImpl;
 import com.vladislav.crm.web.responses.CompanyResponse;
 import com.vladislav.crm.web.responses.ReadUserContactsResponse;
-import com.vladislav.crm.entities.Company;
-import com.vladislav.crm.entities.Contact;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Component;
@@ -27,7 +27,11 @@ public class ReadUserContactsResponseAssemblerImpl implements ReadUserContactsRe
 
         final Company company = contact.getCompany();
         if (company != null) {
-            response.setCompany(new CompanyResponse().setName(company.getName()));
+            response.setCompany(
+                    new CompanyResponse()
+                            .setId(company.getId())
+                            .setName(company.getName())
+            );
         }
 
         return EntityModel.of(response, selfRel);

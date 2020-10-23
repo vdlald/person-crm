@@ -16,5 +16,7 @@ public interface UserContactsController {
 
     EntityModel<ReadContactResponse> updateContact(Long contactId, UpdateContactRequest request);
 
+    ResponseEntity<Void> attachContactToCompany(Long contactId, Long companyId);
+
     ResponseEntity<Void> deleteContact(Long contactId);
 }
