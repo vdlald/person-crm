@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 @RequiredArgsConstructor
 public abstract class AbstractDeleteEntityRequestHandler<T extends AbstractEntity>
-        implements RequestHandler<Long, ResponseEntity<Void>>{
+        implements RequestHandler<Long, ResponseEntity<Void>> {
 
     private final DeleteOperation<T> deleteOperation;
 

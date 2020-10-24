@@ -1,10 +1,10 @@
 package com.vladislav.crm.web.assemblers.impl;
 
+import com.vladislav.crm.entities.AbstractEntity;
+import com.vladislav.crm.entities.Lead;
 import com.vladislav.crm.web.assemblers.ReadLeadResponseAssembler;
 import com.vladislav.crm.web.controllers.impl.UserLeadControllerImpl;
 import com.vladislav.crm.web.responses.ReadLeadResponse;
-import com.vladislav.crm.entities.AbstractEntity;
-import com.vladislav.crm.entities.Lead;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Component;

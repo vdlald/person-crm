@@ -1,12 +1,12 @@
 package com.vladislav.crm.web.handlers.pipelines.impl;
 
+import com.vladislav.crm.entities.Pipeline;
+import com.vladislav.crm.services.operations.ReadOperation;
+import com.vladislav.crm.services.operations.UpdateOperation;
 import com.vladislav.crm.web.assemblers.ReadPipelineResponseAssembler;
 import com.vladislav.crm.web.handlers.pipelines.UpdatePipelineRequestHandler;
 import com.vladislav.crm.web.requests.UpdatePipelineRequest;
 import com.vladislav.crm.web.responses.ReadPipelineResponse;
-import com.vladislav.crm.entities.Pipeline;
-import com.vladislav.crm.services.operations.ReadOperation;
-import com.vladislav.crm.services.operations.UpdateOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;

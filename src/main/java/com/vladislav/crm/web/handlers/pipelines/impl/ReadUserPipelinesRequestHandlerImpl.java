@@ -1,12 +1,12 @@
 package com.vladislav.crm.web.handlers.pipelines.impl;
 
+import com.vladislav.crm.entities.User;
+import com.vladislav.crm.services.operations.pipelines.ReadUserPipelinesOperation;
+import com.vladislav.crm.services.operations.users.GetCurrentUserStubOperation;
 import com.vladislav.crm.web.assemblers.ReadUserPipelinesResponseAssembler;
 import com.vladislav.crm.web.controllers.impl.UserPipelinesControllerImpl;
 import com.vladislav.crm.web.handlers.pipelines.ReadUserPipelinesRequestHandler;
 import com.vladislav.crm.web.responses.ReadUserPipelinesResponse;
-import com.vladislav.crm.entities.User;
-import com.vladislav.crm.services.operations.pipelines.ReadUserPipelinesOperation;
-import com.vladislav.crm.services.operations.users.GetCurrentUserStubOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
@@ -43,6 +43,7 @@ public class ReadUserPipelinesRequestHandlerImpl implements ReadUserPipelinesReq
                 .link(linkTo(methodOn(UserPipelinesControllerImpl.class).readUserPipelines()).withSelfRel())
                 .build();
     }
+
     @Override
     public RepresentationModel<?> handle() {
         return handle(null);

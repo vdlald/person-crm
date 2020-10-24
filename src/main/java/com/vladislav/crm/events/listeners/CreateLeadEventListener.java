@@ -25,7 +25,7 @@ public class CreateLeadEventListener implements ApplicationListener<CreateLeadEv
                 .setLeadId(leadId)
                 .setUserId(getUserIdByLeadIdOperation.execute(leadId))
                 .build();
-        
+
         reportService.addNewLeadLog(request, new DefaultStreamObserver<>());
     }
 }
