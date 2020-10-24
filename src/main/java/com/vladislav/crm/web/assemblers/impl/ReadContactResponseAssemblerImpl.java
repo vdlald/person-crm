@@ -25,8 +25,8 @@ public class ReadContactResponseAssemblerImpl implements ReadContactResponseAsse
         final Company company = entity.getCompany();
         if (company != null) {
             response.setCompany(new CompanyResponse()
-                            .setName(company.getName())
-                            .setId(company.getId()));
+                    .setName(company.getName())
+                    .setId(company.getId()));
         }
 
         final Link selfRel = linkTo(methodOn(UserContactsControllerImpl.class)

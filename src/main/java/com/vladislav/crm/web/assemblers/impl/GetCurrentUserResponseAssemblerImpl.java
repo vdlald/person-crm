@@ -1,9 +1,9 @@
 package com.vladislav.crm.web.assemblers.impl;
 
+import com.vladislav.crm.entities.User;
 import com.vladislav.crm.entities.UserInfo;
 import com.vladislav.crm.web.assemblers.GetCurrentUserResponseAssembler;
 import com.vladislav.crm.web.controllers.impl.UserControllerImpl;
-import com.vladislav.crm.entities.User;
 import com.vladislav.crm.web.responses.GetCurrentUserResponse;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;

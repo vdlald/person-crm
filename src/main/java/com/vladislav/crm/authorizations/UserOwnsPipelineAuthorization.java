@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserOwnsPipelineAuthorization implements UserOwnsEntityAuthorization{
+public class UserOwnsPipelineAuthorization implements UserOwnsEntityAuthorization {
 
     private final GetCurrentUserStubOperation getCurrentUserStubOperation;
     private final GetUserIdByPipelineIdOperation getUserIdByPipelineIdOperation;

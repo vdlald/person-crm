@@ -1,6 +1,7 @@
 package com.vladislav.crm.events;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Value;
 import org.springframework.context.ApplicationEvent;
 
 @Value

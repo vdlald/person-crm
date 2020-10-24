@@ -1,12 +1,12 @@
 package com.vladislav.crm.web.handlers.statuses.impl;
 
+import com.vladislav.crm.entities.Status;
+import com.vladislav.crm.services.operations.ReadOperation;
+import com.vladislav.crm.services.operations.UpdateOperation;
 import com.vladislav.crm.web.assemblers.ReadStatusResponseAssembler;
 import com.vladislav.crm.web.handlers.statuses.UpdateStatusRequestHandler;
 import com.vladislav.crm.web.requests.UpdateStatusRequest;
 import com.vladislav.crm.web.responses.ReadStatusResponse;
-import com.vladislav.crm.entities.Status;
-import com.vladislav.crm.services.operations.ReadOperation;
-import com.vladislav.crm.services.operations.UpdateOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;

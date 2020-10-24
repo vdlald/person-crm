@@ -1,12 +1,12 @@
 package com.vladislav.crm.web.handlers.contacts.impl;
 
+import com.vladislav.crm.entities.User;
+import com.vladislav.crm.services.operations.contacts.ReadUserContactsOperation;
+import com.vladislav.crm.services.operations.users.GetCurrentUserStubOperation;
 import com.vladislav.crm.web.assemblers.ReadUserContactsResponseAssembler;
 import com.vladislav.crm.web.controllers.impl.UserContactsControllerImpl;
 import com.vladislav.crm.web.handlers.contacts.ReadUserContactsRequestHandler;
 import com.vladislav.crm.web.responses.ReadUserContactsResponse;
-import com.vladislav.crm.entities.User;
-import com.vladislav.crm.services.operations.contacts.ReadUserContactsOperation;
-import com.vladislav.crm.services.operations.users.GetCurrentUserStubOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
