@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UpdateStatusRequestHandlerImpl implements UpdateStatusRequestHandler {
 
-    private final ReadOperation<Status> statusReadOperation;
+    private final ReadOperation<Status> readStatusOperation;
     private final UpdateOperation<Status> statusUpdateOperation;
     private final ReadStatusResponseAssembler readStatusResponseAssembler;
 
@@ -26,7 +26,7 @@ public class UpdateStatusRequestHandlerImpl implements UpdateStatusRequestHandle
         final Long statusId = requestPair.getFirst();
         final UpdateStatusRequest request = requestPair.getSecond();
 
-        final Status status = statusReadOperation.execute(statusId)
+        final Status status = readStatusOperation.execute(statusId)
                 .setName(request.getName());
 
         return readStatusResponseAssembler.toModel(statusUpdateOperation.execute(status));

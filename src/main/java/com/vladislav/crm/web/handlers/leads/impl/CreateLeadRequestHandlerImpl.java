@@ -21,15 +21,15 @@ public class CreateLeadRequestHandlerImpl implements CreateLeadRequestHandler {
     private final GetCurrentUserOperation getCurrentUserStubOperation;
     private final CreateOperation<Lead> leadCreateOperation;
     private final ReadLeadResponseAssembler readLeadResponseAssembler;
-    private final ReadOperation<Status> statusReadOperation;
+    private final ReadOperation<Status> readStatusStubOperation;
 
     @Override
     public EntityModel<ReadLeadResponse> handle(CreateLeadRequest request) {
         final Lead lead = new Lead()
                 .setName(request.getName())
                 .setSale(request.getSale())
-                .setStatus(statusReadOperation.execute(request.getStatusId()))
-                .setUser(getCurrentUserStubOperation.execute());
+                .setStatusUnsafe(readStatusStubOperation.execute(request.getStatusId()))
+                .setUserUnsafe(getCurrentUserStubOperation.execute());
 
         return readLeadResponseAssembler.toModel(leadCreateOperation.execute(lead));
     }

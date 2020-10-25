@@ -18,8 +18,8 @@ public class ReadStatusRequestHandlerImpl
     @Autowired
     public ReadStatusRequestHandlerImpl(
             RepresentationModelAssembler<Status, EntityModel<ReadStatusResponse>> assembler,
-            ReadOperation<Status> readOperation
+            ReadOperation<Status> readStatusOperation
     ) {
-        super(assembler, readOperation);
+        super(assembler, readStatusOperation);
     }
 }
