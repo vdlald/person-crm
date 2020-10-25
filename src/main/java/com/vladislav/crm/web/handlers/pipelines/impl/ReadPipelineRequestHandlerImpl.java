@@ -18,8 +18,8 @@ public class ReadPipelineRequestHandlerImpl
     @Autowired
     public ReadPipelineRequestHandlerImpl(
             RepresentationModelAssembler<Pipeline, EntityModel<ReadPipelineResponse>> assembler,
-            ReadOperation<Pipeline> readPipelineStubOperation
+            ReadOperation<Pipeline> readPipelineOperation
     ) {
-        super(assembler, readPipelineStubOperation);
+        super(assembler, readPipelineOperation);
     }
 }
