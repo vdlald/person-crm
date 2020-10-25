@@ -18,8 +18,8 @@ public class ReadCompanyRequestHandlerImpl
     @Autowired
     public ReadCompanyRequestHandlerImpl(
             RepresentationModelAssembler<Company, EntityModel<CompanyResponse>> assembler,
-            ReadOperation<Company> readOperation
+            ReadOperation<Company> readCompanyOperation
     ) {
-        super(assembler, readOperation);
+        super(assembler, readCompanyOperation);
     }
 }

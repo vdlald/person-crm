@@ -22,19 +22,19 @@ public class CreateContactRequestHandlerImpl implements CreateContactRequestHand
     private final GetCurrentUserOperation getCurrentUserStubOperation;
     private final ReadContactResponseAssembler readContactResponseAssembler;
     private final CreateOperation<Contact> createContactOperation;
-    private final ReadOperation<Company> companyReadOperation;
+    private final ReadOperation<Company> readCompanyStubOperation;
 
     @Override
     public EntityModel<ReadContactResponse> handle(CreateContactRequest request) {
         final User user = getCurrentUserStubOperation.execute();
 
         final Contact contact = new Contact()
-                .setUser(user)
+                .setUserUnsafe(user)
                 .setName(request.getName());
 
         final Long companyId = request.getCompanyId();
         if (companyId != null) {
-            contact.setCompany(companyReadOperation.execute(companyId));
+            contact.setCompanyUnsafe(readCompanyStubOperation.execute(companyId));
         }
 
         return readContactResponseAssembler.toModel(createContactOperation.execute(contact));

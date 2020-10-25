@@ -26,7 +26,7 @@ public class CreateCompanyRequestHandlerImpl implements CreateCompanyRequestHand
         final User user = getCurrentUserStubOperation.execute();
 
         final Company company = new Company()
-                .setUser(user)
+                .setUserUnsafe(user)
                 .setName(request.getName());
 
         return companyResponseAssembler.toModel(companyCreateOperation.execute(company));
