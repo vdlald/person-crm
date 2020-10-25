@@ -11,10 +11,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ReportGrpcConfig {
 
-    @Value("${app.grpc.server.report.host}")
+    @Value("${app.grpc.report.host}")
     private String host;
 
-    @Value("${app.grpc.server.report.port}")
+    @Value("${app.grpc.report.port}")
     private Integer port;
 
     @Bean
