@@ -24,7 +24,7 @@ public class CreatePipelineRequestHandlerImpl implements CreatePipelineRequestHa
     public EntityModel<ReadPipelineResponse> handle(CreatePipelineRequest request) {
         final Pipeline pipeline = new Pipeline()
                 .setName(request.getName())
-                .setUser(getCurrentUserStubOperation.execute());
+                .setUserUnsafe(getCurrentUserStubOperation.execute());
 
         return readPipelineResponseAssembler.toModel(createPipelineOperation.execute(pipeline));
     }
