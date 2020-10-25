@@ -2,7 +2,7 @@ package com.vladislav.crm.web.handlers.companies.impl;
 
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.operations.companies.ReadUserCompaniesOperation;
-import com.vladislav.crm.services.operations.users.GetCurrentUserStubOperation;
+import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
 import com.vladislav.crm.web.assemblers.CompanyResponseAssembler;
 import com.vladislav.crm.web.controllers.impl.UserCompaniesControllerImpl;
 import com.vladislav.crm.web.handlers.companies.ReadUserCompaniesRequestHandler;
@@ -25,7 +25,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ReadUserCompaniesRequestHandlerImpl implements ReadUserCompaniesRequestHandler {
 
-    private final GetCurrentUserStubOperation getCurrentUserStubOperation;
+    private final GetCurrentUserOperation getCurrentUserStubOperation;
     private final ReadUserCompaniesOperation readUserCompaniesOperation;
     private final CompanyResponseAssembler companyResponseAssembler;
 

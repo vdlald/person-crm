@@ -2,7 +2,7 @@ package com.vladislav.crm.authorizations;
 
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.operations.pipelines.GetUserIdByPipelineIdOperation;
-import com.vladislav.crm.services.operations.users.GetCurrentUserStubOperation;
+import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserOwnsPipelineAuthorization implements UserOwnsEntityAuthorization {
 
-    private final GetCurrentUserStubOperation getCurrentUserStubOperation;
+    private final GetCurrentUserOperation getCurrentUserStubOperation;
     private final GetUserIdByPipelineIdOperation getUserIdByPipelineIdOperation;
 
     @Override

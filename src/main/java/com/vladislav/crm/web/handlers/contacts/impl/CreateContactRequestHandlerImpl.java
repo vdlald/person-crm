@@ -19,14 +19,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CreateContactRequestHandlerImpl implements CreateContactRequestHandler {
 
-    private final GetCurrentUserOperation getCurrentUserOperation;
+    private final GetCurrentUserOperation getCurrentUserStubOperation;
     private final ReadContactResponseAssembler readContactResponseAssembler;
     private final CreateOperation<Contact> createContactOperation;
     private final ReadOperation<Company> companyReadOperation;
 
     @Override
     public EntityModel<ReadContactResponse> handle(CreateContactRequest request) {
-        final User user = getCurrentUserOperation.execute();
+        final User user = getCurrentUserStubOperation.execute();
 
         final Contact contact = new Contact()
                 .setUser(user)

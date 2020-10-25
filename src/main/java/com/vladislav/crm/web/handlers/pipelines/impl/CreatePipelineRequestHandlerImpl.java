@@ -17,14 +17,14 @@ import org.springframework.stereotype.Service;
 public class CreatePipelineRequestHandlerImpl implements CreatePipelineRequestHandler {
 
     private final CreateOperation<Pipeline> createPipelineOperation;
-    private final GetCurrentUserOperation getCurrentUserOperation;
+    private final GetCurrentUserOperation getCurrentUserStubOperation;
     private final ReadPipelineResponseAssembler readPipelineResponseAssembler;
 
     @Override
     public EntityModel<ReadPipelineResponse> handle(CreatePipelineRequest request) {
         final Pipeline pipeline = new Pipeline()
                 .setName(request.getName())
-                .setUser(getCurrentUserOperation.execute());
+                .setUser(getCurrentUserStubOperation.execute());
 
         return readPipelineResponseAssembler.toModel(createPipelineOperation.execute(pipeline));
     }
