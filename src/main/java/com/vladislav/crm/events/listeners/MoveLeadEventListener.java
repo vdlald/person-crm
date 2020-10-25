@@ -6,16 +6,18 @@ import com.vladislav.crm.events.MoveLeadEvent;
 import com.vladislav.crm.grpc.DefaultStreamObserver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class MoveLeadEventListener implements ApplicationListener<MoveLeadEvent> {
+public class MoveLeadEventListener {
 
     private final ReportServiceStub reportService;
 
-    @Override
+    @Async
+    @EventListener
     public void onApplicationEvent(MoveLeadEvent event) {
         final AddMoveLeadLogRequest request = AddMoveLeadLogRequest.newBuilder()
                 .setLeadId(event.getLeadId())
