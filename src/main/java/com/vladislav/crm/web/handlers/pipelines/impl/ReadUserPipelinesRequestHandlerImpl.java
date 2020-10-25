@@ -2,7 +2,7 @@ package com.vladislav.crm.web.handlers.pipelines.impl;
 
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.operations.pipelines.ReadUserPipelinesOperation;
-import com.vladislav.crm.services.operations.users.GetCurrentUserStubOperation;
+import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
 import com.vladislav.crm.web.assemblers.ReadUserPipelinesResponseAssembler;
 import com.vladislav.crm.web.controllers.impl.UserPipelinesControllerImpl;
 import com.vladislav.crm.web.handlers.pipelines.ReadUserPipelinesRequestHandler;
@@ -25,7 +25,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ReadUserPipelinesRequestHandlerImpl implements ReadUserPipelinesRequestHandler {
 
-    private final GetCurrentUserStubOperation getCurrentUserStubOperation;
+    private final GetCurrentUserOperation getCurrentUserStubOperation;
     private final ReadUserPipelinesResponseAssembler readUserPipelinesResponseAssembler;
     private final ReadUserPipelinesOperation readUserPipelinesOperation;
 

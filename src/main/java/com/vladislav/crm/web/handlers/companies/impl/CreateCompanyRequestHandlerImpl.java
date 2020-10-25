@@ -17,13 +17,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CreateCompanyRequestHandlerImpl implements CreateCompanyRequestHandler {
 
-    private final GetCurrentUserOperation getCurrentUserOperation;
+    private final GetCurrentUserOperation getCurrentUserStubOperation;
     private final CompanyResponseAssembler companyResponseAssembler;
     private final CreateOperation<Company> companyCreateOperation;
 
     @Override
     public EntityModel<CompanyResponse> handle(CreateCompanyRequest request) {
-        final User user = getCurrentUserOperation.execute();
+        final User user = getCurrentUserStubOperation.execute();
 
         final Company company = new Company()
                 .setUser(user)
