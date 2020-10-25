@@ -55,6 +55,11 @@ public class Status extends AbstractEntity {
         return this;
     }
 
+    public Status setPipelineUnsafe(Pipeline newPipeline) {
+        pipeline = newPipeline;
+        return this;
+    }
+
     public Status addLead(Lead lead) {
         if (leads.contains(lead)) {
             return this;

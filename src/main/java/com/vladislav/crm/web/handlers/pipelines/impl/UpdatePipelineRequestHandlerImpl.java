@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UpdatePipelineRequestHandlerImpl implements UpdatePipelineRequestHandler {
 
-    private final ReadOperation<Pipeline> pipelineReadOperation;
+    private final ReadOperation<Pipeline> readPipelineOperation;
     private final UpdateOperation<Pipeline> pipelineUpdateOperation;
     private final ReadPipelineResponseAssembler readPipelineResponseAssembler;
 
@@ -26,7 +26,7 @@ public class UpdatePipelineRequestHandlerImpl implements UpdatePipelineRequestHa
         final Long pipelineId = requestPair.getFirst();
         final UpdatePipelineRequest request = requestPair.getSecond();
 
-        final Pipeline pipeline = pipelineReadOperation.execute(pipelineId)
+        final Pipeline pipeline = readPipelineOperation.execute(pipelineId)
                 .setName(request.getName());
 
         return readPipelineResponseAssembler.toModel(pipelineUpdateOperation.execute(pipeline));
