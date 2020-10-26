@@ -21,7 +21,7 @@ public class JwtConfig {
     @Bean
     public JwtParser jwtParser(SecretKey jwtSecretKey) {
         return Jwts.parserBuilder()
-                .setSigningKey(Keys.hmacShaKeyFor("secretsecretsecretsecretsecretsecret".getBytes(StandardCharsets.UTF_8)))
+                .setSigningKey(jwtSecretKey)
                 .build();
     }
 }
