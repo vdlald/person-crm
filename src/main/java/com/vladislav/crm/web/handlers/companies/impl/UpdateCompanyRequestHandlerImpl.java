@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UpdateCompanyRequestHandlerImpl implements UpdateCompanyRequestHandler {
 
-    private final ReadOperation<Company> companyReadOperation;
+    private final ReadOperation<Company> readCompanyOperation;
     private final CompanyResponseAssembler companyResponseAssembler;
     private final UpdateOperation<Company> companyUpdateOperation;
 
@@ -26,7 +26,7 @@ public class UpdateCompanyRequestHandlerImpl implements UpdateCompanyRequestHand
         final Long companyId = requestPair.getFirst();
         final UpdateCompanyRequest request = requestPair.getSecond();
 
-        final Company company = companyReadOperation.execute(companyId)
+        final Company company = readCompanyOperation.execute(companyId)
                 .setName(request.getName());
 
         return companyResponseAssembler.toModel(companyUpdateOperation.execute(company));

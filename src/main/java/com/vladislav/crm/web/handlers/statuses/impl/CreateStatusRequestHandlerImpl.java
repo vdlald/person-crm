@@ -18,14 +18,14 @@ import org.springframework.stereotype.Service;
 public class CreateStatusRequestHandlerImpl implements CreateStatusRequestHandler {
 
     private final CreateOperation<Status> statusCreateOperation;
-    private final ReadOperation<Pipeline> pipelineReadOperation;
+    private final ReadOperation<Pipeline> readPipelineOperation;
     private final ReadStatusResponseAssembler readStatusResponseAssembler;
 
     @Override
     public EntityModel<ReadStatusResponse> handle(CreateStatusRequest request) {
         final Status status = new Status()
                 .setName(request.getName())
-                .setPipeline(pipelineReadOperation.execute(request.getPipelineId()));
+                .setPipelineUnsafe(readPipelineOperation.execute(request.getPipelineId()));
 
         return readStatusResponseAssembler.toModel(statusCreateOperation.execute(status));
     }

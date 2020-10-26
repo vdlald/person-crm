@@ -16,6 +16,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -23,14 +25,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final OncePerRequestFilter jwtFilter;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/v1/users", "/api/v1/users/").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/users", "/api/v1/users/", "/api/v1/auth").permitAll()
                 .anyRequest().authenticated()
-                .and().httpBasic()
+                .and().httpBasic()  // для облегченного тестирования api
                 .and().sessionManagement().disable();
+        http.addFilterBefore(jwtFilter, BasicAuthenticationFilter.class);
     }
 
     @Override

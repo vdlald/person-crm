@@ -62,6 +62,11 @@ public class Contact extends AbstractEntityWithTime {
         return this;
     }
 
+    public Contact setUserUnsafe(User newUser) {
+        user = newUser;
+        return this;
+    }
+
     public Contact setCompany(Company newCompany) {
         if (Objects.equals(company, newCompany)) {
             return this;
@@ -76,6 +81,11 @@ public class Contact extends AbstractEntityWithTime {
         if (company != null) {
             newCompany.addContact(this);
         }
+        return this;
+    }
+
+    public Contact setCompanyUnsafe(Company company) {
+        this.company = company;
         return this;
     }
 

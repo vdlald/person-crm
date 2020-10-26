@@ -36,7 +36,7 @@ public class ValidationControllerAdvice {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
             message = exception.getMessage();
         }
-        
+
         return ErrorResponse.builder()
                 .setStatus(status)
                 .setMessage(message)

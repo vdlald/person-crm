@@ -1,19 +1,23 @@
 package com.vladislav.crm.events;
 
-import lombok.Getter;
+import lombok.EqualsAndHashCode;
+import lombok.Value;
 import org.springframework.context.ApplicationEvent;
 
+@Value
+@EqualsAndHashCode(callSuper = true)
 public class MoveLeadEvent extends ApplicationEvent {
 
-    @Getter
-    private final Long leadId;
+    Long userId;
+    Long leadId;
+    Long prevStatusId;
+    Long nextStatusId;
 
-    @Getter
-    private final Long statusId;
-
-    public MoveLeadEvent(Object source, Long leadId, Long statusId) {
+    public MoveLeadEvent(Object source, Long userId, Long leadId, Long prevStatusId, Long nextStatusId) {
         super(source);
+        this.userId = userId;
         this.leadId = leadId;
-        this.statusId = statusId;
+        this.prevStatusId = prevStatusId;
+        this.nextStatusId = nextStatusId;
     }
 }

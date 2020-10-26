@@ -2,7 +2,7 @@ package com.vladislav.crm.authorizations;
 
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.operations.contacts.GetUserIdByContactIdOperation;
-import com.vladislav.crm.services.operations.users.GetCurrentUserStubOperation;
+import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserOwnsContactAuthorization implements UserOwnsEntityAuthorization {
 
-    private final GetCurrentUserStubOperation getCurrentUserStubOperation;
+    private final GetCurrentUserOperation getCurrentUserStubOperation;
     private final GetUserIdByContactIdOperation getUserIdByContactIdOperation;
 
     @Override

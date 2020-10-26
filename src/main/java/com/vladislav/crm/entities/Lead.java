@@ -68,6 +68,11 @@ public class Lead extends AbstractEntityWithTime {
         return this;
     }
 
+    public Lead setUserUnsafe(User newUser) {
+        user = newUser;
+        return this;
+    }
+
     public Lead setStatus(Status newStatus) {
         if (Objects.equals(status, newStatus)) {
             return this;
@@ -82,6 +87,11 @@ public class Lead extends AbstractEntityWithTime {
         if (newStatus != null) {
             status.addLead(this);
         }
+        return this;
+    }
+
+    public Lead setStatusUnsafe(Status newStatus) {
+        status = newStatus;
         return this;
     }
 

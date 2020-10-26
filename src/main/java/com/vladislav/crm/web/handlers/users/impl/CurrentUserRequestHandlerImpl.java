@@ -1,9 +1,9 @@
 package com.vladislav.crm.web.handlers.users.impl;
 
-import com.vladislav.crm.web.assemblers.GetCurrentUserResponseAssembler;
-import com.vladislav.crm.web.handlers.users.CurrentUserRequestHandler;
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
+import com.vladislav.crm.web.assemblers.GetCurrentUserResponseAssembler;
+import com.vladislav.crm.web.handlers.users.CurrentUserRequestHandler;
 import com.vladislav.crm.web.responses.GetCurrentUserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

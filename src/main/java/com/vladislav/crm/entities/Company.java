@@ -82,4 +82,9 @@ public class Company extends AbstractEntity {
         }
         return this;
     }
+
+    public Company setUserUnsafe(User user) {
+        this.user = user;
+        return this;
+    }
 }

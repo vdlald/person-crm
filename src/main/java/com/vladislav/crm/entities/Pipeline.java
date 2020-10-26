@@ -55,6 +55,11 @@ public class Pipeline extends AbstractEntity {
         return this;
     }
 
+    public Pipeline setUserUnsafe(User newUser) {
+        user = newUser;
+        return this;
+    }
+
     public Pipeline addStatus(Status status) {
         if (statuses.contains(status)) {
             return this;
