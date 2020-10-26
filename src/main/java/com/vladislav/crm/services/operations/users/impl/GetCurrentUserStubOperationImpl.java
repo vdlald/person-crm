@@ -6,6 +6,7 @@ import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
@@ -17,6 +18,7 @@ public class GetCurrentUserStubOperationImpl implements GetCurrentUserOperation 
     private final GetCurrentUserPrincipalOperation getCurrentUserPrincipalOperation;
 
     @Override
+    @Transactional
     public User execute() {
         final User principal = getCurrentUserPrincipalOperation.execute();
         return entityManager.getReference(User.class, principal.getId());
