@@ -1,4 +1,7 @@
 app:
+  jwt:
+    secret: secretsecretsecretsecretsecretsecret
+    lifetime: 5
   grpc:
     server:
       port: 50051

@@ -1,14 +1,11 @@
 package com.vladislav.crm;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtParser;
+import com.vladislav.crm.services.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -23,8 +20,7 @@ import java.util.Objects;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class JwtFilter extends OncePerRequestFilter {
 
-    private final UserDetailsService userDetailsService;
-    private final JwtParser jwtParser;
+    private final TokenService tokenService;
 
     @Override
     protected void doFilterInternal(
@@ -36,12 +32,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
         if (Objects.nonNull(requestTokenHeader) && requestTokenHeader.startsWith("Bearer ")) {
             final String token = requestTokenHeader.substring(7);
-            final Jws<Claims> jws = jwtParser.parseClaimsJws(token);
-            final Claims claims = jws.getBody();
 
-            final UserDetails userDetails = userDetailsService.loadUserByUsername(claims.get("username", String.class));
+            final UserDetails user = tokenService.parseToken(token);
+
             final UsernamePasswordAuthenticationToken auth =
-                    new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+                    new UsernamePasswordAuthenticationToken(user, "", user.getAuthorities());
+
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
         filterChain.doFilter(request, response);
