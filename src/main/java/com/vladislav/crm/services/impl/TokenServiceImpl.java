@@ -26,7 +26,7 @@ public class TokenServiceImpl implements TokenService {
     private final SecretKey jwtSecretKey;
 
     @Value("${app.jwt.lifetime}")
-    private final Integer lifetime;
+    private Integer lifetime;
 
     @Override
     public String generateToken(User user) {
