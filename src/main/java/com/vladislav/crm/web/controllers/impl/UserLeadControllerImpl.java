@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
@@ -27,6 +29,7 @@ public class UserLeadControllerImpl implements UserLeadController {
     private final DeleteLeadRequestHandler deleteLeadRequestHandler;
     private final MoveLeadToAnotherStatusRequestHandler moveLeadToAnotherStatusRequestHandler;
     private final AttachLeadToContactRequestHandler attachLeadToContactRequestHandler;
+    private final GetAllLeadsInExcelRequestHandler getAllLeadsInExcelRequestHandler;
 
     @Override
     @GetMapping("/{id}")
@@ -87,5 +90,11 @@ public class UserLeadControllerImpl implements UserLeadController {
             @PathVariable("contactId") Long contactId
     ) {
         return attachLeadToContactRequestHandler.handle(Pair.of(leadId, contactId));
+    }
+
+    @Override
+    @GetMapping(value = "/excel", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void getAllLeadsInExcel(HttpServletResponse response) {
+        getAllLeadsInExcelRequestHandler.handle(response);
     }
 }
