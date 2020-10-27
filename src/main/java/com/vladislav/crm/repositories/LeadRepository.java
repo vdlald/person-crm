@@ -16,6 +16,8 @@ public interface LeadRepository extends JpaRepository<Lead, Long> {
 
     Collection<Lead> findAllByStatusId(Long statusId);
 
+    Collection<Lead> findAllByUserId(Long userId);
+
     @Query("select user.id from Lead where id = :id")
     Optional<Long> findUserIdById(Long id);
 
