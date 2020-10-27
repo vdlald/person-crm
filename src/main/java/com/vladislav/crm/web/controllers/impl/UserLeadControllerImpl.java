@@ -92,6 +92,7 @@ public class UserLeadControllerImpl implements UserLeadController {
         return attachLeadToContactRequestHandler.handle(Pair.of(leadId, contactId));
     }
 
+    @Override
     @GetMapping(value = "/excel", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void getAllLeadsInExcel(HttpServletResponse response) {
         getAllLeadsInExcelRequestHandler.handle(response);

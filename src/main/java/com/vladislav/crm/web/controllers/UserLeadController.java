@@ -6,6 +6,8 @@ import com.vladislav.crm.web.responses.ReadLeadResponse;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 
+import javax.servlet.http.HttpServletResponse;
+
 public interface UserLeadController {
     EntityModel<ReadLeadResponse> readLead(Long leadId);
 
@@ -18,4 +20,6 @@ public interface UserLeadController {
     ResponseEntity<Void> moveLeadToAnotherStatus(Long leadId, Long statusId);
 
     ResponseEntity<Void> attachLeadToContact(Long leadId, Long contactId);
+
+    void getAllLeadsInExcel(HttpServletResponse response);
 }
