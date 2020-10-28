@@ -35,7 +35,7 @@ public class Pipeline extends AbstractEntity {
     private User user;
 
     @Setter(AccessLevel.PRIVATE)
-    @OneToMany(mappedBy = "pipeline", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "pipeline", fetch = FetchType.LAZY)
     private List<Status> statuses = new ArrayList<>();
 
     public Pipeline setUser(User newUser) {
@@ -80,10 +80,5 @@ public class Pipeline extends AbstractEntity {
 
     public List<Status> getStatuses() {
         return new ArrayList<>(statuses);
-    }
-
-    @PreRemove
-    private void preRemove() {
-        user.removePipeline(this);
     }
 }

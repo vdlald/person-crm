@@ -35,7 +35,7 @@ public class Company extends AbstractEntity {
     private User user;
 
     @Setter(AccessLevel.PRIVATE)
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company", cascade = CascadeType.DETACH)
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     private List<Contact> contacts = new ArrayList<>();
 
     public Company addContact(Contact contact) {
@@ -58,12 +58,6 @@ public class Company extends AbstractEntity {
 
     public List<Contact> getContacts() {
         return new ArrayList<>(contacts);
-    }
-
-    @PreRemove
-    private void preRemove() {
-        contacts.forEach(contact -> contact.setCompany(null));
-        user.removeCompany(this);
     }
 
     public Company setUser(User newUser) {
