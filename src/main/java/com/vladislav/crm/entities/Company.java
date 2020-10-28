@@ -35,7 +35,7 @@ public class Company extends AbstractEntity {
     private User user;
 
     @Setter(AccessLevel.PRIVATE)
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     private List<Contact> contacts = new ArrayList<>();
 
     public Company addContact(Contact contact) {
