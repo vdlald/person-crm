@@ -34,7 +34,7 @@ public class Contact extends AbstractEntityWithTime {
     @ToString.Include
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id")
     private Company company;
 
@@ -109,16 +109,5 @@ public class Contact extends AbstractEntityWithTime {
 
     public List<Lead> getLeads() {
         return new ArrayList<>(leads);
-    }
-
-    @PreRemove
-    private void preRemove() {
-        if (user != null) {
-            user.removeContact(this);
-        }
-        if (company != null) {
-            company.removeContact(this);
-        }
-        leads.forEach(lead -> lead.removeContact(this));
     }
 }

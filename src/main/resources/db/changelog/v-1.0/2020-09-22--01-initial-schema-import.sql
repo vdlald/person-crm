@@ -29,7 +29,7 @@ create table leads
     updated_at timestamp,
     name       varchar(32),
     sale       decimal(19, 2),
-    status_id  bigint    not null,
+    status_id  bigint,
     user_id    bigint    not null,
     primary key (lead_id)
 );
