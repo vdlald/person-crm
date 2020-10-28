@@ -1,4 +1,4 @@
-package com.vladislav.crm;
+package com.vladislav.crm.security.filters;
 
 import com.vladislav.crm.services.TokenService;
 import lombok.RequiredArgsConstructor;
