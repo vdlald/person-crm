@@ -2,6 +2,7 @@ package com.vladislav.crm.services.operations.contacts.impl;
 
 import com.vladislav.crm.repositories.ContactRepository;
 import com.vladislav.crm.services.operations.contacts.AttachContactToCompanyOperation;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,10 @@ public class AttachContactToCompanyOperationImpl implements AttachContactToCompa
     private final ContactRepository contactRepository;
 
     @Override
-    public void execute(Long contactId, Long companyId) {
+    public void execute(
+            @NonNull Long contactId,
+            @NonNull Long companyId
+    ) {
         contactRepository.attachContactToCompany(contactId, companyId);
     }
 }

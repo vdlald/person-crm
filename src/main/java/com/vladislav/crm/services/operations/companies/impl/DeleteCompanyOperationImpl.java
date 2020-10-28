@@ -2,6 +2,7 @@ package com.vladislav.crm.services.operations.companies.impl;
 
 import com.vladislav.crm.entities.Company;
 import com.vladislav.crm.services.operations.DeleteOperation;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class DeleteCompanyOperationImpl implements DeleteOperation<Company> {
 
     @Override
     @Transactional
-    public void execute(Long id) {
+    public void execute(@NonNull Long id) {
         entityManager.flush();
         entityManager.clear();
 

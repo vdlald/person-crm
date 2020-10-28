@@ -2,6 +2,7 @@ package com.vladislav.crm.services.operations.statuses.impl;
 
 import com.vladislav.crm.entities.Status;
 import com.vladislav.crm.services.operations.ReadOperation;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class ReadStatusStubOperationImpl implements ReadOperation<Status> {
 
     @Override
     @Transactional
-    public Status execute(Long id) {
+    public Status execute(@NonNull Long id) {
         return entityManager.getReference(Status.class, id);
     }
 }

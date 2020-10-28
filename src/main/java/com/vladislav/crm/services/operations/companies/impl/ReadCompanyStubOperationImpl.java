@@ -2,6 +2,7 @@ package com.vladislav.crm.services.operations.companies.impl;
 
 import com.vladislav.crm.entities.Company;
 import com.vladislav.crm.services.operations.ReadOperation;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class ReadCompanyStubOperationImpl implements ReadOperation<Company> {
 
     @Override
     @Transactional
-    public Company execute(Long id) {
+    public Company execute(@NonNull Long id) {
         return entityManager.getReference(Company.class, id);
     }
 }

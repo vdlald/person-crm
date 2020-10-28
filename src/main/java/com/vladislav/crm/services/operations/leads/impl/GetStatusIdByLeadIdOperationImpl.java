@@ -2,6 +2,7 @@ package com.vladislav.crm.services.operations.leads.impl;
 
 import com.vladislav.crm.repositories.LeadRepository;
 import com.vladislav.crm.services.operations.leads.GetStatusIdByLeadIdOperation;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public class GetStatusIdByLeadIdOperationImpl implements GetStatusIdByLeadIdOper
     private final LeadRepository leadRepository;
 
     @Override
-    public Long execute(Long leadId) {
+    public Long execute(@NonNull Long leadId) {
         return leadRepository.findStatusIdById(leadId).orElseThrow(EntityNotFoundException::new);
     }
 }
