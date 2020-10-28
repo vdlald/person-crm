@@ -28,11 +28,13 @@ public class DeletePipelineOperationImpl implements DeleteOperation<Pipeline> {
         leadQuery.setParameter("id", id);
         leadQuery.executeUpdate();
 
-        final Query deleteStatuses = entityManager.createNativeQuery("DELETE FROM statuses WHERE pipeline_id = :id");
+        final Query deleteStatuses = entityManager.createNativeQuery(
+                "DELETE FROM statuses WHERE pipeline_id = :id");
         deleteStatuses.setParameter("id", id);
         deleteStatuses.executeUpdate();
 
-        final Query deletePipeline = entityManager.createNativeQuery("DELETE FROM pipelines WHERE pipeline_id = :id");
+        final Query deletePipeline = entityManager.createNativeQuery(
+                "DELETE FROM pipelines WHERE pipeline_id = :id");
         deletePipeline.setParameter("id", id);
         deletePipeline.executeUpdate();
     }

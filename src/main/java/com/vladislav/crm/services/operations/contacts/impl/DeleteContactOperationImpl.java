@@ -23,11 +23,13 @@ public class DeleteContactOperationImpl implements DeleteOperation<Contact> {
         entityManager.flush();
         entityManager.clear();
 
-        final Query query = entityManager.createNativeQuery("DELETE FROM leads_contacts WHERE contact_id = :id");
+        final Query query = entityManager.createNativeQuery(
+                "DELETE FROM leads_contacts WHERE contact_id = :id");
         query.setParameter("id", id);
         query.executeUpdate();
 
-        final Query deleteContactQuery = entityManager.createNativeQuery("DELETE FROM contacts WHERE contact_id = :id");
+        final Query deleteContactQuery = entityManager.createNativeQuery(
+                "DELETE FROM contacts WHERE contact_id = :id");
         deleteContactQuery.setParameter("id", id);
         deleteContactQuery.executeUpdate();
     }

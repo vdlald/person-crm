@@ -22,7 +22,8 @@ public class DeleteStatusOperationImpl implements DeleteOperation<Status> {
         entityManager.flush();
         entityManager.clear();
 
-        final Query leadQuery = entityManager.createQuery("update Lead lead set lead.status = null where lead.status.id = :id");
+        final Query leadQuery = entityManager.createQuery(
+                "update Lead lead set lead.status = null where lead.status.id = :id");
         leadQuery.setParameter("id", id);
         leadQuery.executeUpdate();
 
