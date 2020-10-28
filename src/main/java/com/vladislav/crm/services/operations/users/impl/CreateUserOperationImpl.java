@@ -4,6 +4,7 @@ import com.vladislav.crm.entities.User;
 import com.vladislav.crm.entities.UserInfo;
 import com.vladislav.crm.repositories.UserRepository;
 import com.vladislav.crm.services.operations.CreateOperation;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,7 +20,7 @@ public class CreateUserOperationImpl implements CreateOperation<User> {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public User execute(User newUser) {
+    public User execute(@NonNull User newUser) {
         if (userRepository.existsByUsername(newUser.getUsername())) {
             throw new EntityExistsException();
         }

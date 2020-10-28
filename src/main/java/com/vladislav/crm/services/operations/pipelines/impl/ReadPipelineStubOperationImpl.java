@@ -2,6 +2,7 @@ package com.vladislav.crm.services.operations.pipelines.impl;
 
 import com.vladislav.crm.entities.Pipeline;
 import com.vladislav.crm.services.operations.ReadOperation;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class ReadPipelineStubOperationImpl implements ReadOperation<Pipeline> {
 
     @Override
     @Transactional
-    public Pipeline execute(Long id) {
+    public Pipeline execute(@NonNull Long id) {
         return entityManager.getReference(Pipeline.class, id);
     }
 }
