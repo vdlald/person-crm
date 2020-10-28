@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -93,8 +94,8 @@ public class UserLeadControllerImpl implements UserLeadController {
     }
 
     @Override
-    @GetMapping(value = "/excel", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void getAllLeadsInExcel(HttpServletResponse response) {
-        getAllLeadsInExcelRequestHandler.handle(response);
+    @GetMapping(value = "/excel", produces = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public void getAllLeadsInExcel(HttpServletRequest request, HttpServletResponse response) {
+        getAllLeadsInExcelRequestHandler.handle(Pair.of(request, response));
     }
 }
