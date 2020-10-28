@@ -2,6 +2,7 @@ package com.vladislav.crm.services.operations.pipelines.impl;
 
 import com.vladislav.crm.repositories.PipelineRepository;
 import com.vladislav.crm.services.operations.pipelines.GetUserIdByPipelineIdOperation;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public class GetUserIdByPipelineIdOperationImpl implements GetUserIdByPipelineId
     private final PipelineRepository pipelineRepository;
 
     @Override
-    public Long execute(Long pipelineId) {
+    public Long execute(@NonNull Long pipelineId) {
         return pipelineRepository.findUserIdById(pipelineId).orElseThrow(EntityNotFoundException::new);
     }
 }

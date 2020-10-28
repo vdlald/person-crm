@@ -2,9 +2,11 @@ package com.vladislav.crm.services.operations.leads.impl;
 
 import com.vladislav.crm.entities.Lead;
 import com.vladislav.crm.services.operations.DeleteOperation;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -16,7 +18,8 @@ public class DeleteLeadOperationImpl implements DeleteOperation<Lead> {
     private final EntityManager entityManager;
 
     @Override
-    public void execute(Long id) {
+    @Transactional
+    public void execute(@NonNull Long id) {
         entityManager.flush();
         entityManager.clear();
 
