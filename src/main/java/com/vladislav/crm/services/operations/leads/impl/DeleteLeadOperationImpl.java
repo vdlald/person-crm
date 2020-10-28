@@ -1,16 +1,33 @@
 package com.vladislav.crm.services.operations.leads.impl;
 
 import com.vladislav.crm.entities.Lead;
-import com.vladislav.crm.services.operations.abstractions.AbstractDeleteOperation;
+import com.vladislav.crm.services.operations.DeleteOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-@Service
-public class DeleteLeadOperationImpl extends AbstractDeleteOperation<Lead> {
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
-    @Autowired
-    public DeleteLeadOperationImpl(JpaRepository<Lead, Long> repository) {
-        super(repository);
+@Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+public class DeleteLeadOperationImpl implements DeleteOperation<Lead> {
+
+    private final EntityManager entityManager;
+
+    @Override
+    public void execute(Long id) {
+        entityManager.flush();
+        entityManager.clear();
+
+        final Query query = entityManager.createNativeQuery(
+                "DELETE FROM leads_contacts WHERE lead_id = :id");
+        query.setParameter("id", id);
+        query.executeUpdate();
+
+        final Query deleteContactQuery = entityManager.createNativeQuery(
+                "DELETE FROM leads WHERE lead_id = :id");
+        deleteContactQuery.setParameter("id", id);
+        deleteContactQuery.executeUpdate();
     }
 }
