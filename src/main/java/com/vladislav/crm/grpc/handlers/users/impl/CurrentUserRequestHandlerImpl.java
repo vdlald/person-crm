@@ -1,6 +1,6 @@
 package com.vladislav.crm.grpc.handlers.users.impl;
 
-import com.proto.users.CurrentUserRequest;
+import com.google.protobuf.Empty;
 import com.proto.users.CurrentUserResponse;
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.grpc.assemblers.CurrentUserResponseAssembler;
@@ -18,7 +18,7 @@ public class CurrentUserRequestHandlerImpl implements CurrentUserRequestHandler 
     private final CurrentUserResponseAssembler currentUserResponseAssembler;
 
     @Override
-    public CurrentUserResponse handle(CurrentUserRequest ignore) {
+    public CurrentUserResponse handle(Empty ignore) {
         final User user = getCurrentUserOperation.execute();
         return currentUserResponseAssembler.toMessage(user);
     }

@@ -1,5 +1,6 @@
 package com.vladislav.crm.grpc.services;
 
+import com.google.protobuf.Empty;
 import com.proto.users.*;
 import com.vladislav.crm.grpc.GrpcServiceUtils;
 import com.vladislav.crm.grpc.handlers.users.CreateUserRequestHandler;
@@ -19,7 +20,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
     private final GetUserRequestHandler getUserRequestHandler;
 
     @Override
-    public void currentUser(CurrentUserRequest request, StreamObserver<CurrentUserResponse> responseObserver) {
+    public void currentUser(Empty request, StreamObserver<CurrentUserResponse> responseObserver) {
         GrpcServiceUtils.handle(currentUserRequestHandler, request, responseObserver);
     }
 
