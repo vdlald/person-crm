@@ -26,6 +26,7 @@ public class UserContactsControllerImpl implements UserContactsController {
     private final ReadContactRequestHandler readContactRequestHandler;
     private final CreateContactRequestHandler createContactRequestHandler;
     private final UpdateContactRequestHandler updateContactRequestHandler;
+    private final AttachContactToCompanyRequestHandler attachContactToCompanyRequestHandler;
     private final DeleteContactRequestHandler deleteContactRequestHandler;
 
     @Override
@@ -46,6 +47,7 @@ public class UserContactsControllerImpl implements UserContactsController {
     @Override
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("@userOwnsCompanyAuthorization.hasAuthorization(#request.companyId)")
     public EntityModel<ReadContactResponse> createContact(
             @Valid @RequestBody CreateContactRequest request
     ) {
@@ -60,6 +62,17 @@ public class UserContactsControllerImpl implements UserContactsController {
             @Valid @RequestBody UpdateContactRequest request
     ) {
         return updateContactRequestHandler.handle(Pair.of(contactId, request));
+    }
+
+    @Override
+    @GetMapping("/{id}/attachTo/{companyId}")
+    @PreAuthorize("@userOwnsContactAuthorization.hasAuthorization(#contactId) && " +
+            "@userOwnsCompanyAuthorization.hasAuthorization(#companyId)")
+    public ResponseEntity<Void> attachContactToCompany(
+            @PathVariable("id") Long contactId,
+            @PathVariable("companyId") Long companyId
+    ) {
+        return attachContactToCompanyRequestHandler.handle(Pair.of(contactId, companyId));
     }
 
     @Override

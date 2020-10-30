@@ -1,9 +1,9 @@
 package com.vladislav.crm.web.assemblers.impl;
 
+import com.vladislav.crm.entities.Pipeline;
 import com.vladislav.crm.web.assemblers.ReadUserPipelinesResponseAssembler;
 import com.vladislav.crm.web.controllers.impl.UserPipelinesControllerImpl;
 import com.vladislav.crm.web.responses.ReadUserPipelinesResponse;
-import com.vladislav.crm.entities.Pipeline;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Component;

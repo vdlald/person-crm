@@ -5,6 +5,7 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +28,14 @@ public class Pipeline extends AbstractEntity {
     @ToString.Include
     private String name;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @ToString.Include
     private User user;
 
     @Setter(AccessLevel.PRIVATE)
-    @OneToMany(mappedBy = "pipeline", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "pipeline", fetch = FetchType.LAZY)
     private List<Status> statuses = new ArrayList<>();
 
     public Pipeline setUser(User newUser) {
@@ -41,16 +43,20 @@ public class Pipeline extends AbstractEntity {
             return this;
         }
 
-        final User oldUser = this.user;
-        user = newUser;
-
-        if (oldUser != null) {
-            oldUser.removePipeline(this);
+        if (user != null) {
+            user.removePipeline(this);
         }
+
+        user = newUser;
 
         if (user != null) {
             user.addPipeline(this);
         }
+        return this;
+    }
+
+    public Pipeline setUserUnsafe(User newUser) {
+        user = newUser;
         return this;
     }
 
@@ -74,10 +80,5 @@ public class Pipeline extends AbstractEntity {
 
     public List<Status> getStatuses() {
         return new ArrayList<>(statuses);
-    }
-
-    @PreRemove
-    private void preRemove() {
-        user.removePipeline(this);
     }
 }

@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Objects;
@@ -32,6 +33,7 @@ public class UserInfo extends AbstractEntity {
     @Column(name = "lastname", length = 32)
     private String lastname;
 
+    @NotNull
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -41,12 +43,13 @@ public class UserInfo extends AbstractEntity {
             return this;
         }
 
-        final User oldInfo = this.user;
-        user = newUser;
-
-        if (oldInfo != null) {
-            oldInfo.setInfo(null);
+        if (user != null) {
+            final User oldUser = user;
+            user = null;
+            oldUser.setInfo(null);
         }
+
+        user = newUser;
 
         if (user != null) {
             user.setInfo(this);

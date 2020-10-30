@@ -5,6 +5,7 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +28,14 @@ public class Company extends AbstractEntity {
     @ToString.Include
     private String name;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @ToString.Include
     private User user;
 
     @Setter(AccessLevel.PRIVATE)
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company", cascade = CascadeType.DETACH)
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     private List<Contact> contacts = new ArrayList<>();
 
     public Company addContact(Contact contact) {
@@ -58,27 +60,25 @@ public class Company extends AbstractEntity {
         return new ArrayList<>(contacts);
     }
 
-    @PreRemove
-    private void preRemove() {
-        contacts.forEach(contact -> contact.setCompany(null));
-        user.removeCompany(this);
-    }
-
     public Company setUser(User newUser) {
         if (Objects.equals(user, newUser)) {
             return this;
         }
 
-        final User oldUser = this.user;
-        user = newUser;
-
-        if (oldUser != null) {
-            oldUser.removeCompany(this);
+        if (user != null) {
+            user.removeCompany(this);
         }
+
+        user = newUser;
 
         if (user != null) {
             user.addCompany(this);
         }
+        return this;
+    }
+
+    public Company setUserUnsafe(User user) {
+        this.user = user;
         return this;
     }
 }

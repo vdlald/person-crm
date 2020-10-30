@@ -6,6 +6,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.*;
 
@@ -27,12 +28,13 @@ public class Contact extends AbstractEntityWithTime {
     @ToString.Include
     private String name;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @ToString.Include
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id")
     private Company company;
 
@@ -48,12 +50,11 @@ public class Contact extends AbstractEntityWithTime {
             return this;
         }
 
-        final User oldUser = this.user;
-        user = newUser;
-
-        if (oldUser != null) {
-            oldUser.removeContact(this);
+        if (user != null) {
+            user.removeContact(this);
         }
+
+        user = newUser;
 
         if (user != null) {
             user.addContact(this);
@@ -61,20 +62,30 @@ public class Contact extends AbstractEntityWithTime {
         return this;
     }
 
+    public Contact setUserUnsafe(User newUser) {
+        user = newUser;
+        return this;
+    }
+
     public Contact setCompany(Company newCompany) {
-        if (Objects.equals(company, newCompany))
+        if (Objects.equals(company, newCompany)) {
             return this;
-
-        final Company oldCompany = this.company;
-        company = newCompany;
-
-        if (oldCompany != null) {
-            oldCompany.removeContact(this);
         }
+
+        if (company != null) {
+            company.removeContact(this);
+        }
+
+        company = newCompany;
 
         if (company != null) {
             newCompany.addContact(this);
         }
+        return this;
+    }
+
+    public Contact setCompanyUnsafe(Company company) {
+        this.company = company;
         return this;
     }
 
@@ -98,12 +109,5 @@ public class Contact extends AbstractEntityWithTime {
 
     public List<Lead> getLeads() {
         return new ArrayList<>(leads);
-    }
-
-    @PreRemove
-    private void preRemove() {
-        user.removeContact(this);
-        company.removeContact(this);
-        leads.forEach(lead -> lead.removeContact(this));
     }
 }

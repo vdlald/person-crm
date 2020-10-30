@@ -1,10 +1,10 @@
 package com.vladislav.crm.web.handlers.pipelines.impl;
 
+import com.vladislav.crm.entities.Pipeline;
+import com.vladislav.crm.services.operations.ReadOperation;
 import com.vladislav.crm.web.handlers.AbstractReadEntityRequestHandler;
 import com.vladislav.crm.web.handlers.pipelines.ReadPipelineRequestHandler;
 import com.vladislav.crm.web.responses.ReadPipelineResponse;
-import com.vladislav.crm.entities.Pipeline;
-import com.vladislav.crm.services.operations.ReadOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
@@ -18,8 +18,8 @@ public class ReadPipelineRequestHandlerImpl
     @Autowired
     public ReadPipelineRequestHandlerImpl(
             RepresentationModelAssembler<Pipeline, EntityModel<ReadPipelineResponse>> assembler,
-            ReadOperation<Pipeline> readOperation
+            ReadOperation<Pipeline> readPipelineOperation
     ) {
-        super(assembler, readOperation);
+        super(assembler, readPipelineOperation);
     }
 }

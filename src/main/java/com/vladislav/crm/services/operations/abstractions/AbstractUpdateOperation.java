@@ -2,6 +2,7 @@ package com.vladislav.crm.services.operations.abstractions;
 
 import com.vladislav.crm.entities.AbstractEntity;
 import com.vladislav.crm.services.operations.UpdateOperation;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,7 +14,7 @@ public abstract class AbstractUpdateOperation<T extends AbstractEntity> implemen
     private final JpaRepository<T, Long> repository;
 
     @Override
-    public T execute(T entity) {
+    public T execute(@NonNull T entity) {
         if (repository.existsById(entity.getId())) {
             return repository.save(entity);
         } else {

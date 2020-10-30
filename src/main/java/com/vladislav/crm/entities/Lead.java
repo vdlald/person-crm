@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.*;
@@ -34,11 +35,13 @@ public class Lead extends AbstractEntityWithTime {
     @ToString.Include
     private BigDecimal sale;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @ToString.Include
     private User user;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "status_id")
     @ToString.Include
@@ -50,19 +53,23 @@ public class Lead extends AbstractEntityWithTime {
 
     public Lead setUser(User newUser) {
         if (Objects.equals(user, newUser)) {
-            return null;
+            return this;
         }
 
-        final User oldUser = this.user;
+        if (user != null) {
+            user.removeLead(this);
+        }
+
         user = newUser;
-
-        if (oldUser != null) {
-            oldUser.removeLead(this);
-        }
 
         if (user != null) {
             user.addLead(this);
         }
+        return this;
+    }
+
+    public Lead setUserUnsafe(User newUser) {
+        user = newUser;
         return this;
     }
 
@@ -71,16 +78,20 @@ public class Lead extends AbstractEntityWithTime {
             return this;
         }
 
-        final Status oldStatus = this.status;
-        status = newStatus;
-
-        if (oldStatus != null) {
-            oldStatus.removeLead(this);
+        if (status != null) {
+            status.removeLead(this);
         }
+
+        status = newStatus;
 
         if (newStatus != null) {
             status.addLead(this);
         }
+        return this;
+    }
+
+    public Lead setStatusUnsafe(Status newStatus) {
+        status = newStatus;
         return this;
     }
 
@@ -104,12 +115,5 @@ public class Lead extends AbstractEntityWithTime {
 
     public List<Contact> getContacts() {
         return new ArrayList<>(contacts);
-    }
-
-    @PreRemove
-    private void preRemove() {
-        user.removeLead(this);
-        status.removeLead(this);
-        contacts.forEach(contact -> contact.removeLead(this));
     }
 }

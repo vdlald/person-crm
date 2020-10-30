@@ -1,40 +1,37 @@
 package com.vladislav.crm.services.operations.contacts.impl;
 
-import com.vladislav.crm.entities.Company;
 import com.vladislav.crm.entities.Contact;
-import com.vladislav.crm.repositories.ContactRepository;
 import com.vladislav.crm.services.operations.DeleteOperation;
-import com.vladislav.crm.services.operations.abstractions.AbstractDeleteOperation;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 @Service
-public class DeleteContactOperationImpl extends AbstractDeleteOperation<Contact> {
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+public class DeleteContactOperationImpl implements DeleteOperation<Contact> {
 
-    private final ContactRepository contactRepository;
-    private final DeleteOperation<Company> companyDeleteOperation;
+    private final EntityManager entityManager;
 
-    public DeleteContactOperationImpl(ContactRepository repository, DeleteOperation<Company> companyDeleteOperation) {
-        super(repository);
-        this.companyDeleteOperation = companyDeleteOperation;
-        contactRepository = repository;
-    }
-
+    // refactor candidate: может быть здесь лучше обойтись без нативных запросов ?
     @Override
-    public void execute(Long id) {
-        final Contact contact = contactRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    @Transactional
+    public void execute(@NonNull Long id) {
+        entityManager.flush();
+        entityManager.clear();
 
-        contact.getLeads().forEach(contact::removeLead);
-        contact.setUser(null);
+        final Query query = entityManager.createNativeQuery(
+                "DELETE FROM leads_contacts WHERE contact_id = :id");
+        query.setParameter("id", id);
+        query.executeUpdate();
 
-        final Company company = contact.getCompany();
-        if (company != null)
-            if (company.getContacts().isEmpty())
-                companyDeleteOperation.execute(company);
-            else
-                contact.setCompany(null);
-
-        contactRepository.delete(contact);
+        final Query deleteContactQuery = entityManager.createNativeQuery(
+                "DELETE FROM contacts WHERE contact_id = :id");
+        deleteContactQuery.setParameter("id", id);
+        deleteContactQuery.executeUpdate();
     }
 }

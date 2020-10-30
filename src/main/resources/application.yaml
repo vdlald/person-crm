@@ -1,7 +1,13 @@
 app:
+  jwt:
+    secret: secretsecretsecretsecretsecretsecret
+    lifetime: 5
   grpc:
     server:
-      port: 50052
+      port: 50051
+    report:
+      host: localhost
+      port: 50053
 spring:
   liquibase:
     change-log: classpath:/db/changelog/v-1.0/changelog-v.1.0-cumulative.xml

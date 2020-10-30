@@ -1,7 +1,6 @@
 package com.vladislav.crm.web.handlers.leads.impl;
 
 import com.vladislav.crm.entities.Lead;
-import com.vladislav.crm.entities.Status;
 import com.vladislav.crm.services.operations.ReadOperation;
 import com.vladislav.crm.services.operations.UpdateOperation;
 import com.vladislav.crm.web.assemblers.ReadLeadResponseAssembler;
@@ -27,13 +26,9 @@ public class UpdateLeadRequestHandlerImpl implements UpdateLeadRequestHandler {
         final Long id = requestPair.getFirst();
         final UpdateLeadRequest request = requestPair.getSecond();
 
-        final Status newStatus = new Status();
-        newStatus.setId(request.getStatusId());
-
         final Lead lead = leadReadOperation.execute(id);
         lead.setName(request.getName())
-                .setSale(request.getSale())
-                .setStatus(newStatus);
+                .setSale(request.getSale());
 
         return readLeadResponseAssembler.toModel(leadUpdateOperation.execute(lead));
     }

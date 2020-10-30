@@ -2,22 +2,23 @@ package com.vladislav.crm.authorizations;
 
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.operations.companies.GetUserIdByCompanyIdOperation;
-import com.vladislav.crm.services.operations.users.GetCurrentUserStubOperation;
+import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserOwnsCompanyAuthorization {
+public class UserOwnsCompanyAuthorization implements UserOwnsEntityAuthorization {
 
-    private final GetCurrentUserStubOperation getCurrentUserStubOperation;
+    private final GetCurrentUserOperation getCurrentUserStubOperation;
     private final GetUserIdByCompanyIdOperation getUserIdByCompanyIdOperation;
 
-    public boolean hasAuthorization(Long contactId) {
+    @Override
+    public boolean hasAuthorization(Long companyId) {
         final User user = getCurrentUserStubOperation.execute();
-        final long contactUserId = getUserIdByCompanyIdOperation.execute(contactId);
+        final long companyUserId = getUserIdByCompanyIdOperation.execute(companyId);
 
-        return user.getId().equals(contactUserId);
+        return user.getId().equals(companyUserId);
     }
 }

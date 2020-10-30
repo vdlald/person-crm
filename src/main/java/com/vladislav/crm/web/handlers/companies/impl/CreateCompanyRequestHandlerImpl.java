@@ -3,7 +3,7 @@ package com.vladislav.crm.web.handlers.companies.impl;
 import com.vladislav.crm.entities.Company;
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.operations.CreateOperation;
-import com.vladislav.crm.services.operations.users.GetCurrentUserStubOperation;
+import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
 import com.vladislav.crm.web.assemblers.CompanyResponseAssembler;
 import com.vladislav.crm.web.handlers.companies.CreateCompanyRequestHandler;
 import com.vladislav.crm.web.requests.CreateCompanyRequest;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CreateCompanyRequestHandlerImpl implements CreateCompanyRequestHandler {
 
-    private final GetCurrentUserStubOperation getCurrentUserStubOperation;
+    private final GetCurrentUserOperation getCurrentUserStubOperation;
     private final CompanyResponseAssembler companyResponseAssembler;
     private final CreateOperation<Company> companyCreateOperation;
 
@@ -26,7 +26,7 @@ public class CreateCompanyRequestHandlerImpl implements CreateCompanyRequestHand
         final User user = getCurrentUserStubOperation.execute();
 
         final Company company = new Company()
-                .setUser(user)
+                .setUserUnsafe(user)
                 .setName(request.getName());
 
         return companyResponseAssembler.toModel(companyCreateOperation.execute(company));

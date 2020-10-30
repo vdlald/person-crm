@@ -5,6 +5,7 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class Status extends AbstractEntity {
     @ToString.Include
     private String name;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pipeline_id")
     @ToString.Include
@@ -41,16 +43,20 @@ public class Status extends AbstractEntity {
             return this;
         }
 
-        final Pipeline oldPipeline = this.pipeline;
-        pipeline = newPipeline;
-
-        if (oldPipeline != null) {
-            oldPipeline.removeStatus(this);
+        if (pipeline != null) {
+            pipeline.removeStatus(this);
         }
+
+        pipeline = newPipeline;
 
         if (pipeline != null) {
             pipeline.addStatus(this);
         }
+        return this;
+    }
+
+    public Status setPipelineUnsafe(Pipeline newPipeline) {
+        pipeline = newPipeline;
         return this;
     }
 
@@ -74,11 +80,5 @@ public class Status extends AbstractEntity {
 
     public List<Lead> getLeads() {
         return new ArrayList<>(leads);
-    }
-
-    @PreRemove
-    private void preRemove() {
-        pipeline.removeStatus(this);
-        leads.forEach(lead -> lead.setStatus(null));
     }
 }

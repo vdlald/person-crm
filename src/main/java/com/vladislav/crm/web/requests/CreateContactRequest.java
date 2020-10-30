@@ -18,4 +18,6 @@ public class CreateContactRequest {
     @Size(min = 1, max = 32)
     private String name;
 
+    private Long companyId;
+
 }
