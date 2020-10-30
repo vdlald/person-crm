@@ -41,7 +41,7 @@ message GetUserResponse {
   UserInfoResponse info = 2;
 }
 
-message UpdateUserInfoRequest {
+message UpdateCurrentUserInfoRequest {
   string email = 1;
   string firstname = 2;
   string lastname = 3;
@@ -54,5 +54,5 @@ service UserService {
 
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {};
 
-  rpc UpdateUserInfo(UpdateUserInfoRequest) returns (google.protobuf.Empty) {};
+  rpc UpdateUserInfo(UpdateCurrentUserInfoRequest) returns (google.protobuf.Empty) {};
 }

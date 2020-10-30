@@ -6,6 +6,7 @@ import com.vladislav.crm.grpc.GrpcServiceUtils;
 import com.vladislav.crm.grpc.handlers.users.CreateUserRequestHandler;
 import com.vladislav.crm.grpc.handlers.users.CurrentUserRequestHandler;
 import com.vladislav.crm.grpc.handlers.users.GetUserRequestHandler;
+import com.vladislav.crm.grpc.handlers.users.UpdateUserInfoRequestHandler;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,16 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
     private final CurrentUserRequestHandler currentUserRequestHandler;
     private final CreateUserRequestHandler createUserRequestHandler;
     private final GetUserRequestHandler getUserRequestHandler;
+    private final UpdateUserInfoRequestHandler updateUserInfoRequestHandler;
 
     @Override
     public void currentUser(Empty request, StreamObserver<CurrentUserResponse> responseObserver) {
         GrpcServiceUtils.handle(currentUserRequestHandler, request, responseObserver);
+    }
+
+    @Override
+    public void updateUserInfo(UpdateCurrentUserInfoRequest request, StreamObserver<Empty> responseObserver) {
+        GrpcServiceUtils.handle(updateUserInfoRequestHandler, request, responseObserver);
     }
 
     @Override
