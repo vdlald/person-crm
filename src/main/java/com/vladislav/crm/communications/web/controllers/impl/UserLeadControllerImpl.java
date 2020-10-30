@@ -52,7 +52,7 @@ public class UserLeadControllerImpl implements UserLeadController {
     @Override
     @PostMapping("/{id}")
     @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#leadId)")
-    public EntityModel<ReadLeadResponse> updateContact(
+    public EntityModel<ReadLeadResponse> updateLead(
             @PathVariable("id") Long leadId,
             @Valid @RequestBody UpdateLeadRequest request
     ) {
