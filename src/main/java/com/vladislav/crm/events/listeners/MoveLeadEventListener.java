@@ -3,7 +3,7 @@ package com.vladislav.crm.events.listeners;
 import com.proto.report.AddMoveLeadLogRequest;
 import com.proto.report.ReportServiceGrpc.ReportServiceStub;
 import com.vladislav.crm.events.MoveLeadEvent;
-import com.vladislav.crm.grpc.DefaultStreamObserver;
+import com.vladislav.crm.communications.grpc.DefaultStreamObserver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
