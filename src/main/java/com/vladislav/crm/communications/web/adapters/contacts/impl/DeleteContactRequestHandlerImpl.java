@@ -1,0 +1,19 @@
+package com.vladislav.crm.communications.web.adapters.contacts.impl;
+
+import com.vladislav.crm.entities.Contact;
+import com.vladislav.crm.services.operations.DeleteOperation;
+import com.vladislav.crm.communications.web.adapters.AbstractDeleteEntityRequestHandler;
+import com.vladislav.crm.communications.web.adapters.contacts.DeleteContactRequestHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class DeleteContactRequestHandlerImpl
+        extends AbstractDeleteEntityRequestHandler<Contact>
+        implements DeleteContactRequestHandler {
+
+    @Autowired
+    public DeleteContactRequestHandlerImpl(DeleteOperation<Contact> deleteOperation) {
+        super(deleteOperation);
+    }
+}

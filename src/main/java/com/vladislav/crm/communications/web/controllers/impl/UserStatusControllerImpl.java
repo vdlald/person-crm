@@ -1,7 +1,7 @@
 package com.vladislav.crm.communications.web.controllers.impl;
 
 import com.vladislav.crm.communications.web.controllers.UserStatusController;
-import com.vladislav.crm.communications.web.handlers.statuses.*;
+import com.vladislav.crm.communications.web.adapters.statuses.*;
 import com.vladislav.crm.communications.web.requests.CreateStatusRequest;
 import com.vladislav.crm.communications.web.requests.UpdateStatusRequest;
 import com.vladislav.crm.communications.web.responses.ReadStatusResponse;

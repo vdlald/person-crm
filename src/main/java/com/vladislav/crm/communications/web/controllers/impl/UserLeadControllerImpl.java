@@ -1,7 +1,7 @@
 package com.vladislav.crm.communications.web.controllers.impl;
 
 import com.vladislav.crm.communications.web.controllers.UserLeadController;
-import com.vladislav.crm.communications.web.handlers.leads.*;
+import com.vladislav.crm.communications.web.adapters.leads.*;
 import com.vladislav.crm.communications.web.requests.CreateLeadRequest;
 import com.vladislav.crm.communications.web.requests.UpdateLeadRequest;
 import com.vladislav.crm.communications.web.responses.ReadLeadResponse;

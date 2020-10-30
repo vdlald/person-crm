@@ -1,9 +1,9 @@
 package com.vladislav.crm.communications.web.controllers.impl;
 
 import com.vladislav.crm.communications.web.controllers.UserController;
-import com.vladislav.crm.communications.web.handlers.users.CreateUserRequestHandler;
-import com.vladislav.crm.communications.web.handlers.users.CurrentUserRequestHandler;
-import com.vladislav.crm.communications.web.handlers.users.UpdateCurrentUserInfoRequestHandler;
+import com.vladislav.crm.communications.web.adapters.users.CreateUserRequestHandler;
+import com.vladislav.crm.communications.web.adapters.users.CurrentUserRequestHandler;
+import com.vladislav.crm.communications.web.adapters.users.UpdateCurrentUserInfoRequestHandler;
 import com.vladislav.crm.communications.web.requests.CreateUserRequest;
 import com.vladislav.crm.communications.web.requests.UpdateCurrentUserInfoRequest;
 import com.vladislav.crm.communications.web.responses.GetCurrentUserResponse;

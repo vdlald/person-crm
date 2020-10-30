@@ -1,7 +1,7 @@
 package com.vladislav.crm.communications.web.controllers.impl;
 
 import com.vladislav.crm.communications.web.controllers.UserCompaniesController;
-import com.vladislav.crm.communications.web.handlers.companies.*;
+import com.vladislav.crm.communications.web.adapters.companies.*;
 import com.vladislav.crm.communications.web.requests.CreateCompanyRequest;
 import com.vladislav.crm.communications.web.requests.UpdateCompanyRequest;
 import com.vladislav.crm.communications.web.responses.CompanyResponse;

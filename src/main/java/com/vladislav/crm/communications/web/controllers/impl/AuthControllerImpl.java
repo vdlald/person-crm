@@ -1,8 +1,8 @@
 package com.vladislav.crm.communications.web.controllers.impl;
 
 import com.vladislav.crm.communications.web.controllers.AuthController;
-import com.vladislav.crm.communications.web.handlers.auth.AuthRequestHandler;
-import com.vladislav.crm.communications.web.requests.AuthRequest;
+import com.vladislav.crm.communications.web.adapters.auth.AuthRequestHandler;
+import com.vladislav.crm.communications.requests.AuthRequest;
 import com.vladislav.crm.communications.web.responses.AuthResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

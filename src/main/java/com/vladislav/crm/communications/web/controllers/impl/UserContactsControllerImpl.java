@@ -1,7 +1,7 @@
 package com.vladislav.crm.communications.web.controllers.impl;
 
 import com.vladislav.crm.communications.web.controllers.UserContactsController;
-import com.vladislav.crm.communications.web.handlers.contacts.*;
+import com.vladislav.crm.communications.web.adapters.contacts.*;
 import com.vladislav.crm.communications.web.requests.CreateContactRequest;
 import com.vladislav.crm.communications.web.requests.UpdateContactRequest;
 import com.vladislav.crm.communications.web.responses.ReadContactResponse;
