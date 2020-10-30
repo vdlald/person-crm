@@ -1,10 +1,10 @@
 package com.vladislav.crm.communications.web.adapters.statuses.impl;
 
-import com.vladislav.crm.entities.Status;
-import com.vladislav.crm.services.operations.ReadOperation;
+import com.vladislav.crm.communications.handlers.AbstractReadEntityRequestHandler;
 import com.vladislav.crm.communications.web.adapters.AbstractReadEntityRequestHandlerAdapter;
 import com.vladislav.crm.communications.web.adapters.statuses.ReadStatusRequestHandlerAdapter;
 import com.vladislav.crm.communications.web.responses.ReadStatusResponse;
+import com.vladislav.crm.entities.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
@@ -18,8 +18,8 @@ public class ReadStatusRequestHandlerAdapterAdapterImpl
     @Autowired
     public ReadStatusRequestHandlerAdapterAdapterImpl(
             RepresentationModelAssembler<Status, EntityModel<ReadStatusResponse>> assembler,
-            ReadOperation<Status> readStatusOperation
+            AbstractReadEntityRequestHandler<Status> requestHandler
     ) {
-        super(assembler, readStatusOperation);
+        super(assembler, requestHandler);
     }
 }

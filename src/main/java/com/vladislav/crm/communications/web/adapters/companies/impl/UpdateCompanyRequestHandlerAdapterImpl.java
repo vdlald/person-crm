@@ -1,10 +1,8 @@
 package com.vladislav.crm.communications.web.adapters.companies.impl;
 
-import com.vladislav.crm.entities.Company;
-import com.vladislav.crm.services.operations.ReadOperation;
-import com.vladislav.crm.services.operations.UpdateOperation;
-import com.vladislav.crm.communications.web.assemblers.CompanyResponseAssembler;
+import com.vladislav.crm.communications.handlers.companies.UpdateCompanyRequestHandler;
 import com.vladislav.crm.communications.web.adapters.companies.UpdateCompanyRequestHandlerAdapter;
+import com.vladislav.crm.communications.web.assemblers.CompanyResponseAssembler;
 import com.vladislav.crm.communications.web.requests.UpdateCompanyRequest;
 import com.vladislav.crm.communications.web.responses.CompanyResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,18 +15,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UpdateCompanyRequestHandlerAdapterImpl implements UpdateCompanyRequestHandlerAdapter {
 
-    private final ReadOperation<Company> readCompanyOperation;
     private final CompanyResponseAssembler companyResponseAssembler;
-    private final UpdateOperation<Company> companyUpdateOperation;
+    private final UpdateCompanyRequestHandler requestHandler;
 
     @Override
     public EntityModel<CompanyResponse> handle(Pair<Long, UpdateCompanyRequest> requestPair) {
-        final Long companyId = requestPair.getFirst();
-        final UpdateCompanyRequest request = requestPair.getSecond();
-
-        final Company company = readCompanyOperation.execute(companyId)
-                .setName(request.getName());
-
-        return companyResponseAssembler.toModel(companyUpdateOperation.execute(company));
+        return companyResponseAssembler.toModel(
+                requestHandler.handle(
+                        Pair.of(requestPair.getFirst(), requestPair.getSecond().toCommunicationRequest())));
     }
 }

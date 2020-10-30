@@ -1,12 +1,11 @@
 package com.vladislav.crm.communications.web.adapters.statuses.impl;
 
-import com.vladislav.crm.entities.Status;
-import com.vladislav.crm.services.operations.ReadOperation;
-import com.vladislav.crm.services.operations.UpdateOperation;
-import com.vladislav.crm.communications.web.assemblers.ReadStatusResponseAssembler;
+import com.vladislav.crm.communications.handlers.statuses.UpdateStatusRequestHandler;
 import com.vladislav.crm.communications.web.adapters.statuses.UpdateStatusRequestHandlerAdapter;
+import com.vladislav.crm.communications.web.assemblers.ReadStatusResponseAssembler;
 import com.vladislav.crm.communications.web.requests.UpdateStatusRequest;
 import com.vladislav.crm.communications.web.responses.ReadStatusResponse;
+import com.vladislav.crm.entities.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
@@ -17,18 +16,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UpdateStatusRequestHandlerAdapterImpl implements UpdateStatusRequestHandlerAdapter {
 
-    private final ReadOperation<Status> readStatusOperation;
-    private final UpdateOperation<Status> statusUpdateOperation;
+    private final UpdateStatusRequestHandler requestHandler;
     private final ReadStatusResponseAssembler readStatusResponseAssembler;
 
     @Override
     public EntityModel<ReadStatusResponse> handle(Pair<Long, UpdateStatusRequest> requestPair) {
-        final Long statusId = requestPair.getFirst();
-        final UpdateStatusRequest request = requestPair.getSecond();
-
-        final Status status = readStatusOperation.execute(statusId)
-                .setName(request.getName());
-
-        return readStatusResponseAssembler.toModel(statusUpdateOperation.execute(status));
+        final Status status = requestHandler.handle(
+                Pair.of(requestPair.getFirst(), requestPair.getSecond().toCommunicationRequest())
+        );
+        return readStatusResponseAssembler.toModel(status);
     }
 }

@@ -1,9 +1,9 @@
 package com.vladislav.crm.communications.web.adapters.statuses.impl;
 
-import com.vladislav.crm.services.operations.leads.ReadStatusLeadsOperation;
+import com.vladislav.crm.communications.handlers.statuses.ReadStatusLeadsRequestHandler;
+import com.vladislav.crm.communications.web.adapters.statuses.ReadStatusLeadsRequestHandlerAdapter;
 import com.vladislav.crm.communications.web.assemblers.ReadLeadResponseAssembler;
 import com.vladislav.crm.communications.web.controllers.impl.UserStatusControllerImpl;
-import com.vladislav.crm.communications.web.adapters.statuses.ReadStatusLeadsRequestHandlerAdapter;
 import com.vladislav.crm.communications.web.responses.ReadLeadResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +24,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class ReadStatusLeadsRequestHandlerAdapterImpl implements ReadStatusLeadsRequestHandlerAdapter {
 
     private final ReadLeadResponseAssembler readLeadResponseAssembler;
-    private final ReadStatusLeadsOperation readStatusLeadsOperation;
+    private final ReadStatusLeadsRequestHandler requestHandler;
 
     @Override
     public RepresentationModel<?> handle(Long statusId) {
-        final List<EntityModel<ReadLeadResponse>> leads = readStatusLeadsOperation.execute(statusId)
+        final List<EntityModel<ReadLeadResponse>> leads = requestHandler.handle(statusId)
                 .stream()
                 .map(readLeadResponseAssembler::toModel)
                 .collect(Collectors.toUnmodifiableList());

@@ -1,11 +1,8 @@
 package com.vladislav.crm.communications.web.adapters.companies.impl;
 
-import com.vladislav.crm.entities.Company;
-import com.vladislav.crm.entities.User;
-import com.vladislav.crm.services.operations.CreateOperation;
-import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
-import com.vladislav.crm.communications.web.assemblers.CompanyResponseAssembler;
+import com.vladislav.crm.communications.handlers.companies.CreateCompanyRequestHandler;
 import com.vladislav.crm.communications.web.adapters.companies.CreateCompanyRequestHandlerAdapter;
+import com.vladislav.crm.communications.web.assemblers.CompanyResponseAssembler;
 import com.vladislav.crm.communications.web.requests.CreateCompanyRequest;
 import com.vladislav.crm.communications.web.responses.CompanyResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,18 +14,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CreateCompanyRequestHandlerAdapterImpl implements CreateCompanyRequestHandlerAdapter {
 
-    private final GetCurrentUserOperation getCurrentUserStubOperation;
     private final CompanyResponseAssembler companyResponseAssembler;
-    private final CreateOperation<Company> companyCreateOperation;
+    private final CreateCompanyRequestHandler requestHandler;
 
     @Override
     public EntityModel<CompanyResponse> handle(CreateCompanyRequest request) {
-        final User user = getCurrentUserStubOperation.execute();
-
-        final Company company = new Company()
-                .setUserUnsafe(user)
-                .setName(request.getName());
-
-        return companyResponseAssembler.toModel(companyCreateOperation.execute(company));
+        return companyResponseAssembler.toModel(requestHandler.handle(request.toCommunicationRequest()));
     }
 }

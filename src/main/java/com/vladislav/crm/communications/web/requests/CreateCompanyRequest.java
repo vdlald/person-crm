@@ -18,4 +18,8 @@ public class CreateCompanyRequest {
     @Size(min = 1, max = 32)
     private String name;
 
+    public com.vladislav.crm.communications.requests.CreateCompanyRequest toCommunicationRequest() {
+        return new com.vladislav.crm.communications.requests.CreateCompanyRequest()
+                .setName(name);
+    }
 }

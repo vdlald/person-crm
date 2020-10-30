@@ -1,10 +1,10 @@
 package com.vladislav.crm.communications.web.adapters.contacts.impl;
 
-import com.vladislav.crm.entities.Contact;
-import com.vladislav.crm.services.operations.ReadOperation;
+import com.vladislav.crm.communications.handlers.AbstractReadEntityRequestHandler;
 import com.vladislav.crm.communications.web.adapters.AbstractReadEntityRequestHandlerAdapter;
 import com.vladislav.crm.communications.web.adapters.contacts.ReadContactRequestHandlerAdapter;
 import com.vladislav.crm.communications.web.responses.ReadContactResponse;
+import com.vladislav.crm.entities.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
@@ -18,8 +18,8 @@ public class ReadContactRequestHandlerAdapterAdapterImpl
     @Autowired
     public ReadContactRequestHandlerAdapterAdapterImpl(
             RepresentationModelAssembler<Contact, EntityModel<ReadContactResponse>> assembler,
-            ReadOperation<Contact> readOperation
+            AbstractReadEntityRequestHandler<Contact> requestHandler
     ) {
-        super(assembler, readOperation);
+        super(assembler, requestHandler);
     }
 }

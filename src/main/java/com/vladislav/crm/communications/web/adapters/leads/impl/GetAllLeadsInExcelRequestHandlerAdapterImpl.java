@@ -1,16 +1,11 @@
 package com.vladislav.crm.communications.web.adapters.leads.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vladislav.crm.communications.handlers.leads.GetAllLeadsInExcelRequestHandler;
 import com.vladislav.crm.communications.web.adapters.leads.GetAllLeadsInExcelRequestHandlerAdapter;
-import com.vladislav.crm.entities.Lead;
-import com.vladislav.crm.entities.User;
-import com.vladislav.crm.functions.CreateExcelFromLeadsFunction;
-import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
-import com.vladislav.crm.services.operations.users.ReadUserLeadsOperation;
 import com.vladislav.crm.communications.web.responses.FileResponse;
 import lombok.RequiredArgsConstructor;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpHeaders;
@@ -21,16 +16,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class GetAllLeadsInExcelRequestHandlerAdapterImpl implements GetAllLeadsInExcelRequestHandlerAdapter {
 
-    private final GetCurrentUserOperation getCurrentUserStubOperation;
-    private final ReadUserLeadsOperation readUserLeadsOperation;
     private final ObjectMapper objectMapper;
+    private final GetAllLeadsInExcelRequestHandler getAllLeadsInExcelRequestHandler;
 
     private static final String filename = "leads.xls";
 
@@ -39,11 +32,7 @@ public class GetAllLeadsInExcelRequestHandlerAdapterImpl implements GetAllLeadsI
         final HttpServletRequest request = pair.getFirst();
         final HttpServletResponse response = pair.getSecond();
 
-        final User user = getCurrentUserStubOperation.execute();
-        final Collection<Lead> leads = readUserLeadsOperation.execute(user.getId());
-
-        final Pair<HSSFWorkbook, HSSFSheet> sheetPair = new CreateExcelFromLeadsFunction().apply(leads);
-        final HSSFWorkbook workbook = sheetPair.getFirst();
+        final Workbook workbook = getAllLeadsInExcelRequestHandler.handle();
 
         final String accept = Optional.ofNullable(request.getHeader("Accept")).orElse("");
         try {

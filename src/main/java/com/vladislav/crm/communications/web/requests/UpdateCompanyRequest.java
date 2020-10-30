@@ -18,4 +18,8 @@ public class UpdateCompanyRequest {
     @Size(min = 1, max = 32)
     private String name;
 
+    public com.vladislav.crm.communications.requests.UpdateCompanyRequest toCommunicationRequest() {
+        return new com.vladislav.crm.communications.requests.UpdateCompanyRequest()
+                .setName(name);
+    }
 }

@@ -1,6 +1,6 @@
 package com.vladislav.crm.communications.web.adapters.contacts.impl;
 
-import com.vladislav.crm.services.operations.contacts.AttachContactToCompanyOperation;
+import com.vladislav.crm.communications.handlers.contacts.AttachContactToCompanyRequestHandler;
 import com.vladislav.crm.communications.web.adapters.contacts.AttachContactToCompanyRequestHandlerAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AttachContactToCompanyRequestHandlerAdapterImpl implements AttachContactToCompanyRequestHandlerAdapter {
 
-    private final AttachContactToCompanyOperation attachContactToCompanyOperation;
+    private final AttachContactToCompanyRequestHandler requestHandler;
 
     @Override
     public ResponseEntity<Void> handle(Pair<Long, Long> requestPair) {
-        attachContactToCompanyOperation.execute(requestPair.getFirst(), requestPair.getSecond());
+        requestHandler.handle(requestPair);
         return ResponseEntity.noContent().build();
     }
 }

@@ -5,4 +5,5 @@ import com.vladislav.crm.communications.requests.CreateUserRequest;
 import com.vladislav.crm.entities.User;
 
 public interface CreateUserRequestHandler extends RequestHandler<CreateUserRequest, User> {
+    User handle(String username, String password);
 }

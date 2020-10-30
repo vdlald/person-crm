@@ -1,6 +1,6 @@
 package com.vladislav.crm.communications.web.adapters.leads.impl;
 
-import com.vladislav.crm.services.operations.leads.AttachLeadToContactOperation;
+import com.vladislav.crm.communications.handlers.leads.AttachLeadToContactRequestHandler;
 import com.vladislav.crm.communications.web.adapters.leads.AttachLeadToContactRequestHandlerAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +12,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AttachLeadToContactRequestHandlerAdapterImpl implements AttachLeadToContactRequestHandlerAdapter {
 
-    private final AttachLeadToContactOperation attachLeadToContactOperation;
+    private final AttachLeadToContactRequestHandler attachLeadToContactRequestHandler;
 
     @Override
     public ResponseEntity<Void> handle(Pair<Long, Long> requestPair) {
-        final Long leadId = requestPair.getFirst();
-        final Long contactId = requestPair.getSecond();
-
-        attachLeadToContactOperation.execute(leadId, contactId);
-
+        attachLeadToContactRequestHandler.handle(requestPair);
         return ResponseEntity.noContent().build();
     }
 }

@@ -1,10 +1,8 @@
 package com.vladislav.crm.communications.web.adapters.contacts.impl;
 
-import com.vladislav.crm.entities.Contact;
-import com.vladislav.crm.services.operations.ReadOperation;
-import com.vladislav.crm.services.operations.UpdateOperation;
-import com.vladislav.crm.communications.web.assemblers.ReadContactResponseAssembler;
+import com.vladislav.crm.communications.handlers.contacts.UpdateContactRequestHandler;
 import com.vladislav.crm.communications.web.adapters.contacts.UpdateContactRequestHandlerAdapter;
+import com.vladislav.crm.communications.web.assemblers.ReadContactResponseAssembler;
 import com.vladislav.crm.communications.web.requests.UpdateContactRequest;
 import com.vladislav.crm.communications.web.responses.ReadContactResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,18 +15,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UpdateContactRequestHandlerAdapterImpl implements UpdateContactRequestHandlerAdapter {
 
-    private final ReadOperation<Contact> readContactOperation;
+    private final UpdateContactRequestHandler requestHandler;
     private final ReadContactResponseAssembler readContactResponseAssembler;
-    private final UpdateOperation<Contact> updateContactOperation;
 
     @Override
     public EntityModel<ReadContactResponse> handle(Pair<Long, UpdateContactRequest> requestPair) {
-        final Long contactId = requestPair.getFirst();
-        final UpdateContactRequest request = requestPair.getSecond();
-
-        final Contact contact = readContactOperation.execute(contactId)
-                .setName(request.getName());
-
-        return readContactResponseAssembler.toModel(updateContactOperation.execute(contact));
+        return readContactResponseAssembler.toModel(
+                requestHandler.handle(
+                        Pair.of(requestPair.getFirst(), requestPair.getSecond().toCommunicationRequest())));
     }
 }

@@ -27,4 +27,10 @@ public class CreateLeadRequest {
     @NotNull
     private Long statusId;
 
+    public com.vladislav.crm.communications.requests.CreateLeadRequest toCommunicationRequest() {
+        return new com.vladislav.crm.communications.requests.CreateLeadRequest()
+                .setName(name)
+                .setSale(sale)
+                .setStatusId(statusId);
+    }
 }

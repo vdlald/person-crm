@@ -1,7 +1,7 @@
 package com.vladislav.crm.communications.web.adapters;
 
+import com.vladislav.crm.communications.handlers.AbstractReadEntityRequestHandler;
 import com.vladislav.crm.entities.AbstractEntity;
-import com.vladislav.crm.services.operations.ReadOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
@@ -11,10 +11,10 @@ public abstract class AbstractReadEntityRequestHandlerAdapter<T extends Abstract
         implements RequestHandlerAdapter<Long, EntityModel<RES>> {
 
     private final RepresentationModelAssembler<T, EntityModel<RES>> assembler;
-    private final ReadOperation<T> readOperation;
+    private final AbstractReadEntityRequestHandler<T> requestHandler;
 
     @Override
     public EntityModel<RES> handle(Long id) {
-        return assembler.toModel(readOperation.execute(id));
+        return assembler.toModel(requestHandler.handle(id));
     }
 }

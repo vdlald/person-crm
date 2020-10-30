@@ -16,9 +16,14 @@ public class CreateUserRequestHandlerImpl implements CreateUserRequestHandler {
 
     @Override
     public User handle(CreateUserRequest request) {
+        return handle(request.getUsername(), request.getPassword());
+    }
+
+    @Override
+    public User handle(String username, String password) {
         final User newUser = new User()
-                .setUsername(request.getUsername())
-                .setPassword(request.getPassword());
+                .setUsername(username)
+                .setPassword(password);
 
         return createUserOperation.execute(newUser);
     }

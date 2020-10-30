@@ -28,4 +28,10 @@ public class UpdateCurrentUserInfoRequest {
     @Column(name = "lastname", length = 32)
     private String lastname;
 
+    public com.vladislav.crm.communications.requests.UpdateCurrentUserInfoRequest toCommunicationRequest() {
+        return new com.vladislav.crm.communications.requests.UpdateCurrentUserInfoRequest()
+                .setEmail(email)
+                .setFirstname(firstname)
+                .setLastname(lastname);
+    }
 }

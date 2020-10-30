@@ -1,11 +1,9 @@
 package com.vladislav.crm.communications.web.adapters.pipelines.impl;
 
-import com.vladislav.crm.entities.User;
-import com.vladislav.crm.services.operations.pipelines.ReadUserPipelinesOperation;
-import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
+import com.vladislav.crm.communications.handlers.pipelines.ReadUserPipelinesRequestHandler;
+import com.vladislav.crm.communications.web.adapters.pipelines.ReadUserPipelinesRequestHandlerAdapter;
 import com.vladislav.crm.communications.web.assemblers.ReadUserPipelinesResponseAssembler;
 import com.vladislav.crm.communications.web.controllers.impl.UserPipelinesControllerImpl;
-import com.vladislav.crm.communications.web.adapters.pipelines.ReadUserPipelinesRequestHandlerAdapter;
 import com.vladislav.crm.communications.web.responses.ReadUserPipelinesResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +23,12 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ReadUserPipelinesRequestHandlerAdapterImpl implements ReadUserPipelinesRequestHandlerAdapter {
 
-    private final GetCurrentUserOperation getCurrentUserStubOperation;
     private final ReadUserPipelinesResponseAssembler readUserPipelinesResponseAssembler;
-    private final ReadUserPipelinesOperation readUserPipelinesOperation;
+    private final ReadUserPipelinesRequestHandler requestHandler;
 
     @Override
     public RepresentationModel<?> handle(Void unused) {
-        final User user = getCurrentUserStubOperation.execute();
-
-        final List<EntityModel<ReadUserPipelinesResponse>> models = readUserPipelinesOperation.execute(user.getId())
+        final List<EntityModel<ReadUserPipelinesResponse>> models = requestHandler.handle()
                 .stream()
                 .map(readUserPipelinesResponseAssembler::toModel)
                 .collect(Collectors.toUnmodifiableList());

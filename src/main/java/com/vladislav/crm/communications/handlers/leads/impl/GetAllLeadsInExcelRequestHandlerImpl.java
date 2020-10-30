@@ -32,4 +32,9 @@ public class GetAllLeadsInExcelRequestHandlerImpl implements GetAllLeadsInExcelR
 
         return sheetPair.getFirst();
     }
+
+    @Override
+    public Workbook handle() {
+        return handle(null);
+    }
 }

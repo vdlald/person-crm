@@ -1,11 +1,9 @@
 package com.vladislav.crm.communications.web.adapters.companies.impl;
 
-import com.vladislav.crm.entities.User;
-import com.vladislav.crm.services.operations.companies.ReadUserCompaniesOperation;
-import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
+import com.vladislav.crm.communications.handlers.companies.ReadUserCompaniesRequestHandler;
+import com.vladislav.crm.communications.web.adapters.companies.ReadUserCompaniesRequestHandlerAdapter;
 import com.vladislav.crm.communications.web.assemblers.CompanyResponseAssembler;
 import com.vladislav.crm.communications.web.controllers.impl.UserCompaniesControllerImpl;
-import com.vladislav.crm.communications.web.adapters.companies.ReadUserCompaniesRequestHandlerAdapter;
 import com.vladislav.crm.communications.web.responses.CompanyResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +23,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ReadUserCompaniesRequestHandlerAdapterImpl implements ReadUserCompaniesRequestHandlerAdapter {
 
-    private final GetCurrentUserOperation getCurrentUserStubOperation;
-    private final ReadUserCompaniesOperation readUserCompaniesOperation;
+    private final ReadUserCompaniesRequestHandler requestHandler;
     private final CompanyResponseAssembler companyResponseAssembler;
 
     @Override
     public RepresentationModel<?> handle(Void unused) {
-        final User user = getCurrentUserStubOperation.execute();
-
-        final List<EntityModel<CompanyResponse>> companies = readUserCompaniesOperation.execute(user.getId()).
-                stream()
+        final List<EntityModel<CompanyResponse>> companies = requestHandler.handle()
+                .stream()
                 .map(companyResponseAssembler::toModel)
                 .collect(Collectors.toUnmodifiableList());
 

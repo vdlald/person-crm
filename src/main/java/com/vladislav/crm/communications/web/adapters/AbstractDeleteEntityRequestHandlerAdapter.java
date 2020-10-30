@@ -1,7 +1,7 @@
 package com.vladislav.crm.communications.web.adapters;
 
+import com.vladislav.crm.communications.handlers.AbstractDeleteEntityRequestHandler;
 import com.vladislav.crm.entities.AbstractEntity;
-import com.vladislav.crm.services.operations.DeleteOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
@@ -9,11 +9,11 @@ import org.springframework.http.ResponseEntity;
 public abstract class AbstractDeleteEntityRequestHandlerAdapter<T extends AbstractEntity>
         implements RequestHandlerAdapter<Long, ResponseEntity<Void>> {
 
-    private final DeleteOperation<T> deleteOperation;
+    private final AbstractDeleteEntityRequestHandler<T> requestHandler;
 
     @Override
     public ResponseEntity<Void> handle(Long id) {
-        deleteOperation.execute(id);
+        requestHandler.handle(id);
         return ResponseEntity.noContent().build();
     }
 }

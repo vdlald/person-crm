@@ -18,4 +18,8 @@ public class UpdateStatusRequest {
     @Size(min = 1, max = 32)
     private String name;
 
+    public com.vladislav.crm.communications.requests.UpdateStatusRequest toCommunicationRequest() {
+        return new com.vladislav.crm.communications.requests.UpdateStatusRequest()
+                .setName(name);
+    }
 }

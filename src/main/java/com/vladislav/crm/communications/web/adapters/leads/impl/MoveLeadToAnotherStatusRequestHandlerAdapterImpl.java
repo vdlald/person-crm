@@ -1,6 +1,6 @@
 package com.vladislav.crm.communications.web.adapters.leads.impl;
 
-import com.vladislav.crm.services.operations.leads.MoveLeadToStatusOperation;
+import com.vladislav.crm.communications.handlers.leads.MoveLeadToAnotherStatusRequestHandler;
 import com.vladislav.crm.communications.web.adapters.leads.MoveLeadToAnotherStatusRequestHandlerAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +12,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class MoveLeadToAnotherStatusRequestHandlerAdapterImpl implements MoveLeadToAnotherStatusRequestHandlerAdapter {
 
-    private final MoveLeadToStatusOperation moveLeadToStatusOperation;
+    private final MoveLeadToAnotherStatusRequestHandler requestHandler;
 
     @Override
     public ResponseEntity<Void> handle(Pair<Long, Long> requestPair) {
-        final Long leadId = requestPair.getFirst();
-        final Long statusId = requestPair.getSecond();
-
-        moveLeadToStatusOperation.execute(leadId, statusId);
-
+        requestHandler.handle(requestPair);
         return ResponseEntity.noContent().build();
     }
 }

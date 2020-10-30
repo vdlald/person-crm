@@ -18,4 +18,8 @@ public class CreatePipelineRequest {
     @Size(min = 1, max = 32)
     private String name;
 
+    public com.vladislav.crm.communications.requests.CreatePipelineRequest toCommunicationRequest() {
+        return new com.vladislav.crm.communications.requests.CreatePipelineRequest()
+                .setName(name);
+    }
 }

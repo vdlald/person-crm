@@ -1,10 +1,10 @@
 package com.vladislav.crm.communications.web.adapters.leads.impl;
 
-import com.vladislav.crm.entities.Lead;
-import com.vladislav.crm.services.operations.ReadOperation;
+import com.vladislav.crm.communications.handlers.AbstractReadEntityRequestHandler;
 import com.vladislav.crm.communications.web.adapters.AbstractReadEntityRequestHandlerAdapter;
 import com.vladislav.crm.communications.web.adapters.leads.ReadLeadRequestHandlerAdapter;
 import com.vladislav.crm.communications.web.responses.ReadLeadResponse;
+import com.vladislav.crm.entities.Lead;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
@@ -18,8 +18,8 @@ public class ReadLeadRequestHandlerAdapterAdapterImpl
     @Autowired
     public ReadLeadRequestHandlerAdapterAdapterImpl(
             RepresentationModelAssembler<Lead, EntityModel<ReadLeadResponse>> assembler,
-            ReadOperation<Lead> readOperation
+            AbstractReadEntityRequestHandler<Lead> requestHandler
     ) {
-        super(assembler, readOperation);
+        super(assembler, requestHandler);
     }
 }

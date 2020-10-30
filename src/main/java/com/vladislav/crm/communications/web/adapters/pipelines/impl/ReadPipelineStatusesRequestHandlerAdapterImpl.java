@@ -1,9 +1,9 @@
 package com.vladislav.crm.communications.web.adapters.pipelines.impl;
 
-import com.vladislav.crm.services.operations.statuses.ReadPipelineStatusesOperation;
+import com.vladislav.crm.communications.handlers.pipelines.ReadPipelineStatusesRequestHandler;
+import com.vladislav.crm.communications.web.adapters.pipelines.ReadPipelineStatusesRequestHandlerAdapter;
 import com.vladislav.crm.communications.web.assemblers.ReadStatusResponseAssembler;
 import com.vladislav.crm.communications.web.controllers.impl.UserPipelinesControllerImpl;
-import com.vladislav.crm.communications.web.adapters.pipelines.ReadPipelineStatusesRequestHandlerAdapter;
 import com.vladislav.crm.communications.web.responses.ReadStatusResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +24,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class ReadPipelineStatusesRequestHandlerAdapterImpl implements ReadPipelineStatusesRequestHandlerAdapter {
 
     private final ReadStatusResponseAssembler readStatusResponseAssembler;
-    private final ReadPipelineStatusesOperation readPipelineStatusesOperation;
+    private final ReadPipelineStatusesRequestHandler requestHandler;
 
     @Override
     public RepresentationModel<?> handle(Long pipelineId) {
-        final List<EntityModel<ReadStatusResponse>> statuses = readPipelineStatusesOperation.execute(pipelineId)
+        final List<EntityModel<ReadStatusResponse>> statuses = requestHandler.handle(pipelineId)
                 .stream()
                 .map(readStatusResponseAssembler::toModel)
                 .collect(Collectors.toUnmodifiableList());

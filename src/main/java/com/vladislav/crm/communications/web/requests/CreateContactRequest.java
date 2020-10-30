@@ -20,4 +20,9 @@ public class CreateContactRequest {
 
     private Long companyId;
 
+    public com.vladislav.crm.communications.requests.CreateContactRequest toCommunicationRequest() {
+        return new com.vladislav.crm.communications.requests.CreateContactRequest()
+                .setName(name)
+                .setCompanyId(companyId);
+    }
 }

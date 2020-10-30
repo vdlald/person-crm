@@ -23,4 +23,9 @@ public class UpdateLeadRequest {
     @DecimalMin("0.0")
     private BigDecimal sale;
 
+    public com.vladislav.crm.communications.requests.UpdateLeadRequest toCommunicationRequest() {
+        return new com.vladislav.crm.communications.requests.UpdateLeadRequest()
+                .setName(name)
+                .setSale(sale);
+    }
 }

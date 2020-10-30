@@ -22,4 +22,9 @@ public class CreateStatusRequest {
     @NotNull
     private Long pipelineId;
 
+    public com.vladislav.crm.communications.requests.CreateStatusRequest toCommunicationRequest() {
+        return new com.vladislav.crm.communications.requests.CreateStatusRequest()
+                .setName(name)
+                .setPipelineId(pipelineId);
+    }
 }
