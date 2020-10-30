@@ -1,7 +1,7 @@
 package com.vladislav.crm.communications.web.controllers.impl;
 
 import com.vladislav.crm.communications.web.controllers.AuthController;
-import com.vladislav.crm.communications.web.adapters.auth.AuthRequestHandler;
+import com.vladislav.crm.communications.web.adapters.auth.AuthRequestHandlerAdapter;
 import com.vladislav.crm.communications.requests.AuthRequest;
 import com.vladislav.crm.communications.web.responses.AuthResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AuthControllerImpl implements AuthController {
 
-    private final AuthRequestHandler authRequestHandler;
+    private final AuthRequestHandlerAdapter authRequestHandlerAdapter;
 
     @Override
     @PostMapping("")
     public AuthResponse auth(@RequestBody AuthRequest authRequest) {
-        return authRequestHandler.handle(authRequest);
+        return authRequestHandlerAdapter.handle(authRequest);
     }
 }

@@ -24,19 +24,19 @@ import javax.validation.Valid;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserLeadControllerImpl implements UserLeadController {
 
-    private final ReadLeadRequestHandler readLeadRequestHandler;
-    private final CreateLeadRequestHandler createLeadRequestHandler;
-    private final UpdateLeadRequestHandler updateLeadRequestHandler;
-    private final DeleteLeadRequestHandler deleteLeadRequestHandler;
-    private final MoveLeadToAnotherStatusRequestHandler moveLeadToAnotherStatusRequestHandler;
-    private final AttachLeadToContactRequestHandler attachLeadToContactRequestHandler;
-    private final GetAllLeadsInExcelRequestHandler getAllLeadsInExcelRequestHandler;
+    private final ReadLeadRequestHandlerAdapter readLeadRequestHandlerAdapter;
+    private final CreateLeadRequestHandlerAdapter createLeadRequestHandlerAdapter;
+    private final UpdateLeadRequestHandlerAdapter updateLeadRequestHandlerAdapter;
+    private final DeleteLeadRequestHandlerAdapter deleteLeadRequestHandlerAdapter;
+    private final MoveLeadToAnotherStatusRequestHandlerAdapter moveLeadToAnotherStatusRequestHandlerAdapter;
+    private final AttachLeadToContactRequestHandlerAdapter attachLeadToContactRequestHandlerAdapter;
+    private final GetAllLeadsInExcelRequestHandlerAdapter getAllLeadsInExcelRequestHandlerAdapter;
 
     @Override
     @GetMapping("/{id}")
     @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#leadId)")
     public EntityModel<ReadLeadResponse> readLead(@PathVariable("id") Long leadId) {
-        return readLeadRequestHandler.handle(leadId);
+        return readLeadRequestHandlerAdapter.handle(leadId);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class UserLeadControllerImpl implements UserLeadController {
     public EntityModel<ReadLeadResponse> createLead(
             @Valid @RequestBody CreateLeadRequest request
     ) {
-        return createLeadRequestHandler.handle(request);
+        return createLeadRequestHandlerAdapter.handle(request);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class UserLeadControllerImpl implements UserLeadController {
             @PathVariable("id") Long leadId,
             @Valid @RequestBody UpdateLeadRequest request
     ) {
-        return updateLeadRequestHandler.handle(Pair.of(leadId, request));
+        return updateLeadRequestHandlerAdapter.handle(Pair.of(leadId, request));
     }
 
     @Override
@@ -66,7 +66,7 @@ public class UserLeadControllerImpl implements UserLeadController {
     public ResponseEntity<Void> deleteLead(
             @PathVariable("id") Long leadId
     ) {
-        return deleteLeadRequestHandler.handle(leadId);
+        return deleteLeadRequestHandlerAdapter.handle(leadId);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class UserLeadControllerImpl implements UserLeadController {
             @PathVariable("id") Long leadId,
             @PathVariable("statusId") Long statusId
     ) {
-        return moveLeadToAnotherStatusRequestHandler.handle(Pair.of(leadId, statusId));
+        return moveLeadToAnotherStatusRequestHandlerAdapter.handle(Pair.of(leadId, statusId));
     }
 
     @Override
@@ -90,12 +90,12 @@ public class UserLeadControllerImpl implements UserLeadController {
             @PathVariable("id") Long leadId,
             @PathVariable("contactId") Long contactId
     ) {
-        return attachLeadToContactRequestHandler.handle(Pair.of(leadId, contactId));
+        return attachLeadToContactRequestHandlerAdapter.handle(Pair.of(leadId, contactId));
     }
 
     @Override
     @GetMapping(value = "/excel", produces = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public void getAllLeadsInExcel(HttpServletRequest request, HttpServletResponse response) {
-        getAllLeadsInExcelRequestHandler.handle(Pair.of(request, response));
+        getAllLeadsInExcelRequestHandlerAdapter.handle(Pair.of(request, response));
     }
 }

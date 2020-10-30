@@ -22,16 +22,16 @@ import javax.validation.Valid;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserCompaniesControllerImpl implements UserCompaniesController {
 
-    private final ReadUserCompaniesRequestHandler readUserCompaniesRequestHandler;
-    private final ReadCompanyRequestHandler readCompanyRequestHandler;
-    private final CreateCompanyRequestHandler createCompanyRequestHandler;
-    private final UpdateCompanyRequestHandler updateCompanyRequestHandler;
-    private final DeleteCompanyRequestHandler deleteCompanyRequestHandler;
+    private final ReadUserCompaniesRequestHandlerAdapter readUserCompaniesRequestHandlerAdapter;
+    private final ReadCompanyRequestHandlerAdapter readCompanyRequestHandlerAdapter;
+    private final CreateCompanyRequestHandlerAdapter createCompanyRequestHandlerAdapter;
+    private final UpdateCompanyRequestHandlerAdapter updateCompanyRequestHandlerAdapter;
+    private final DeleteCompanyRequestHandlerAdapter deleteCompanyRequestHandlerAdapter;
 
     @Override
     @GetMapping("/")
     public RepresentationModel<?> readUserCompanies() {
-        return readUserCompaniesRequestHandler.handle();
+        return readUserCompaniesRequestHandlerAdapter.handle();
     }
 
     @Override
@@ -40,7 +40,7 @@ public class UserCompaniesControllerImpl implements UserCompaniesController {
     public EntityModel<CompanyResponse> readCompany(
             @PathVariable("id") Long companyId
     ) {
-        return readCompanyRequestHandler.handle(companyId);
+        return readCompanyRequestHandlerAdapter.handle(companyId);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class UserCompaniesControllerImpl implements UserCompaniesController {
     public EntityModel<CompanyResponse> createCompany(
             @Valid @RequestBody CreateCompanyRequest request
     ) {
-        return createCompanyRequestHandler.handle(request);
+        return createCompanyRequestHandlerAdapter.handle(request);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class UserCompaniesControllerImpl implements UserCompaniesController {
             @PathVariable("id") Long companyId,
             @Valid @RequestBody UpdateCompanyRequest request
     ) {
-        return updateCompanyRequestHandler.handle(Pair.of(companyId, request));
+        return updateCompanyRequestHandlerAdapter.handle(Pair.of(companyId, request));
     }
 
     @Override
@@ -69,6 +69,6 @@ public class UserCompaniesControllerImpl implements UserCompaniesController {
     public ResponseEntity<Void> deleteCompany(
             @PathVariable("id") Long companyId
     ) {
-        return deleteCompanyRequestHandler.handle(companyId);
+        return deleteCompanyRequestHandlerAdapter.handle(companyId);
     }
 }

@@ -22,17 +22,17 @@ import javax.validation.Valid;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserPipelinesControllerImpl implements UserPipelinesController {
 
-    private final ReadPipelineRequestHandler readPipelineRequestHandler;
-    private final ReadUserPipelinesRequestHandler readUserPipelinesRequestHandler;
-    private final CreatePipelineRequestHandler createPipelineRequestHandler;
-    private final UpdatePipelineRequestHandler updatePipelineRequestHandler;
-    private final DeletePipelineRequestHandler deletePipelineRequestHandler;
-    private final ReadPipelineStatusesRequestHandler readPipelineStatusesRequestHandler;
+    private final ReadPipelineRequestHandlerAdapter readPipelineRequestHandlerAdapter;
+    private final ReadUserPipelinesRequestHandlerAdapter readUserPipelinesRequestHandlerAdapter;
+    private final CreatePipelineRequestHandlerAdapter createPipelineRequestHandlerAdapter;
+    private final UpdatePipelineRequestHandlerAdapter updatePipelineRequestHandlerAdapter;
+    private final DeletePipelineRequestHandlerAdapter deletePipelineRequestHandlerAdapter;
+    private final ReadPipelineStatusesRequestHandlerAdapter readPipelineStatusesRequestHandlerAdapter;
 
     @Override
     @GetMapping("/")
     public RepresentationModel<?> readUserPipelines() {
-        return readUserPipelinesRequestHandler.handle();
+        return readUserPipelinesRequestHandlerAdapter.handle();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class UserPipelinesControllerImpl implements UserPipelinesController {
     public EntityModel<ReadPipelineResponse> readPipeline(
             @PathVariable("id") Long pipelineId
     ) {
-        return readPipelineRequestHandler.handle(pipelineId);
+        return readPipelineRequestHandlerAdapter.handle(pipelineId);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class UserPipelinesControllerImpl implements UserPipelinesController {
     public EntityModel<ReadPipelineResponse> createPipeline(
             @Valid @RequestBody CreatePipelineRequest request
     ) {
-        return createPipelineRequestHandler.handle(request);
+        return createPipelineRequestHandlerAdapter.handle(request);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class UserPipelinesControllerImpl implements UserPipelinesController {
             @PathVariable("id") Long pipelineId,
             @Valid @RequestBody UpdatePipelineRequest request
     ) {
-        return updatePipelineRequestHandler.handle(Pair.of(pipelineId, request));
+        return updatePipelineRequestHandlerAdapter.handle(Pair.of(pipelineId, request));
     }
 
     @Override
@@ -70,7 +70,7 @@ public class UserPipelinesControllerImpl implements UserPipelinesController {
     public ResponseEntity<Void> deletePipeline(
             @PathVariable("id") Long pipelineId
     ) {
-        return deletePipelineRequestHandler.handle(pipelineId);
+        return deletePipelineRequestHandlerAdapter.handle(pipelineId);
     }
 
     @Override
@@ -79,6 +79,6 @@ public class UserPipelinesControllerImpl implements UserPipelinesController {
     public RepresentationModel<?> readPipelineStatuses(
             @PathVariable("id") Long pipelineId
     ) {
-        return readPipelineStatusesRequestHandler.handle(pipelineId);
+        return readPipelineStatusesRequestHandlerAdapter.handle(pipelineId);
     }
 }

@@ -22,17 +22,17 @@ import javax.validation.Valid;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserContactsControllerImpl implements UserContactsController {
 
-    private final ReadUserContactsRequestHandler readUserContactsRequestHandler;
-    private final ReadContactRequestHandler readContactRequestHandler;
-    private final CreateContactRequestHandler createContactRequestHandler;
-    private final UpdateContactRequestHandler updateContactRequestHandler;
-    private final AttachContactToCompanyRequestHandler attachContactToCompanyRequestHandler;
-    private final DeleteContactRequestHandler deleteContactRequestHandler;
+    private final ReadUserContactsRequestHandlerAdapter readUserContactsRequestHandlerAdapter;
+    private final ReadContactRequestHandlerAdapter readContactRequestHandlerAdapter;
+    private final CreateContactRequestHandlerAdapter createContactRequestHandlerAdapter;
+    private final UpdateContactRequestHandlerAdapter updateContactRequestHandlerAdapter;
+    private final AttachContactToCompanyRequestHandlerAdapter attachContactToCompanyRequestHandlerAdapter;
+    private final DeleteContactRequestHandlerAdapter deleteContactRequestHandlerAdapter;
 
     @Override
     @GetMapping("/")
     public RepresentationModel<?> readUserContacts() {
-        return readUserContactsRequestHandler.handle();
+        return readUserContactsRequestHandlerAdapter.handle();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class UserContactsControllerImpl implements UserContactsController {
     public EntityModel<ReadContactResponse> readContact(
             @PathVariable("id") Long contactId
     ) {
-        return readContactRequestHandler.handle(contactId);
+        return readContactRequestHandlerAdapter.handle(contactId);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class UserContactsControllerImpl implements UserContactsController {
     public EntityModel<ReadContactResponse> createContact(
             @Valid @RequestBody CreateContactRequest request
     ) {
-        return createContactRequestHandler.handle(request);
+        return createContactRequestHandlerAdapter.handle(request);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class UserContactsControllerImpl implements UserContactsController {
             @PathVariable("id") Long contactId,
             @Valid @RequestBody UpdateContactRequest request
     ) {
-        return updateContactRequestHandler.handle(Pair.of(contactId, request));
+        return updateContactRequestHandlerAdapter.handle(Pair.of(contactId, request));
     }
 
     @Override
@@ -72,7 +72,7 @@ public class UserContactsControllerImpl implements UserContactsController {
             @PathVariable("id") Long contactId,
             @PathVariable("companyId") Long companyId
     ) {
-        return attachContactToCompanyRequestHandler.handle(Pair.of(contactId, companyId));
+        return attachContactToCompanyRequestHandlerAdapter.handle(Pair.of(contactId, companyId));
     }
 
     @Override
@@ -82,6 +82,6 @@ public class UserContactsControllerImpl implements UserContactsController {
     public ResponseEntity<Void> deleteContact(
             @PathVariable("id") Long contactId
     ) {
-        return deleteContactRequestHandler.handle(contactId);
+        return deleteContactRequestHandlerAdapter.handle(contactId);
     }
 }

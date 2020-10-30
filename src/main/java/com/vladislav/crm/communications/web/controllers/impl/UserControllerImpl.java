@@ -1,9 +1,9 @@
 package com.vladislav.crm.communications.web.controllers.impl;
 
 import com.vladislav.crm.communications.web.controllers.UserController;
-import com.vladislav.crm.communications.web.adapters.users.CreateUserRequestHandler;
-import com.vladislav.crm.communications.web.adapters.users.CurrentUserRequestHandler;
-import com.vladislav.crm.communications.web.adapters.users.UpdateCurrentUserInfoRequestHandler;
+import com.vladislav.crm.communications.web.adapters.users.CreateUserRequestHandlerAdapter;
+import com.vladislav.crm.communications.web.adapters.users.CurrentUserRequestHandlerAdapter;
+import com.vladislav.crm.communications.web.adapters.users.UpdateCurrentUserInfoRequestHandlerAdapter;
 import com.vladislav.crm.communications.web.requests.CreateUserRequest;
 import com.vladislav.crm.communications.web.requests.UpdateCurrentUserInfoRequest;
 import com.vladislav.crm.communications.web.responses.GetCurrentUserResponse;
@@ -20,21 +20,21 @@ import javax.validation.Valid;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserControllerImpl implements UserController {
 
-    private final CreateUserRequestHandler createUserRequestHandler;
-    private final CurrentUserRequestHandler currentUserRequestHandler;
-    private final UpdateCurrentUserInfoRequestHandler updateCurrentUserInfoRequestHandler;
+    private final CreateUserRequestHandlerAdapter createUserRequestHandlerAdapter;
+    private final CurrentUserRequestHandlerAdapter currentUserRequestHandlerAdapter;
+    private final UpdateCurrentUserInfoRequestHandlerAdapter updateCurrentUserInfoRequestHandlerAdapter;
 
     @Override
     @GetMapping("/current")
     public EntityModel<GetCurrentUserResponse> currentUser() {
-        return currentUserRequestHandler.handle();
+        return currentUserRequestHandlerAdapter.handle();
     }
 
     @Override
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public EntityModel<GetCurrentUserResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
-        return createUserRequestHandler.handle(request);
+        return createUserRequestHandlerAdapter.handle(request);
     }
 
     @Override
@@ -42,6 +42,6 @@ public class UserControllerImpl implements UserController {
     public EntityModel<GetCurrentUserResponse> updateUserInfo(
             @Valid @RequestBody UpdateCurrentUserInfoRequest request
     ) {
-        return updateCurrentUserInfoRequestHandler.handle(request);
+        return updateCurrentUserInfoRequestHandlerAdapter.handle(request);
     }
 }

@@ -22,17 +22,17 @@ import javax.validation.Valid;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserStatusControllerImpl implements UserStatusController {
 
-    private final ReadStatusRequestHandler readStatusRequestHandler;
-    private final CreateStatusRequestHandler createStatusRequestHandler;
-    private final UpdateStatusRequestHandler updateStatusRequestHandler;
-    private final DeleteStatusRequestHandler deleteStatusRequestHandler;
-    private final ReadStatusLeadsRequestHandler readStatusLeadsRequestHandler;
+    private final ReadStatusRequestHandlerAdapter readStatusRequestHandlerAdapter;
+    private final CreateStatusRequestHandlerAdapter createStatusRequestHandlerAdapter;
+    private final UpdateStatusRequestHandlerAdapter updateStatusRequestHandlerAdapter;
+    private final DeleteStatusRequestHandlerAdapter deleteStatusRequestHandlerAdapter;
+    private final ReadStatusLeadsRequestHandlerAdapter readStatusLeadsRequestHandlerAdapter;
 
     @Override
     @GetMapping("/{id}")
     @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#statusId)")
     public EntityModel<ReadStatusResponse> readStatus(@PathVariable("id") Long statusId) {
-        return readStatusRequestHandler.handle(statusId);
+        return readStatusRequestHandlerAdapter.handle(statusId);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class UserStatusControllerImpl implements UserStatusController {
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("@userOwnsPipelineAuthorization.hasAuthorization(#request.pipelineId)")
     public EntityModel<ReadStatusResponse> createStatus(@Valid @RequestBody CreateStatusRequest request) {
-        return createStatusRequestHandler.handle(request);
+        return createStatusRequestHandlerAdapter.handle(request);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class UserStatusControllerImpl implements UserStatusController {
             @PathVariable("id") Long statusId,
             @Valid @RequestBody UpdateStatusRequest request
     ) {
-        return updateStatusRequestHandler.handle(Pair.of(statusId, request));
+        return updateStatusRequestHandlerAdapter.handle(Pair.of(statusId, request));
     }
 
     @Override
@@ -58,13 +58,13 @@ public class UserStatusControllerImpl implements UserStatusController {
     @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#statusId)")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> deleteStatus(@PathVariable("id") Long statusId) {
-        return deleteStatusRequestHandler.handle(statusId);
+        return deleteStatusRequestHandlerAdapter.handle(statusId);
     }
 
     @Override
     @GetMapping("/{id}/leads")
     @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#statusId)")
     public RepresentationModel<?> readStatusLeads(@PathVariable("id") Long statusId) {
-        return readStatusLeadsRequestHandler.handle(statusId);
+        return readStatusLeadsRequestHandlerAdapter.handle(statusId);
     }
 }
