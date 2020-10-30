@@ -9,9 +9,9 @@ import com.vladislav.crm.entities.Pipeline;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component("webCreatePipelineRequestHandlerAdapter")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CreatePipelineRequestHandlerAdapterImpl implements CreatePipelineRequestHandlerAdapter {
 

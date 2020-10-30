@@ -8,9 +8,9 @@ import com.vladislav.crm.communications.web.responses.ReadContactResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component("webCreateContactRequestHandlerAdapter")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CreateContactRequestHandlerAdapterImpl implements CreateContactRequestHandlerAdapter {
 

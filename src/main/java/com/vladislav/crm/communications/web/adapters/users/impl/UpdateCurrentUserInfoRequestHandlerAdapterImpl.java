@@ -8,9 +8,9 @@ import com.vladislav.crm.communications.web.responses.GetCurrentUserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component("webUpdateCurrentUserInfoRequestHandlerAdapter")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UpdateCurrentUserInfoRequestHandlerAdapterImpl implements UpdateCurrentUserInfoRequestHandlerAdapter {
 

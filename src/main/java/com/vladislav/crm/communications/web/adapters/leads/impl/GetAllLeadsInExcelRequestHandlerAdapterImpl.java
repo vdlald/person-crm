@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +18,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Optional;
 
-@Service
+@Component("webGetAllLeadsInExcelRequestHandlerAdapter")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class GetAllLeadsInExcelRequestHandlerAdapterImpl implements GetAllLeadsInExcelRequestHandlerAdapter {
 

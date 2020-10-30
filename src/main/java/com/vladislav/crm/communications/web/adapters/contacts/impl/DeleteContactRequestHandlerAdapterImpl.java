@@ -5,15 +5,15 @@ import com.vladislav.crm.communications.web.adapters.AbstractDeleteEntityRequest
 import com.vladislav.crm.communications.web.adapters.contacts.DeleteContactRequestHandlerAdapter;
 import com.vladislav.crm.entities.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
-public class DeleteContactRequestHandlerAdapterAdapterImpl
+@Component("webDeleteContactRequestHandlerAdapter")
+public class DeleteContactRequestHandlerAdapterImpl
         extends AbstractDeleteEntityRequestHandlerAdapter<Contact>
         implements DeleteContactRequestHandlerAdapter {
 
     @Autowired
-    public DeleteContactRequestHandlerAdapterAdapterImpl(AbstractDeleteEntityRequestHandler<Contact> requestHandler) {
+    public DeleteContactRequestHandlerAdapterImpl(AbstractDeleteEntityRequestHandler<Contact> requestHandler) {
         super(requestHandler);
     }
 }

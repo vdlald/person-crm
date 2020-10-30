@@ -11,7 +11,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.mediatype.hal.HalModelBuilder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-@Service
+@Component("webReadPipelineStatusesRequestHandlerAdapter")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ReadPipelineStatusesRequestHandlerAdapterImpl implements ReadPipelineStatusesRequestHandlerAdapter {
 

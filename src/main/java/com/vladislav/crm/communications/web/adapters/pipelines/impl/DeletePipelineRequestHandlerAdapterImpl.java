@@ -5,15 +5,15 @@ import com.vladislav.crm.communications.web.adapters.AbstractDeleteEntityRequest
 import com.vladislav.crm.communications.web.adapters.pipelines.DeletePipelineRequestHandlerAdapter;
 import com.vladislav.crm.entities.Pipeline;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
-public class DeletePipelineRequestHandlerAdapterAdapterImpl
+@Component("webDeletePipelineRequestHandlerAdapter")
+public class DeletePipelineRequestHandlerAdapterImpl
         extends AbstractDeleteEntityRequestHandlerAdapter<Pipeline>
         implements DeletePipelineRequestHandlerAdapter {
 
     @Autowired
-    public DeletePipelineRequestHandlerAdapterAdapterImpl(AbstractDeleteEntityRequestHandler<Pipeline> requestHandler) {
+    public DeletePipelineRequestHandlerAdapterImpl(AbstractDeleteEntityRequestHandler<Pipeline> requestHandler) {
         super(requestHandler);
     }
 }

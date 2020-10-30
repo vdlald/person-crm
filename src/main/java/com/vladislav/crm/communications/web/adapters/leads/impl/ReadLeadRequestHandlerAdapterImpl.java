@@ -8,15 +8,15 @@ import com.vladislav.crm.entities.Lead;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
-public class ReadLeadRequestHandlerAdapterAdapterImpl
+@Component("webReadLeadRequestHandlerAdapter")
+public class ReadLeadRequestHandlerAdapterImpl
         extends AbstractReadEntityRequestHandlerAdapter<Lead, ReadLeadResponse>
         implements ReadLeadRequestHandlerAdapter {
 
     @Autowired
-    public ReadLeadRequestHandlerAdapterAdapterImpl(
+    public ReadLeadRequestHandlerAdapterImpl(
             RepresentationModelAssembler<Lead, EntityModel<ReadLeadResponse>> assembler,
             AbstractReadEntityRequestHandler<Lead> requestHandler
     ) {

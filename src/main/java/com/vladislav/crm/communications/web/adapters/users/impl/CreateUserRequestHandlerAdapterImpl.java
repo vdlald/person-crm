@@ -9,9 +9,9 @@ import com.vladislav.crm.entities.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component("webCreateUserRequestHandlerAdapter")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CreateUserRequestHandlerAdapterImpl implements CreateUserRequestHandlerAdapter {
 

@@ -8,15 +8,15 @@ import com.vladislav.crm.entities.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
-public class ReadStatusRequestHandlerAdapterAdapterImpl
+@Component("webReadStatusRequestHandlerAdapter")
+public class ReadStatusRequestHandlerAdapterImpl
         extends AbstractReadEntityRequestHandlerAdapter<Status, ReadStatusResponse>
         implements ReadStatusRequestHandlerAdapter {
 
     @Autowired
-    public ReadStatusRequestHandlerAdapterAdapterImpl(
+    public ReadStatusRequestHandlerAdapterImpl(
             RepresentationModelAssembler<Status, EntityModel<ReadStatusResponse>> assembler,
             AbstractReadEntityRequestHandler<Status> requestHandler
     ) {

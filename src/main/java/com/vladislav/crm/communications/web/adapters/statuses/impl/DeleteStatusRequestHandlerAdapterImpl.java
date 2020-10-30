@@ -5,15 +5,15 @@ import com.vladislav.crm.communications.web.adapters.AbstractDeleteEntityRequest
 import com.vladislav.crm.communications.web.adapters.statuses.DeleteStatusRequestHandlerAdapter;
 import com.vladislav.crm.entities.Status;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
-public class DeleteStatusRequestHandlerAdapterAdapterImpl
+@Component("webDeleteStatusRequestHandlerAdapter")
+public class DeleteStatusRequestHandlerAdapterImpl
         extends AbstractDeleteEntityRequestHandlerAdapter<Status>
         implements DeleteStatusRequestHandlerAdapter {
 
     @Autowired
-    public DeleteStatusRequestHandlerAdapterAdapterImpl(AbstractDeleteEntityRequestHandler<Status> requestHandler) {
+    public DeleteStatusRequestHandlerAdapterImpl(AbstractDeleteEntityRequestHandler<Status> requestHandler) {
         super(requestHandler);
     }
 }

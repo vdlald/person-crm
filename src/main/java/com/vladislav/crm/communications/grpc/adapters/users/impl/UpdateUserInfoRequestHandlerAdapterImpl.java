@@ -6,9 +6,9 @@ import com.vladislav.crm.communications.grpc.adapters.users.UpdateUserInfoReques
 import com.vladislav.crm.communications.handlers.users.UpdateCurrentUserInfoRequestHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component("grpcUpdateUserInfoRequestHandlerAdapter")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UpdateUserInfoRequestHandlerAdapterImpl implements UpdateUserInfoRequestHandlerAdapter {
 

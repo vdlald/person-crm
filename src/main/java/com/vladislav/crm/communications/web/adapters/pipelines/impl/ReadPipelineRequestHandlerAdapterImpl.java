@@ -8,15 +8,15 @@ import com.vladislav.crm.entities.Pipeline;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
-public class ReadPipelineRequestHandlerAdapterAdapterImpl
+@Component("webReadPipelineRequestHandlerAdapter")
+public class ReadPipelineRequestHandlerAdapterImpl
         extends AbstractReadEntityRequestHandlerAdapter<Pipeline, ReadPipelineResponse>
         implements ReadPipelineRequestHandlerAdapter {
 
     @Autowired
-    public ReadPipelineRequestHandlerAdapterAdapterImpl(
+    public ReadPipelineRequestHandlerAdapterImpl(
             RepresentationModelAssembler<Pipeline, EntityModel<ReadPipelineResponse>> assembler,
             AbstractReadEntityRequestHandler<Pipeline> requestHandler
     ) {

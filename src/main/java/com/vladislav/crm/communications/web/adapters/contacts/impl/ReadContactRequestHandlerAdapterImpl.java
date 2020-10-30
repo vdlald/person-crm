@@ -8,15 +8,15 @@ import com.vladislav.crm.entities.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
-public class ReadContactRequestHandlerAdapterAdapterImpl
+@Component("webReadContactRequestHandlerAdapter")
+public class ReadContactRequestHandlerAdapterImpl
         extends AbstractReadEntityRequestHandlerAdapter<Contact, ReadContactResponse>
         implements ReadContactRequestHandlerAdapter {
 
     @Autowired
-    public ReadContactRequestHandlerAdapterAdapterImpl(
+    public ReadContactRequestHandlerAdapterImpl(
             RepresentationModelAssembler<Contact, EntityModel<ReadContactResponse>> assembler,
             AbstractReadEntityRequestHandler<Contact> requestHandler
     ) {

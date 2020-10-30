@@ -8,15 +8,15 @@ import com.vladislav.crm.entities.Company;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
-public class ReadCompanyRequestHandlerAdapterAdapterImpl
+@Component("webReadCompanyRequestHandlerAdapter")
+public class ReadCompanyRequestHandlerAdapterImpl
         extends AbstractReadEntityRequestHandlerAdapter<Company, CompanyResponse>
         implements ReadCompanyRequestHandlerAdapter {
 
     @Autowired
-    public ReadCompanyRequestHandlerAdapterAdapterImpl(
+    public ReadCompanyRequestHandlerAdapterImpl(
             RepresentationModelAssembler<Company, EntityModel<CompanyResponse>> assembler,
             AbstractReadEntityRequestHandler<Company> requestHandler
     ) {
