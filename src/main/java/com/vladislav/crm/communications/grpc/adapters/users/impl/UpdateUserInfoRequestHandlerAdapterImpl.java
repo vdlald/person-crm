@@ -2,11 +2,8 @@ package com.vladislav.crm.communications.grpc.adapters.users.impl;
 
 import com.google.protobuf.Empty;
 import com.proto.users.UpdateCurrentUserInfoRequest;
-import com.vladislav.crm.entities.User;
-import com.vladislav.crm.entities.UserInfo;
 import com.vladislav.crm.communications.grpc.adapters.users.UpdateUserInfoRequestHandlerAdapter;
-import com.vladislav.crm.services.operations.UpdateOperation;
-import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
+import com.vladislav.crm.communications.handlers.users.UpdateCurrentUserInfoRequestHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,20 +12,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UpdateUserInfoRequestHandlerAdapterImpl implements UpdateUserInfoRequestHandlerAdapter {
 
-    private final GetCurrentUserOperation getCurrentUserOperation;
-    private final UpdateOperation<User> userUpdateOperation;
+    private final UpdateCurrentUserInfoRequestHandler requestHandler;
 
     @Override
     public Empty handle(UpdateCurrentUserInfoRequest request) {
-        final User user = getCurrentUserOperation.execute();
-        final UserInfo info = user.getInfo();
-
-        info.setEmail(request.getEmail())
+        final var adaptedRequest = new com.vladislav.crm.communications.requests.UpdateCurrentUserInfoRequest()
+                .setEmail(request.getEmail())
                 .setFirstname(request.getFirstname())
                 .setLastname(request.getLastname());
-
-        userUpdateOperation.execute(user);
-
+        requestHandler.handle(adaptedRequest);
         return Empty.getDefaultInstance();
     }
 }
