@@ -36,4 +36,6 @@ public interface LeadRepository extends JpaRepository<Lead, Long> {
 
     @Query("select name from Lead where id = :id")
     Optional<String> findLeadNameById(Long id);
+
+    Optional<Lead.LeadInfo> findLeadInfoById(Long id);
 }

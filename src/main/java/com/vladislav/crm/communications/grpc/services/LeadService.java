@@ -4,6 +4,7 @@ import com.proto.leads.*;
 import com.vladislav.crm.communications.grpc.DefaultStreamObserver;
 import com.vladislav.crm.communications.grpc.GrpcServiceUtils;
 import com.vladislav.crm.communications.grpc.adapters.leads.ReadLeadInfoForReportRequestHandlerAdapter;
+import com.vladislav.crm.communications.grpc.adapters.leads.ReadLeadInfoRequestHandlerAdapter;
 import com.vladislav.crm.communications.grpc.adapters.leads.ReadLeadRequestHandlerAdapter;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
@@ -16,10 +17,16 @@ public class LeadService extends LeadServiceGrpc.LeadServiceImplBase {
 
     private final ReadLeadRequestHandlerAdapter readLeadRequestHandlerAdapter;
     private final ReadLeadInfoForReportRequestHandlerAdapter readLeadInfoForReportRequestHandlerAdapter;
+    private final ReadLeadInfoRequestHandlerAdapter readLeadInfoRequestHandlerAdapter;
 
     @Override
     public void readLead(ReadLeadRequest request, StreamObserver<LeadResponse> responseObserver) {
         GrpcServiceUtils.handle(readLeadRequestHandlerAdapter, request, responseObserver);
+    }
+
+    @Override
+    public void readLeadInfo(ReadLeadInfoRequest request, StreamObserver<ReadLeadInfoResponse> responseObserver) {
+        GrpcServiceUtils.handle(readLeadInfoRequestHandlerAdapter, request, responseObserver);
     }
 
     @Override
