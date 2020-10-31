@@ -51,6 +51,17 @@ public class Lead extends AbstractEntityWithTime {
     @ManyToMany(mappedBy = "leads", fetch = FetchType.LAZY)
     private Set<Contact> contacts = new HashSet<>();
 
+    @Value
+    @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+    public static class LeadInfo {
+
+        @EqualsAndHashCode.Include
+        Long id;
+        String name;
+        BigDecimal sale;
+
+    }
+
     public Lead setUser(User newUser) {
         if (Objects.equals(user, newUser)) {
             return this;

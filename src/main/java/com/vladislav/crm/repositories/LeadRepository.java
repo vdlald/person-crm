@@ -33,4 +33,9 @@ public interface LeadRepository extends JpaRepository<Lead, Long> {
     @Modifying(clearAutomatically = true)
     @Query(value = "INSERT INTO leads_contacts VALUES (:contactId, :leadId)", nativeQuery = true)
     void attachLeadToContact(Long leadId, Long contactId);
+
+    @Query("select name from Lead where id = :id")
+    Optional<String> findLeadNameById(Long id);
+
+    Optional<Lead.LeadInfo> findLeadInfoById(Long id);
 }

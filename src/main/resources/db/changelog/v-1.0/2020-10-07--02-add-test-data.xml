@@ -74,12 +74,12 @@
     <changeSet id="16" author="vdlald">
         <insert tableName="statuses">
             <column name="status_id" valueNumeric="1"/>
-            <column name="name" value="status1"/>
+            <column name="name" value="status1_1"/>
             <column name="pipeline_id" valueNumeric="1"/>
         </insert>
         <insert tableName="statuses">
             <column name="status_id" valueNumeric="2"/>
-            <column name="name" value="status2"/>
+            <column name="name" value="status1_2"/>
             <column name="pipeline_id" valueNumeric="1"/>
         </insert>
     </changeSet>
@@ -87,17 +87,17 @@
     <changeSet id="17" author="vdlald">
         <insert tableName="statuses">
             <column name="status_id" valueNumeric="3"/>
-            <column name="name" value="status1"/>
+            <column name="name" value="status2_1"/>
             <column name="pipeline_id" valueNumeric="2"/>
         </insert>
         <insert tableName="statuses">
             <column name="status_id" valueNumeric="4"/>
-            <column name="name" value="status2"/>
+            <column name="name" value="status2_2"/>
             <column name="pipeline_id" valueNumeric="2"/>
         </insert>
         <insert tableName="statuses">
             <column name="status_id" valueNumeric="5"/>
-            <column name="name" value="status3"/>
+            <column name="name" value="status2_3"/>
             <column name="pipeline_id" valueNumeric="2"/>
         </insert>
     </changeSet>

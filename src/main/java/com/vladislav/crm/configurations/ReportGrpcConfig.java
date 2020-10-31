@@ -19,7 +19,9 @@ public class ReportGrpcConfig {
 
     @Bean
     Channel reportChannel() {
-        return ManagedChannelBuilder.forAddress(host, port).build();
+        return ManagedChannelBuilder.forAddress(host, port)
+                .usePlaintext()
+                .build();
     }
 
     @Bean

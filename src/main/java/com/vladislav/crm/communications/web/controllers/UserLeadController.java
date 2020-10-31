@@ -14,7 +14,7 @@ public interface UserLeadController {
 
     EntityModel<ReadLeadResponse> createLead(CreateLeadRequest request);
 
-    EntityModel<ReadLeadResponse> updateContact(Long leadId, UpdateLeadRequest request);
+    EntityModel<ReadLeadResponse> updateLead(Long leadId, UpdateLeadRequest request);
 
     ResponseEntity<Void> deleteLead(Long leadId);
 
