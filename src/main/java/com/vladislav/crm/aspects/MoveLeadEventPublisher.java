@@ -21,18 +21,22 @@ public class MoveLeadEventPublisher {
     private final GetStatusIdByLeadIdOperation getStatusIdByLeadIdOperation;
     private final GetUserIdByLeadIdOperation getUserIdByLeadIdOperation;
 
-    @Pointcut("execution(* com.vladislav.crm.services.operations.leads.impl.MoveLeadToStatusOperationImpl.execute())")
+    @Pointcut("execution(* com.vladislav.crm.services.operations.leads.impl.MoveLeadToStatusOperationImpl.execute(..))")
     public static void leadChangeStatusPoint() {
     }
 
     @Around(value = "leadChangeStatusPoint() && args(leadId, statusId)", argNames = "joinPoint,leadId,statusId")
-    public Object moveLead(ProceedingJoinPoint joinPoint, Long leadId, Long statusId) throws Throwable {
+    public Object moveLead(
+            ProceedingJoinPoint joinPoint,
+            Long leadId,
+            Long statusId
+    ) throws Throwable {
         final Long prevStatusId = getStatusIdByLeadIdOperation.execute(leadId);
 
         final Object proceed = joinPoint.proceed();
 
-        final MoveLeadEvent event = new MoveLeadEvent(
-                this, getUserIdByLeadIdOperation.execute(leadId), leadId, prevStatusId, statusId);
+        final long userId = getUserIdByLeadIdOperation.execute(leadId);
+        final MoveLeadEvent event = new MoveLeadEvent(this, userId, leadId, prevStatusId, statusId);
         publisher.publishEvent(event);
         return proceed;
     }

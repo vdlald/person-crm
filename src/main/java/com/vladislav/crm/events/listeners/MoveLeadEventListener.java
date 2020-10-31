@@ -21,7 +21,7 @@ public class MoveLeadEventListener {
     public void onApplicationEvent(MoveLeadEvent event) {
         final AddMoveLeadLogRequest request = AddMoveLeadLogRequest.newBuilder()
                 .setLeadId(event.getLeadId())
-                .setUserId(event.getLeadId())
+                .setUserId(event.getUserId())
                 .setPrevStatusId(event.getPrevStatusId())
                 .setNextStatusId(event.getNextStatusId())
                 .build();
