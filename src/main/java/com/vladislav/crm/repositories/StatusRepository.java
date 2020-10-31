@@ -15,4 +15,7 @@ public interface StatusRepository extends JpaRepository<Status, Long> {
     Optional<Long> findUserIdById(Long id);
 
     Collection<Status> findAllByPipelineId(Long pipelineId);
+
+    @Query("select name from Status where id = :id")
+    Optional<String> findStatusNameById(Long id);
 }

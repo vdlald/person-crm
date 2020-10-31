@@ -22,8 +22,22 @@ message ReadLeadRequest {
   int64 leadId = 1;
 }
 
+message ReadLeadInfoForReportRequest {
+  int64 leadId = 1;
+  int64 prevStatusId = 2;
+  int64 nextStatusId = 3;
+}
+
+message ReadLeadInfoForReportResponse {
+  string leadName = 1;
+  string prevStatusName = 2;
+  string nextStatusName = 3;
+}
+
 service LeadService {
   rpc ReadLead(ReadLeadRequest) returns (LeadResponse) {};
 
   rpc ReadLeads(stream ReadLeadRequest) returns (stream LeadResponse) {};
+
+  rpc ReadLeadInfoForReport(stream ReadLeadInfoForReportRequest) returns (stream ReadLeadInfoForReportResponse) {};
 }
