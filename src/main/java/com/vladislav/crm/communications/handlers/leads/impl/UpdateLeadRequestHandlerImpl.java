@@ -8,6 +8,7 @@ import com.vladislav.crm.services.operations.UpdateOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,7 @@ public class UpdateLeadRequestHandlerImpl implements UpdateLeadRequestHandler {
     private final UpdateOperation<Lead> leadUpdateOperation;
 
     @Override
+    @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(requestPair.first)")
     public Lead handle(Pair<Long, UpdateLeadRequest> requestPair) {
         final Long id = requestPair.getFirst();
         final UpdateLeadRequest request = requestPair.getSecond();

@@ -9,6 +9,7 @@ import com.vladislav.crm.services.operations.ReadOperation;
 import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +21,7 @@ public class CreateLeadRequestHandlerImpl implements CreateLeadRequestHandler {
     private final ReadOperation<Status> readStatusStubOperation;
 
     @Override
+    @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#request.statusId)")
     public Lead handle(CreateLeadRequest request) {
         final Lead lead = new Lead()
                 .setName(request.getName())

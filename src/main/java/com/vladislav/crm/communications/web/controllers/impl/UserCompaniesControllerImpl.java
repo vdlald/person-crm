@@ -1,7 +1,7 @@
 package com.vladislav.crm.communications.web.controllers.impl;
 
-import com.vladislav.crm.communications.web.controllers.UserCompaniesController;
 import com.vladislav.crm.communications.web.adapters.companies.*;
+import com.vladislav.crm.communications.web.controllers.UserCompaniesController;
 import com.vladislav.crm.communications.web.requests.CreateCompanyRequest;
 import com.vladislav.crm.communications.web.requests.UpdateCompanyRequest;
 import com.vladislav.crm.communications.web.responses.CompanyResponse;
@@ -12,7 +12,6 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,8 +35,6 @@ public class UserCompaniesControllerImpl implements UserCompaniesController {
 
     @Override
     @GetMapping("/{id}")
-    @PreAuthorize("@userOwnsCompanyAuthorization.hasAuthorization(#companyId) || " +
-            "@userOwnsReadAllAuthorization.hasAuthorization()")
     public EntityModel<CompanyResponse> readCompany(
             @PathVariable("id") Long companyId
     ) {
@@ -55,7 +52,6 @@ public class UserCompaniesControllerImpl implements UserCompaniesController {
 
     @Override
     @PostMapping("/{id}")
-    @PreAuthorize("@userOwnsCompanyAuthorization.hasAuthorization(#companyId)")
     public EntityModel<CompanyResponse> updateCompany(
             @PathVariable("id") Long companyId,
             @Valid @RequestBody UpdateCompanyRequest request
@@ -65,7 +61,6 @@ public class UserCompaniesControllerImpl implements UserCompaniesController {
 
     @Override
     @DeleteMapping("/{id}")
-    @PreAuthorize("@userOwnsCompanyAuthorization.hasAuthorization(#companyId)")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> deleteCompany(
             @PathVariable("id") Long companyId

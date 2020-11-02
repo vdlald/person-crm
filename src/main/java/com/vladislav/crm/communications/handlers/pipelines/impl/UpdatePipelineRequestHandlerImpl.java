@@ -8,6 +8,7 @@ import com.vladislav.crm.services.operations.UpdateOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,7 @@ public class UpdatePipelineRequestHandlerImpl implements UpdatePipelineRequestHa
     private final UpdateOperation<Pipeline> pipelineUpdateOperation;
 
     @Override
+    @PreAuthorize("@userOwnsPipelineAuthorization.hasAuthorization(#requestPair.first)")
     public Pipeline handle(Pair<Long, UpdatePipelineRequest> requestPair) {
         final Long pipelineId = requestPair.getFirst();
         final UpdatePipelineRequest request = requestPair.getSecond();

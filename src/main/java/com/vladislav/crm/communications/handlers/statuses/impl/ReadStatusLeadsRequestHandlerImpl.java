@@ -5,6 +5,7 @@ import com.vladislav.crm.entities.Lead;
 import com.vladislav.crm.services.operations.leads.ReadStatusLeadsOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -16,6 +17,8 @@ public class ReadStatusLeadsRequestHandlerImpl implements ReadStatusLeadsRequest
     private final ReadStatusLeadsOperation readStatusLeadsOperation;
 
     @Override
+    @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#statusId) || " +
+            "@userOwnsReadAllAuthorization.hasAuthorization()")
     public Collection<Lead> handle(Long statusId) {
         return readStatusLeadsOperation.execute(statusId);
     }

@@ -8,6 +8,7 @@ import com.vladislav.crm.services.operations.UpdateOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,7 @@ public class UpdateStatusRequestHandlerImpl implements UpdateStatusRequestHandle
     private final UpdateOperation<Status> statusUpdateOperation;
 
     @Override
+    @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#requestPair.first)")
     public Status handle(Pair<Long, UpdateStatusRequest> requestPair) {
         final Long statusId = requestPair.getFirst();
         final UpdateStatusRequest request = requestPair.getSecond();

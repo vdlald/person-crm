@@ -240,7 +240,7 @@
     <changeSet id="27" author="vdlald">
         <insert tableName="user_authorities">
             <column name="user_id" valueNumeric="2"/>
-            <column name="authority" value="read_all"/>
+            <column name="authority" value="READ_ALL"/>
         </insert>
     </changeSet>
 

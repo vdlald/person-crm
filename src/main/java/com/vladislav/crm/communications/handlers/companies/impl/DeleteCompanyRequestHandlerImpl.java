@@ -5,6 +5,7 @@ import com.vladislav.crm.communications.handlers.companies.DeleteCompanyRequestH
 import com.vladislav.crm.entities.Company;
 import com.vladislav.crm.services.operations.DeleteOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,5 +16,11 @@ public class DeleteCompanyRequestHandlerImpl
     @Autowired
     public DeleteCompanyRequestHandlerImpl(DeleteOperation<Company> deleteOperation) {
         super(deleteOperation);
+    }
+
+    @Override
+    @PreAuthorize("@userOwnsCompanyAuthorization.hasAuthorization(#id)")
+    public Void handle(Long id) {
+        return super.handle(id);
     }
 }

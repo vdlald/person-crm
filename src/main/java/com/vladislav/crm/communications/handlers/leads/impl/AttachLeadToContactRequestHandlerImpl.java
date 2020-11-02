@@ -5,6 +5,7 @@ import com.vladislav.crm.services.operations.leads.AttachLeadToContactOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,8 @@ public class AttachLeadToContactRequestHandlerImpl implements AttachLeadToContac
     private final AttachLeadToContactOperation attachLeadToContactOperation;
 
     @Override
+    @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#requestPair.first) && " +
+            "@userOwnsContactAuthorization.hasAuthorization(#requestPair.second)")
     public Void handle(Pair<Long, Long> requestPair) {
         final Long leadId = requestPair.getFirst();
         final Long contactId = requestPair.getSecond();

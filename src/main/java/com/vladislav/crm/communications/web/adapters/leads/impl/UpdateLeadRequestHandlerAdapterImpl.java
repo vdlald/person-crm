@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 @Component("webUpdateLeadRequestHandlerAdapter")
@@ -19,8 +20,8 @@ public class UpdateLeadRequestHandlerAdapterImpl implements UpdateLeadRequestHan
     private final ReadLeadResponseAssembler readLeadResponseAssembler;
 
     @Override
+    @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#requestPair.first)")
     public EntityModel<ReadLeadResponse> handle(Pair<Long, UpdateLeadRequest> requestPair) {
-
         return readLeadResponseAssembler.toModel(
                 requestHandler.handle(
                         Pair.of(requestPair.getFirst(), requestPair.getSecond().toCommunicationRequest())));

@@ -10,6 +10,7 @@ import com.vladislav.crm.services.operations.ReadOperation;
 import com.vladislav.crm.services.operations.users.GetCurrentUserOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,6 +22,7 @@ public class CreateContactRequestHandlerImpl implements CreateContactRequestHand
     private final ReadOperation<Company> readCompanyStubOperation;
 
     @Override
+    @PreAuthorize("@userOwnsCompanyAuthorization.hasAuthorization(#request.companyId)")
     public Contact handle(CreateContactRequest request) {
         final User user = getCurrentUserStubOperation.execute();
 
