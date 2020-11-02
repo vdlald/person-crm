@@ -222,4 +222,26 @@
         </insert>
     </changeSet>
 
+    <changeSet id="25" author="vdlald">
+        <insert tableName="users">
+            <column name="user_id" valueNumeric="2"/>
+            <column name="username" value="reportService"/>
+            <column name="password" value="$2a$10$hGueLku/zBqQz7LEmko3PeO7rOhGA0Yp8wMo.5uVdxKyNNHDUAISu"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="26" author="vdlald">
+        <insert tableName="usersinfo">
+            <column name="userinfo_id" valueNumeric="2"/>
+            <column name="user_id" value="2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="27" author="vdlald">
+        <insert tableName="user_authorities">
+            <column name="user_id" valueNumeric="2"/>
+            <column name="authority" value="read_all"/>
+        </insert>
+    </changeSet>
+
 </databaseChangeLog>

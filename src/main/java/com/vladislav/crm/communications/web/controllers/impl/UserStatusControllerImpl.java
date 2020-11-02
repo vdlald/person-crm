@@ -30,7 +30,8 @@ public class UserStatusControllerImpl implements UserStatusController {
 
     @Override
     @GetMapping("/{id}")
-    @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#statusId)")
+    @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#statusId) || " +
+            "@userOwnsReadAllAuthorization.hasAuthorization()")
     public EntityModel<ReadStatusResponse> readStatus(@PathVariable("id") Long statusId) {
         return readStatusRequestHandlerAdapter.handle(statusId);
     }
@@ -63,7 +64,8 @@ public class UserStatusControllerImpl implements UserStatusController {
 
     @Override
     @GetMapping("/{id}/leads")
-    @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#statusId)")
+    @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#statusId) || " +
+            "@userOwnsReadAllAuthorization.hasAuthorization()")
     public RepresentationModel<?> readStatusLeads(@PathVariable("id") Long statusId) {
         return readStatusLeadsRequestHandlerAdapter.handle(statusId);
     }

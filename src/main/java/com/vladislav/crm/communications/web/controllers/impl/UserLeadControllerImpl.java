@@ -34,7 +34,8 @@ public class UserLeadControllerImpl implements UserLeadController {
 
     @Override
     @GetMapping("/{id}")
-    @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#leadId)")
+    @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#leadId) ||" +
+            "@userOwnsReadAllAuthorization.hasAuthorization()")
     public EntityModel<ReadLeadResponse> readLead(@PathVariable("id") Long leadId) {
         return readLeadRequestHandlerAdapter.handle(leadId);
     }

@@ -36,7 +36,8 @@ public class UserCompaniesControllerImpl implements UserCompaniesController {
 
     @Override
     @GetMapping("/{id}")
-    @PreAuthorize("@userOwnsCompanyAuthorization.hasAuthorization(#companyId)")
+    @PreAuthorize("@userOwnsCompanyAuthorization.hasAuthorization(#companyId) || " +
+            "@userOwnsReadAllAuthorization.hasAuthorization()")
     public EntityModel<CompanyResponse> readCompany(
             @PathVariable("id") Long companyId
     ) {

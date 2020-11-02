@@ -198,6 +198,7 @@ public class User extends AbstractEntityWithTime implements UserDetails {
 
     @AllArgsConstructor
     public enum Authority implements GrantedAuthority {
+        READ_ALL("read_all"),
         ALL("all");
 
         @Getter

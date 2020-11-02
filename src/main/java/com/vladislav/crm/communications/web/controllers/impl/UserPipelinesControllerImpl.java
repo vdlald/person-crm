@@ -37,7 +37,8 @@ public class UserPipelinesControllerImpl implements UserPipelinesController {
 
     @Override
     @GetMapping("/{id}")
-    @PreAuthorize("@userOwnsPipelineAuthorization.hasAuthorization(#pipelineId)")
+    @PreAuthorize("@userOwnsPipelineAuthorization.hasAuthorization(#pipelineId) || " +
+            "@userOwnsReadAllAuthorization.hasAuthorization()")
     public EntityModel<ReadPipelineResponse> readPipeline(
             @PathVariable("id") Long pipelineId
     ) {
@@ -75,7 +76,8 @@ public class UserPipelinesControllerImpl implements UserPipelinesController {
 
     @Override
     @GetMapping("/{id}/statuses")
-    @PreAuthorize("@userOwnsPipelineAuthorization.hasAuthorization(#pipelineId)")
+    @PreAuthorize("@userOwnsPipelineAuthorization.hasAuthorization(#pipelineId) || " +
+            "@userOwnsReadAllAuthorization.hasAuthorization()")
     public RepresentationModel<?> readPipelineStatuses(
             @PathVariable("id") Long pipelineId
     ) {
