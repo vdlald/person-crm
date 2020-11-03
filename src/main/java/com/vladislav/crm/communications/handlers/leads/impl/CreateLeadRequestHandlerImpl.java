@@ -26,8 +26,12 @@ public class CreateLeadRequestHandlerImpl implements CreateLeadRequestHandler {
         final Lead lead = new Lead()
                 .setName(request.getName())
                 .setSale(request.getSale())
-                .setStatusUnsafe(readStatusStubOperation.execute(request.getStatusId()))
                 .setUserUnsafe(getCurrentUserStubOperation.execute());
+
+        final Long statusId = request.getStatusId();
+        if (statusId != null) {
+            lead.setStatusUnsafe(readStatusStubOperation.execute(statusId));
+        }
 
         return leadCreateOperation.execute(lead);
     }

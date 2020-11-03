@@ -1,9 +1,6 @@
 package com.vladislav.crm;
 
-import com.vladislav.crm.entities.AbstractEntity;
-import com.vladislav.crm.entities.Company;
-import com.vladislav.crm.entities.Contact;
-import com.vladislav.crm.entities.User;
+import com.vladislav.crm.entities.*;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -22,6 +19,14 @@ public class TestUtils {
 
     public static Contact getContact(Long id) {
         return getEntity(id, Contact.class);
+    }
+
+    public static Status getStatus(Long id) {
+        return getEntity(id, Status.class);
+    }
+
+    public static Lead getLead(Long id) {
+        return getEntity(id, Lead.class);
     }
 
     private static <T extends AbstractEntity> T getEntity(Long id, Class<T> clazz) {

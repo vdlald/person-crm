@@ -22,13 +22,14 @@ public class GetAllLeadsInExcelRequestHandlerImpl implements GetAllLeadsInExcelR
 
     private final GetCurrentUserOperation getCurrentUserStubOperation;
     private final ReadUserLeadsOperation readUserLeadsOperation;
+    private final CreateExcelFromLeadsFunction createExcelFromLeadsFunction;
 
     @Override
     public Workbook handle(Void unused) {
         final User user = getCurrentUserStubOperation.execute();
         final Collection<Lead> leads = readUserLeadsOperation.execute(user.getId());
 
-        final Pair<HSSFWorkbook, HSSFSheet> sheetPair = new CreateExcelFromLeadsFunction().apply(leads);
+        final Pair<HSSFWorkbook, HSSFSheet> sheetPair = createExcelFromLeadsFunction.apply(leads);
 
         return sheetPair.getFirst();
     }

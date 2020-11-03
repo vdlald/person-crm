@@ -5,10 +5,12 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.data.util.Pair;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.function.Function;
 
+@Component
 public class CreateExcelFromLeadsFunction implements Function<Collection<Lead>, Pair<HSSFWorkbook, HSSFSheet>> {
 
     @Override
