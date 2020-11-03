@@ -1,8 +1,7 @@
-package com.vladislav.crm.communications.handlers.companies;
+package com.vladislav.crm.communications.handlers;
 
-import com.vladislav.crm.communications.handlers.AbstractDeleteEntityRequestHandler;
 import com.vladislav.crm.entities.User;
-import com.vladislav.crm.services.operations.DeleteOperation;
+import com.vladislav.crm.services.operations.ReadOperation;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,19 +13,19 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class TestAbstractDeleteEntityRequestHandler {
+public class TestAbstractReadEntityRequestHandler {
 
     @Mock
-    private DeleteOperation<User> deleteOperation;
+    private ReadOperation<User> userReadOperation;
 
     @Captor
     private ArgumentCaptor<Long> argumentCaptor;
 
-    private AbstractDeleteEntityRequestHandler<User> requestHandler;
+    private AbstractReadEntityRequestHandler<User> requestHandler;
 
     @BeforeEach
     public void setUp() {
-        requestHandler = new AbstractDeleteEntityRequestHandler<>(deleteOperation) {
+        requestHandler = new AbstractReadEntityRequestHandler<>(userReadOperation) {
         };
     }
 
@@ -35,7 +34,8 @@ public class TestAbstractDeleteEntityRequestHandler {
         final long userId = 1L;
         requestHandler.handle(userId);
 
-        Mockito.verify(deleteOperation, Mockito.times(1)).execute(argumentCaptor.capture());
+        Mockito.verify(userReadOperation, Mockito.times(1))
+                .execute(argumentCaptor.capture());
 
         final Long value = argumentCaptor.getValue();
         Assertions.assertEquals(userId, value);
