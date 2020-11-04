@@ -90,38 +90,38 @@ create table usersinfo
 
 --changeset vdlald:10
 alter table users
-    add constraint UK_r43af9ap4edm43mmtq01oddj6 unique (username);
+    add constraint users_unique_username unique (username);
 
 alter table usersinfo
-    add constraint UK_7lw66ffkiov27cf2u2d62ewg5 unique (email);
+    add constraint usersinfo_unique_email unique (email);
 
 alter table contacts
-    add constraint FK5nvk2pja04n1pbiyk1xn7739l foreign key (company_id) references companies;
+    add constraint contacts_fk_company_id foreign key (company_id) references companies;
 
 alter table contacts
-    add constraint FKna8bddygr3l3kq1imghgcskt8 foreign key (user_id) references users;
+    add constraint contacts_fk_user_id foreign key (user_id) references users;
 
 alter table leads
-    add constraint FKm4y87aldo2nu9g4iqwm1y9ngr foreign key (status_id) references statuses;
+    add constraint leads_fk_status_id foreign key (status_id) references statuses;
 
 alter table leads
-    add constraint FK10u8b7klywjncgkn7xffx7ncu foreign key (user_id) references users;
+    add constraint leads_fk_user_id foreign key (user_id) references users;
 
 alter table leads_contacts
-    add constraint FK70aoivhgle1c8wi1hxvvohj5m foreign key (lead_id) references leads;
+    add constraint leads_contacts_fk_lead_id foreign key (lead_id) references leads;
 
 alter table leads_contacts
-    add constraint FKpx2f0y60xb8qflhm6vpg6hg0v foreign key (contact_id) references contacts;
+    add constraint leads_contacts_fk_contact_id foreign key (contact_id) references contacts;
 
 alter table pipelines
-    add constraint FKjr3b68dg5qsj0uf3psd0js6b8 foreign key (user_id) references users;
+    add constraint pipelines_fk_user_id foreign key (user_id) references users;
 
 alter table statuses
-    add constraint FKkw8ywp80vnvotmhg0wgv8jv46 foreign key (pipeline_id) references pipelines;
+    add constraint statuses_fk_pipeline_id foreign key (pipeline_id) references pipelines;
 
 alter table user_authorities
-    add constraint FKswqqnqcyqob25xy8l2iw1mi9 foreign key (user_id) references users;
+    add constraint user_authorities_fk_user_id foreign key (user_id) references users;
 
 alter table usersinfo
-    add constraint FKhjn8m05kaw7ln6i1t4njjfr0s foreign key (user_id) references users;
+    add constraint usersinfo_fk_user_id foreign key (user_id) references users;
 
