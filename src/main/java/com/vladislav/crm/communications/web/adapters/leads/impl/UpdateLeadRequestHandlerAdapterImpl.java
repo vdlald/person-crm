@@ -20,7 +20,6 @@ public class UpdateLeadRequestHandlerAdapterImpl implements UpdateLeadRequestHan
 
     @Override
     public EntityModel<ReadLeadResponse> handle(Pair<Long, UpdateLeadRequest> requestPair) {
-
         return readLeadResponseAssembler.toModel(
                 requestHandler.handle(
                         Pair.of(requestPair.getFirst(), requestPair.getSecond().toCommunicationRequest())));

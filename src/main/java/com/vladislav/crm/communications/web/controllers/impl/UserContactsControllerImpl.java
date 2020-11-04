@@ -1,7 +1,7 @@
 package com.vladislav.crm.communications.web.controllers.impl;
 
-import com.vladislav.crm.communications.web.controllers.UserContactsController;
 import com.vladislav.crm.communications.web.adapters.contacts.*;
+import com.vladislav.crm.communications.web.controllers.UserContactsController;
 import com.vladislav.crm.communications.web.requests.CreateContactRequest;
 import com.vladislav.crm.communications.web.requests.UpdateContactRequest;
 import com.vladislav.crm.communications.web.responses.ReadContactResponse;
@@ -12,7 +12,6 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -37,7 +36,6 @@ public class UserContactsControllerImpl implements UserContactsController {
 
     @Override
     @GetMapping("/{id}")
-    @PreAuthorize("@userOwnsContactAuthorization.hasAuthorization(#contactId)")
     public EntityModel<ReadContactResponse> readContact(
             @PathVariable("id") Long contactId
     ) {
@@ -47,7 +45,6 @@ public class UserContactsControllerImpl implements UserContactsController {
     @Override
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("@userOwnsCompanyAuthorization.hasAuthorization(#request.companyId)")
     public EntityModel<ReadContactResponse> createContact(
             @Valid @RequestBody CreateContactRequest request
     ) {
@@ -56,7 +53,6 @@ public class UserContactsControllerImpl implements UserContactsController {
 
     @Override
     @PostMapping("/{id}")
-    @PreAuthorize("@userOwnsContactAuthorization.hasAuthorization(#contactId)")
     public EntityModel<ReadContactResponse> updateContact(
             @PathVariable("id") Long contactId,
             @Valid @RequestBody UpdateContactRequest request
@@ -66,8 +62,6 @@ public class UserContactsControllerImpl implements UserContactsController {
 
     @Override
     @GetMapping("/{id}/attachTo/{companyId}")
-    @PreAuthorize("@userOwnsContactAuthorization.hasAuthorization(#contactId) && " +
-            "@userOwnsCompanyAuthorization.hasAuthorization(#companyId)")
     public ResponseEntity<Void> attachContactToCompany(
             @PathVariable("id") Long contactId,
             @PathVariable("companyId") Long companyId
@@ -77,7 +71,6 @@ public class UserContactsControllerImpl implements UserContactsController {
 
     @Override
     @DeleteMapping("/{id}")
-    @PreAuthorize("@userOwnsContactAuthorization.hasAuthorization(#contactId)")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> deleteContact(
             @PathVariable("id") Long contactId

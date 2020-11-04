@@ -1,7 +1,7 @@
 package com.vladislav.crm.communications.web.controllers.impl;
 
-import com.vladislav.crm.communications.web.controllers.UserLeadController;
 import com.vladislav.crm.communications.web.adapters.leads.*;
+import com.vladislav.crm.communications.web.controllers.UserLeadController;
 import com.vladislav.crm.communications.web.requests.CreateLeadRequest;
 import com.vladislav.crm.communications.web.requests.UpdateLeadRequest;
 import com.vladislav.crm.communications.web.responses.ReadLeadResponse;
@@ -12,7 +12,6 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +33,6 @@ public class UserLeadControllerImpl implements UserLeadController {
 
     @Override
     @GetMapping("/{id}")
-    @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#leadId)")
     public EntityModel<ReadLeadResponse> readLead(@PathVariable("id") Long leadId) {
         return readLeadRequestHandlerAdapter.handle(leadId);
     }
@@ -42,7 +40,6 @@ public class UserLeadControllerImpl implements UserLeadController {
     @Override
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#request.statusId)")
     public EntityModel<ReadLeadResponse> createLead(
             @Valid @RequestBody CreateLeadRequest request
     ) {
@@ -51,7 +48,6 @@ public class UserLeadControllerImpl implements UserLeadController {
 
     @Override
     @PostMapping("/{id}")
-    @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#leadId)")
     public EntityModel<ReadLeadResponse> updateLead(
             @PathVariable("id") Long leadId,
             @Valid @RequestBody UpdateLeadRequest request
@@ -61,7 +57,6 @@ public class UserLeadControllerImpl implements UserLeadController {
 
     @Override
     @DeleteMapping("/{id}")
-    @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#leadId)")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> deleteLead(
             @PathVariable("id") Long leadId
@@ -71,8 +66,6 @@ public class UserLeadControllerImpl implements UserLeadController {
 
     @Override
     @GetMapping("/{id}/moveTo/{statusId}")
-    @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#leadId) && " +
-            "@userOwnsStatusAuthorization.hasAuthorization(#statusId)")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> moveLeadToAnotherStatus(
             @PathVariable("id") Long leadId,
@@ -83,8 +76,6 @@ public class UserLeadControllerImpl implements UserLeadController {
 
     @Override
     @GetMapping("/{id}/attachTo/{contactId}")
-    @PreAuthorize("@userOwnsLeadAuthorization.hasAuthorization(#leadId) && " +
-            "@userOwnsContactAuthorization.hasAuthorization(#contactId)")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> attachLeadToContact(
             @PathVariable("id") Long leadId,

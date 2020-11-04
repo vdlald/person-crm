@@ -5,6 +5,7 @@ import com.vladislav.crm.communications.handlers.contacts.ReadContactRequestHand
 import com.vladislav.crm.entities.Contact;
 import com.vladislav.crm.services.operations.ReadOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,5 +18,12 @@ public class ReadContactRequestHandlerImpl
             ReadOperation<Contact> readOperation
     ) {
         super(readOperation);
+    }
+
+    @Override
+    @PreAuthorize("@userOwnsContactAuthorization.hasAuthorization(#id) || " +
+            "@userOwnsReadAllAuthorization.hasAuthorization()")
+    public Contact handle(Long id) {
+        return super.handle(id);
     }
 }

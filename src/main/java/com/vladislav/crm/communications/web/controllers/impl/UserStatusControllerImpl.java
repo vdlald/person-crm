@@ -1,7 +1,7 @@
 package com.vladislav.crm.communications.web.controllers.impl;
 
-import com.vladislav.crm.communications.web.controllers.UserStatusController;
 import com.vladislav.crm.communications.web.adapters.statuses.*;
+import com.vladislav.crm.communications.web.controllers.UserStatusController;
 import com.vladislav.crm.communications.web.requests.CreateStatusRequest;
 import com.vladislav.crm.communications.web.requests.UpdateStatusRequest;
 import com.vladislav.crm.communications.web.responses.ReadStatusResponse;
@@ -12,7 +12,6 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,7 +29,6 @@ public class UserStatusControllerImpl implements UserStatusController {
 
     @Override
     @GetMapping("/{id}")
-    @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#statusId)")
     public EntityModel<ReadStatusResponse> readStatus(@PathVariable("id") Long statusId) {
         return readStatusRequestHandlerAdapter.handle(statusId);
     }
@@ -38,14 +36,12 @@ public class UserStatusControllerImpl implements UserStatusController {
     @Override
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("@userOwnsPipelineAuthorization.hasAuthorization(#request.pipelineId)")
     public EntityModel<ReadStatusResponse> createStatus(@Valid @RequestBody CreateStatusRequest request) {
         return createStatusRequestHandlerAdapter.handle(request);
     }
 
     @Override
     @PostMapping("/{id}")
-    @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#statusId)")
     public EntityModel<ReadStatusResponse> updatePipeline(
             @PathVariable("id") Long statusId,
             @Valid @RequestBody UpdateStatusRequest request
@@ -55,7 +51,6 @@ public class UserStatusControllerImpl implements UserStatusController {
 
     @Override
     @DeleteMapping("/{id}")
-    @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#statusId)")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> deleteStatus(@PathVariable("id") Long statusId) {
         return deleteStatusRequestHandlerAdapter.handle(statusId);
@@ -63,7 +58,6 @@ public class UserStatusControllerImpl implements UserStatusController {
 
     @Override
     @GetMapping("/{id}/leads")
-    @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#statusId)")
     public RepresentationModel<?> readStatusLeads(@PathVariable("id") Long statusId) {
         return readStatusLeadsRequestHandlerAdapter.handle(statusId);
     }

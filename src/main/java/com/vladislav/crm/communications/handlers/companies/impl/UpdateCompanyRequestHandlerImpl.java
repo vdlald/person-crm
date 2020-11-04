@@ -8,6 +8,7 @@ import com.vladislav.crm.services.operations.UpdateOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,7 @@ public class UpdateCompanyRequestHandlerImpl implements UpdateCompanyRequestHand
     private final UpdateOperation<Company> companyUpdateOperation;
 
     @Override
+    @PreAuthorize("@userOwnsCompanyAuthorization.hasAuthorization(#requestPair.first)")
     public Company handle(Pair<Long, UpdateCompanyRequest> requestPair) {
         final Long companyId = requestPair.getFirst();
         final UpdateCompanyRequest request = requestPair.getSecond();

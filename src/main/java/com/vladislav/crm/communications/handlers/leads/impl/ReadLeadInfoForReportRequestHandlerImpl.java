@@ -7,6 +7,7 @@ import com.vladislav.crm.services.operations.leads.GetLeadNameOperation;
 import com.vladislav.crm.services.operations.statuses.GetStatusNameOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +18,10 @@ public class ReadLeadInfoForReportRequestHandlerImpl implements ReadLeadInfoForR
     private final GetStatusNameOperation getStatusNameOperation;
 
     @Override
+    @PreAuthorize("(@userOwnsLeadAuthorization.hasAuthorization(#request.leadId) && " +
+            "@userOwnsStatusAuthorization.hasAuthorization(request.prevStatusId) && " +
+            "@userOwnsStatusAuthorization.hasAuthorization(request.nextStatusId)) || " +
+            "@userOwnsReadAllAuthorization.hasAuthorization()")
     public ReadLeadInfoForReportResponse handle(ReadLeadInfoForReportRequest request) {
         return new ReadLeadInfoForReportResponse()
                 .setLeadName(getLeadNameOperation.execute(request.getLeadId()))

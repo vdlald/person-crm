@@ -8,6 +8,7 @@ import com.vladislav.crm.services.operations.UpdateOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,7 @@ public class UpdateContactRequestHandlerImpl implements UpdateContactRequestHand
     private final UpdateOperation<Contact> updateContactOperation;
 
     @Override
+    @PreAuthorize("@userOwnsContactAuthorization.hasAuthorization(#requestPair.first)")
     public Contact handle(Pair<Long, UpdateContactRequest> requestPair) {
         final Long contactId = requestPair.getFirst();
         final UpdateContactRequest request = requestPair.getSecond();

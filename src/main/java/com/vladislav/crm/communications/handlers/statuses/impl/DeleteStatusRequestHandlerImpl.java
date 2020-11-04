@@ -5,6 +5,7 @@ import com.vladislav.crm.communications.handlers.statuses.DeleteStatusRequestHan
 import com.vladislav.crm.entities.Status;
 import com.vladislav.crm.services.operations.DeleteOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,5 +16,11 @@ public class DeleteStatusRequestHandlerImpl
     @Autowired
     public DeleteStatusRequestHandlerImpl(DeleteOperation<Status> deleteOperation) {
         super(deleteOperation);
+    }
+
+    @Override
+    @PreAuthorize("@userOwnsStatusAuthorization.hasAuthorization(#id)")
+    public Void handle(Long id) {
+        return super.handle(id);
     }
 }
