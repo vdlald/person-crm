@@ -21,7 +21,6 @@ public class ReadUserContactsRequestHandlerImpl implements ReadUserContactsReque
     @Override
     public Collection<Contact> handle(Void unused) {
         final User user = getCurrentUserStubOperation.execute();
-
         return readUserContactsOperation.execute(user.getId());
     }
 

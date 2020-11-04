@@ -52,6 +52,7 @@ public class Lead extends AbstractEntityWithTime {
     private Set<Contact> contacts = new HashSet<>();
 
     @Value
+    @Builder(setterPrefix = "set")
     @EqualsAndHashCode(onlyExplicitlyIncluded = true)
     public static class LeadInfo {
 
