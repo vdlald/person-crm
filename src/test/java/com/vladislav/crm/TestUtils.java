@@ -29,6 +29,10 @@ public class TestUtils {
         return getEntity(id, Lead.class);
     }
 
+    public static Pipeline getPipeline(Long id) {
+        return getEntity(id, Pipeline.class);
+    }
+
     private static <T extends AbstractEntity> T getEntity(Long id, Class<T> clazz) {
         final T entity;
         try {

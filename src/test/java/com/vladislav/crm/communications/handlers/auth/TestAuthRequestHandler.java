@@ -53,7 +53,7 @@ public class TestAuthRequestHandler {
         Mockito.verify(authenticationManager).authenticate(Mockito.any(UsernamePasswordAuthenticationToken.class));
         Mockito.verify(userDetailsService).loadUserByUsername("demo");
         Mockito.verify(tokenService).generateToken(user);
-        
+
         Assertions.assertEquals("token", handle.getToken());
     }
 }
