@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -25,10 +24,12 @@ public class RefreshAccessTokenRequestHandlerImpl implements RefreshAccessTokenR
     @Override
     public AuthResponse handle(UUID refreshTokenRaw) {
         final RefreshToken refreshToken = refreshTokenRepository.findById(refreshTokenRaw)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new AccessDeniedException("Refresh token not found"));
+
+        refreshTokenRepository.delete(refreshToken);
 
         final LocalDateTime now = LocalDateTime.now();
-        if (refreshToken.getValidUntil().isBefore(now)) {
+        if (refreshToken.getValidUntil().isAfter(now)) {
             final User user = refreshToken.getUser();
 
             return new AuthResponse()
