@@ -32,7 +32,7 @@ public class RefreshToken {
 
     @NotNull
     @JoinColumn(name = "user_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     @NotNull
