@@ -1,7 +1,8 @@
 app:
   jwt:
     secret: secretsecretsecretsecretsecretsecret
-    lifetime: 5
+    access-token-lifetime: 5
+    refresh-token-lifetime: 90
   grpc:
     server:
       port: 50051

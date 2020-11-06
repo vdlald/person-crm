@@ -2,7 +2,8 @@ package com.vladislav.crm.communications.handlers.auth.impl;
 
 import com.vladislav.crm.communications.handlers.auth.AuthRequestHandler;
 import com.vladislav.crm.communications.requests.AuthRequest;
-import com.vladislav.crm.communications.web.responses.AuthResponse;
+import com.vladislav.crm.communications.responses.AuthResponse;
+import com.vladislav.crm.entities.RefreshToken;
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.TokenService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,11 @@ public class AuthRequestHandlerImpl implements AuthRequestHandler {
 
         final User user = (User) userDetailsService.loadUserByUsername(authRequest.getUsername());
 
-        final String token = tokenService.generateToken(user);
-        return new AuthResponse().setToken(token);
+        final String accessToken = tokenService.generateAccessToken(user);
+        final RefreshToken refreshToken = tokenService.generateRefreshToken(user);
+
+        return new AuthResponse()
+                .setAccessToken(accessToken)
+                .setRefreshToken(refreshToken);
     }
 }

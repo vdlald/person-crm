@@ -16,6 +16,6 @@ public class AuthRequestHandlerAdapterImpl implements AuthRequestHandlerAdapter 
 
     @Override
     public AuthResponse handle(AuthRequest authRequest) {
-        return requestHandler.handle(authRequest);
+        return AuthResponse.of(requestHandler.handle(authRequest));
     }
 }
