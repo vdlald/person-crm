@@ -3,7 +3,8 @@ package com.vladislav.crm.communications.handlers.auth;
 import com.vladislav.crm.TestUtils;
 import com.vladislav.crm.communications.handlers.auth.impl.AuthRequestHandlerImpl;
 import com.vladislav.crm.communications.requests.AuthRequest;
-import com.vladislav.crm.communications.web.responses.AuthResponse;
+import com.vladislav.crm.communications.responses.AuthResponse;
+import com.vladislav.crm.entities.RefreshToken;
 import com.vladislav.crm.entities.User;
 import com.vladislav.crm.services.TokenService;
 import org.junit.jupiter.api.Assertions;
@@ -32,6 +33,7 @@ public class TestAuthRequestHandler {
     private AuthRequestHandler requestHandler;
 
     private User user;
+    private RefreshToken refreshToken;
 
     @BeforeEach
     public void setUp() {
@@ -40,8 +42,12 @@ public class TestAuthRequestHandler {
         Mockito.when(userDetailsService.loadUserByUsername("demo"))
                 .thenReturn(user);
 
-        Mockito.when(tokenService.generateToken(user))
+        Mockito.when(tokenService.generateAccessToken(user))
                 .thenReturn("token");
+
+        refreshToken = new RefreshToken();
+        Mockito.when(tokenService.generateRefreshToken(user))
+                .thenReturn(refreshToken);
 
         requestHandler = new AuthRequestHandlerImpl(userDetailsService, tokenService, authenticationManager);
     }
@@ -52,8 +58,10 @@ public class TestAuthRequestHandler {
 
         Mockito.verify(authenticationManager).authenticate(Mockito.any(UsernamePasswordAuthenticationToken.class));
         Mockito.verify(userDetailsService).loadUserByUsername("demo");
-        Mockito.verify(tokenService).generateToken(user);
+        Mockito.verify(tokenService).generateAccessToken(user);
+        Mockito.verify(tokenService).generateRefreshToken(user);
 
-        Assertions.assertEquals("token", handle.getToken());
+        Assertions.assertEquals("token", handle.getAccessToken());
+        Assertions.assertEquals(refreshToken, handle.getRefreshToken());
     }
 }
