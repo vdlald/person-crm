@@ -1,6 +1,8 @@
 package com.vladislav.crm.services.impl;
 
+import com.vladislav.crm.entities.RefreshToken;
 import com.vladislav.crm.entities.User;
+import com.vladislav.crm.repositories.RefreshTokenRepository;
 import com.vladislav.crm.services.TokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
@@ -24,15 +28,29 @@ public class TokenServiceImpl implements TokenService {
 
     private final JwtParser jwtParser;
     private final SecretKey jwtSecretKey;
+    private final RefreshTokenRepository refreshTokenRepository;
 
-    @Value("${app.jwt.lifetime}")
-    private Integer lifetime;
+    @Value("${app.jwt.access-token-lifetime}")
+    private Integer accessTokenLifetime;
+
+    @Value("${app.jwt.refresh-token-lifetime}")
+    private Integer refreshTokenLifetime;
 
     @Override
-    public String generateToken(User user) {
-
+    public RefreshToken generateRefreshToken(User user) {
         final Instant createdAt = Instant.now();
-        final Instant expiredAt = createdAt.plus(lifetime, ChronoUnit.MINUTES);
+        final Instant expiredAt = createdAt.plus(refreshTokenLifetime, ChronoUnit.DAYS);
+
+        final RefreshToken refreshToken = new RefreshToken().setUserUnsafe(user)
+                .setValidUntil(LocalDateTime.ofInstant(expiredAt, ZoneId.systemDefault()));
+
+        return refreshTokenRepository.save(refreshToken);
+    }
+
+    @Override
+    public String generateAccessToken(User user) {
+        final Instant createdAt = Instant.now();
+        final Instant expiredAt = createdAt.plus(accessTokenLifetime, ChronoUnit.MINUTES);
 
         return Jwts.builder()
                 .claim("userId", user.getId())
