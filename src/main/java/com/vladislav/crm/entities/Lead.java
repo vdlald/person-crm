@@ -61,6 +61,11 @@ public class Lead extends AbstractEntityWithTime {
         String name;
         BigDecimal sale;
 
+        public LeadInfo(long id, String name, BigDecimal sale) {
+            this.id = id;
+            this.name = name;
+            this.sale = sale;
+        }
     }
 
     public Lead setUser(User newUser) {

@@ -49,6 +49,11 @@ public class User extends AbstractEntityWithTime implements UserDetails {
     @Setter(AccessLevel.PRIVATE)
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
     @JsonIgnoreProperties("user")
+    private List<RefreshToken> refreshTokens = new ArrayList<>();
+
+    @Setter(AccessLevel.PRIVATE)
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
+    @JsonIgnoreProperties("user")
     private List<Contact> contacts = new ArrayList<>();
 
     @Setter(AccessLevel.PRIVATE)
@@ -160,6 +165,24 @@ public class User extends AbstractEntityWithTime implements UserDetails {
         return this;
     }
 
+    public User addRefreshToken(RefreshToken token) {
+        if (refreshTokens.contains(token)) {
+            return this;
+        }
+        refreshTokens.add(token);
+        token.setUser(this);
+        return this;
+    }
+
+    public User removeRefreshToken(RefreshToken refreshToken) {
+        if (!refreshTokens.contains(refreshToken)) {
+            return this;
+        }
+        refreshTokens.remove(refreshToken);
+        refreshToken.setUser(null);
+        return this;
+    }
+
     public List<Contact> getContacts() {
         return new ArrayList<>(contacts);
     }
@@ -174,6 +197,10 @@ public class User extends AbstractEntityWithTime implements UserDetails {
 
     public List<Company> getCompanies() {
         return new ArrayList<>(companies);
+    }
+
+    public List<RefreshToken> getRefreshTokens() {
+        return new ArrayList<>(refreshTokens);
     }
 
     @Override
@@ -198,11 +225,11 @@ public class User extends AbstractEntityWithTime implements UserDetails {
 
     @AllArgsConstructor
     public enum Authority implements GrantedAuthority {
-        READ_ALL("read_all"),
-        ALL("all");
+        READ_ALL;
 
-        @Getter
-        private final String authority;
-
+        @Override
+        public String getAuthority() {
+            return toString();
+        }
     }
 }
