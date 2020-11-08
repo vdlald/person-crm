@@ -44,7 +44,12 @@ public class BasicAuthInterceptor implements ServerInterceptor {
 
     private void authUser(String basicAuth) {
         final String base64Credentials = basicAuth.substring("Basic".length()).trim();
-        final String credentials = new String(Base64Utils.decodeFromString(base64Credentials), StandardCharsets.UTF_8);
+        final String credentials;
+        try {
+            credentials = new String(Base64Utils.decodeFromString(base64Credentials), StandardCharsets.UTF_8);
+        } catch (IllegalArgumentException e) {
+            throw new BadCredentialsException("bad credentials");
+        }
         final String[] values = credentials.split(":", 2);
 
         final String username = values[0];
