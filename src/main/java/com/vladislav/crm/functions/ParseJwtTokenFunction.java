@@ -1,7 +1,7 @@
-package com.vladislav.crm.services;
+package com.vladislav.crm.functions;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
-public interface TokenService {
+public interface ParseJwtTokenFunction {
     UserDetails parseToken(String token);
 }

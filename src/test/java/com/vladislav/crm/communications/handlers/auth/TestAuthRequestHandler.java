@@ -5,7 +5,7 @@ import com.vladislav.crm.communications.requests.AuthRequest;
 import com.vladislav.crm.communications.responses.AuthResponse;
 import com.vladislav.crm.entities.RefreshToken;
 import com.vladislav.crm.entities.User;
-import com.vladislav.crm.services.TokenService;
+import com.vladislav.crm.functions.ParseJwtTokenFunction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -26,7 +26,7 @@ public class TestAuthRequestHandler {
     private UserDetailsService userDetailsService;
 
     @Mock
-    private TokenService tokenService;
+    private ParseJwtTokenFunction parseJwtTokenFunction;
 
     @Mock
     private AuthenticationManager authenticationManager;
