@@ -6,7 +6,8 @@ import com.vladislav.crm.communications.requests.AuthRequest;
 import com.vladislav.crm.communications.responses.AuthResponse;
 import com.vladislav.crm.entities.RefreshToken;
 import com.vladislav.crm.entities.User;
-import com.vladislav.crm.services.TokenService;
+import com.vladislav.crm.functions.GenerateAccessTokenFunction;
+import com.vladislav.crm.functions.GenerateRefreshTokenFunction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,10 +26,13 @@ public class TestAuthRequestHandler {
     private UserDetailsService userDetailsService;
 
     @Mock
-    private TokenService tokenService;
+    private AuthenticationManager authenticationManager;
 
     @Mock
-    private AuthenticationManager authenticationManager;
+    private GenerateRefreshTokenFunction generateRefreshTokenFunction;
+
+    @Mock
+    private GenerateAccessTokenFunction generateAccessTokenFunction;
 
     private AuthRequestHandler requestHandler;
 
@@ -42,14 +46,15 @@ public class TestAuthRequestHandler {
         Mockito.when(userDetailsService.loadUserByUsername("demo"))
                 .thenReturn(user);
 
-        Mockito.when(tokenService.generateAccessToken(user))
+        Mockito.when(generateAccessTokenFunction.apply(user))
                 .thenReturn("token");
 
         refreshToken = new RefreshToken();
-        Mockito.when(tokenService.generateRefreshToken(user))
+        Mockito.when(generateRefreshTokenFunction.apply(user))
                 .thenReturn(refreshToken);
 
-        requestHandler = new AuthRequestHandlerImpl(userDetailsService, tokenService, authenticationManager);
+        requestHandler = new AuthRequestHandlerImpl(
+                userDetailsService, authenticationManager, generateRefreshTokenFunction, generateAccessTokenFunction);
     }
 
     @Test
@@ -58,8 +63,8 @@ public class TestAuthRequestHandler {
 
         Mockito.verify(authenticationManager).authenticate(Mockito.any(UsernamePasswordAuthenticationToken.class));
         Mockito.verify(userDetailsService).loadUserByUsername("demo");
-        Mockito.verify(tokenService).generateAccessToken(user);
-        Mockito.verify(tokenService).generateRefreshToken(user);
+        Mockito.verify(generateAccessTokenFunction).apply(user);
+        Mockito.verify(generateRefreshTokenFunction).apply(user);
 
         Assertions.assertEquals("token", handle.getAccessToken());
         Assertions.assertEquals(refreshToken, handle.getRefreshToken());
