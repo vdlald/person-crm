@@ -33,7 +33,7 @@ public class JwtFilter extends OncePerRequestFilter {
         if (Objects.nonNull(requestTokenHeader) && requestTokenHeader.startsWith("Bearer ")) {
             final String token = requestTokenHeader.substring(7);
 
-            final UserDetails user = parseJwtTokenFunction.parseToken(token);
+            final UserDetails user = parseJwtTokenFunction.apply(token);
 
             final UsernamePasswordAuthenticationToken auth =
                     new UsernamePasswordAuthenticationToken(user, "", user.getAuthorities());
