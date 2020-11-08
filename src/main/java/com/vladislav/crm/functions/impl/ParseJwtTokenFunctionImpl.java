@@ -21,7 +21,7 @@ public class ParseJwtTokenFunctionImpl implements ParseJwtTokenFunction {
 
     @Override
     @SuppressWarnings("unchecked cast")
-    public UserDetails parseToken(String token) {
+    public UserDetails apply(String token) {
         final Jws<Claims> jws = jwtParser.parseClaimsJws(token);
         final Claims claims = jws.getBody();
 
