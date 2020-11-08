@@ -4,6 +4,7 @@ import com.vladislav.crm.communications.handlers.auth.RefreshAccessTokenRequestH
 import com.vladislav.crm.communications.responses.AuthResponse;
 import com.vladislav.crm.entities.RefreshToken;
 import com.vladislav.crm.entities.User;
+import com.vladislav.crm.functions.GenerateRefreshTokenFunction;
 import com.vladislav.crm.services.TokenService;
 import com.vladislav.crm.services.operations.refreshtokens.DeleteRefreshTokenOperation;
 import com.vladislav.crm.services.operations.refreshtokens.ReadRefreshTokenOperation;
@@ -23,6 +24,7 @@ public class RefreshAccessTokenRequestHandlerImpl implements RefreshAccessTokenR
     private final TokenService tokenService;
     private final ReadRefreshTokenOperation readRefreshTokenOperation;
     private final DeleteRefreshTokenOperation deleteRefreshTokenOperation;
+    private final GenerateRefreshTokenFunction generateRefreshTokenFunction;
 
     @Override
     public AuthResponse handle(UUID refreshTokenRaw) {
@@ -41,7 +43,7 @@ public class RefreshAccessTokenRequestHandlerImpl implements RefreshAccessTokenR
 
             return new AuthResponse()
                     .setAccessToken(tokenService.generateAccessToken(user))
-                    .setRefreshToken(tokenService.generateRefreshToken(user));
+                    .setRefreshToken(generateRefreshTokenFunction.apply(user));
         } else {
             throw new AccessDeniedException("Refresh token has expired");
         }
