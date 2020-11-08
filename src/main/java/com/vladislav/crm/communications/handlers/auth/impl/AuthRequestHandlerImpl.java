@@ -5,8 +5,8 @@ import com.vladislav.crm.communications.requests.AuthRequest;
 import com.vladislav.crm.communications.responses.AuthResponse;
 import com.vladislav.crm.entities.RefreshToken;
 import com.vladislav.crm.entities.User;
+import com.vladislav.crm.functions.GenerateAccessTokenFunction;
 import com.vladislav.crm.functions.GenerateRefreshTokenFunction;
-import com.vladislav.crm.services.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,9 +19,9 @@ import org.springframework.stereotype.Service;
 public class AuthRequestHandlerImpl implements AuthRequestHandler {
 
     private final UserDetailsService userDetailsService;
-    private final TokenService tokenService;
     private final AuthenticationManager authenticationManager;
     private final GenerateRefreshTokenFunction generateRefreshTokenFunction;
+    private final GenerateAccessTokenFunction generateAccessTokenFunction;
 
     @Override
     public AuthResponse handle(AuthRequest authRequest) {
@@ -30,7 +30,7 @@ public class AuthRequestHandlerImpl implements AuthRequestHandler {
 
         final User user = (User) userDetailsService.loadUserByUsername(authRequest.getUsername());
 
-        final String accessToken = tokenService.generateAccessToken(user);
+        final String accessToken = generateAccessTokenFunction.apply(user);
         final RefreshToken refreshToken = generateRefreshTokenFunction.apply(user);
 
         return new AuthResponse()

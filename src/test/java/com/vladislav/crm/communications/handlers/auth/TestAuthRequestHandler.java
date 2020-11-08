@@ -43,8 +43,8 @@ public class TestAuthRequestHandler {
         Mockito.when(userDetailsService.loadUserByUsername("demo"))
                 .thenReturn(user);
 
-        Mockito.when(tokenService.generateAccessToken(user))
-                .thenReturn("token");
+//        Mockito.when(tokenService.generateAccessToken(user))
+//                .thenReturn("token");
 
         refreshToken = new RefreshToken();
 //        Mockito.when(tokenService.generateRefreshToken(user))
@@ -59,7 +59,7 @@ public class TestAuthRequestHandler {
 
         Mockito.verify(authenticationManager).authenticate(Mockito.any(UsernamePasswordAuthenticationToken.class));
         Mockito.verify(userDetailsService).loadUserByUsername("demo");
-        Mockito.verify(tokenService).generateAccessToken(user);
+//        Mockito.verify(tokenService).generateAccessToken(user);
 //        Mockito.verify(tokenService).generateRefreshToken(user);
 
         Assertions.assertEquals("token", handle.getAccessToken());

@@ -4,8 +4,8 @@ import com.vladislav.crm.communications.handlers.auth.RefreshAccessTokenRequestH
 import com.vladislav.crm.communications.responses.AuthResponse;
 import com.vladislav.crm.entities.RefreshToken;
 import com.vladislav.crm.entities.User;
+import com.vladislav.crm.functions.GenerateAccessTokenFunction;
 import com.vladislav.crm.functions.GenerateRefreshTokenFunction;
-import com.vladislav.crm.services.TokenService;
 import com.vladislav.crm.services.operations.refreshtokens.DeleteRefreshTokenOperation;
 import com.vladislav.crm.services.operations.refreshtokens.ReadRefreshTokenOperation;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +21,10 @@ import java.util.UUID;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RefreshAccessTokenRequestHandlerImpl implements RefreshAccessTokenRequestHandler {
 
-    private final TokenService tokenService;
     private final ReadRefreshTokenOperation readRefreshTokenOperation;
     private final DeleteRefreshTokenOperation deleteRefreshTokenOperation;
     private final GenerateRefreshTokenFunction generateRefreshTokenFunction;
+    private final GenerateAccessTokenFunction generateAccessTokenFunction;
 
     @Override
     public AuthResponse handle(UUID refreshTokenRaw) {
@@ -42,7 +42,7 @@ public class RefreshAccessTokenRequestHandlerImpl implements RefreshAccessTokenR
             final User user = refreshToken.getUser();
 
             return new AuthResponse()
-                    .setAccessToken(tokenService.generateAccessToken(user))
+                    .setAccessToken(generateAccessTokenFunction.apply(user))
                     .setRefreshToken(generateRefreshTokenFunction.apply(user));
         } else {
             throw new AccessDeniedException("Refresh token has expired");
