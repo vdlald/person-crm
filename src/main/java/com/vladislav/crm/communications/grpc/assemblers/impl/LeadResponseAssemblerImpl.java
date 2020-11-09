@@ -36,7 +36,7 @@ public class LeadResponseAssemblerImpl implements LeadResponseAssembler {
         }
 
         int i = 0;
-        for (Contact contact : lead.getContacts()) {
+        for (Contact contact : lead.getContacts()) {  // вопрос: как получить контакты от Lead
             Long contactId = contact.getId();
             builder.setContactsId(i, contactId);
             i++;

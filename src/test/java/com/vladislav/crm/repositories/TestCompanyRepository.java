@@ -65,7 +65,7 @@ public class TestCompanyRepository {
 
     @Test
     @Transactional
-    @Disabled
+    @Disabled  // вопрос: почему меняется имя компании ?
     public void testChangeInUserNotAffectToCompany() {
         user = userRepository.findById(user.getId()).get();
         user.getCompanies().get(0).setName("name");
