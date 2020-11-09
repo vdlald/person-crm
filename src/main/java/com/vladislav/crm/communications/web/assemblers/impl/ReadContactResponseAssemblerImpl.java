@@ -1,11 +1,11 @@
 package com.vladislav.crm.communications.web.assemblers.impl;
 
-import com.vladislav.crm.entities.Company;
-import com.vladislav.crm.entities.Contact;
 import com.vladislav.crm.communications.web.assemblers.ReadContactResponseAssembler;
 import com.vladislav.crm.communications.web.controllers.impl.UserContactsControllerImpl;
-import com.vladislav.crm.communications.web.responses.CompanyResponse;
 import com.vladislav.crm.communications.web.responses.ReadContactResponse;
+import com.vladislav.crm.communications.web.responses.ReadContactResponse.CompanyResponse;
+import com.vladislav.crm.entities.Company;
+import com.vladislav.crm.entities.Contact;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Component;

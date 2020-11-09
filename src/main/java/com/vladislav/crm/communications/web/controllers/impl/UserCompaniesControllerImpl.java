@@ -4,7 +4,7 @@ import com.vladislav.crm.communications.web.adapters.companies.*;
 import com.vladislav.crm.communications.web.controllers.UserCompaniesController;
 import com.vladislav.crm.communications.web.requests.CreateCompanyRequest;
 import com.vladislav.crm.communications.web.requests.UpdateCompanyRequest;
-import com.vladislav.crm.communications.web.responses.CompanyResponse;
+import com.vladislav.crm.communications.web.responses.ReadCompanyResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
@@ -35,7 +35,7 @@ public class UserCompaniesControllerImpl implements UserCompaniesController {
 
     @Override
     @GetMapping("/{id}")
-    public EntityModel<CompanyResponse> readCompany(
+    public EntityModel<ReadCompanyResponse> readCompany(
             @PathVariable("id") Long companyId
     ) {
         return readCompanyRequestHandlerAdapter.handle(companyId);
@@ -44,7 +44,7 @@ public class UserCompaniesControllerImpl implements UserCompaniesController {
     @Override
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    public EntityModel<CompanyResponse> createCompany(
+    public EntityModel<ReadCompanyResponse> createCompany(
             @Valid @RequestBody CreateCompanyRequest request
     ) {
         return createCompanyRequestHandlerAdapter.handle(request);
@@ -52,7 +52,7 @@ public class UserCompaniesControllerImpl implements UserCompaniesController {
 
     @Override
     @PostMapping("/{id}")
-    public EntityModel<CompanyResponse> updateCompany(
+    public EntityModel<ReadCompanyResponse> updateCompany(
             @PathVariable("id") Long companyId,
             @Valid @RequestBody UpdateCompanyRequest request
     ) {

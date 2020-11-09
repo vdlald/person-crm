@@ -16,6 +16,6 @@ public class ReadUserContactsResponse {
     private String name;
 
     @JsonIgnoreProperties("contactsId")
-    private CompanyResponse company;
+    private ReadCompanyResponse company;
 
 }
