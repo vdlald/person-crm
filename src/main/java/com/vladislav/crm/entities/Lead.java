@@ -41,7 +41,6 @@ public class Lead extends AbstractEntityWithTime {
     @ToString.Include
     private User user;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "status_id")
     @ToString.Include
