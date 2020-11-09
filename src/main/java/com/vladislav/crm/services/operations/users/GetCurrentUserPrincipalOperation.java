@@ -1,4 +1,4 @@
-package com.vladislav.crm.services.operations;
+package com.vladislav.crm.services.operations.users;
 
 import com.vladislav.crm.entities.User;
 
