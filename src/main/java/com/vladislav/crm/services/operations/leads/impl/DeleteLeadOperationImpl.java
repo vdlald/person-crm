@@ -18,7 +18,6 @@ public class DeleteLeadOperationImpl implements DeleteOperation<Lead> {
     private final ReadOperation<Lead> readLeadOperation;
 
     @Override
-    @Transactional
     public void execute(@NonNull Long id) {
         final Lead lead = readLeadOperation.execute(id);
         lead.getContacts().forEach(contact -> contact.removeLead(lead));
