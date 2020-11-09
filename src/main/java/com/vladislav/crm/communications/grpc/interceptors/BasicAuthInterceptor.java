@@ -1,5 +1,6 @@
 package com.vladislav.crm.communications.grpc.interceptors;
 
+import com.vladislav.crm.AppUtils;
 import io.grpc.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class BasicAuthInterceptor implements ServerInterceptor {
         try {
             authUser(basicAuth);
         } catch (BadCredentialsException e) {
-            serverCall.close(Status.UNAUTHENTICATED.withDescription(e.getLocalizedMessage()), new Metadata());
+            serverCall.close(Status.UNAUTHENTICATED.withDescription(AppUtils.getMessage(e)), new Metadata());
             return new ServerCall.Listener<>() {
             };
         }

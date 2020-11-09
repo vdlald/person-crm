@@ -1,5 +1,6 @@
 package com.vladislav.crm.communications.grpc;
 
+import com.vladislav.crm.AppUtils;
 import io.grpc.stub.StreamObserver;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -46,7 +47,7 @@ public class DefaultStreamObserver<T> implements StreamObserver<T> {
         };
 
         @Setter
-        private Consumer<Throwable> onError = t -> log.error(t.getLocalizedMessage(), t);
+        private Consumer<Throwable> onError = t -> log.error(AppUtils.getMessage(t), t);
 
         @Setter
         private Runnable onCompleted = () -> {
