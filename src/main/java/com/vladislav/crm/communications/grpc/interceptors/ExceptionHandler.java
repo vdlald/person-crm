@@ -1,11 +1,10 @@
 package com.vladislav.crm.communications.grpc.interceptors;
 
+import com.vladislav.crm.AppUtils;
 import io.grpc.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -23,12 +22,7 @@ public class ExceptionHandler implements ServerInterceptor {
                 try {
                     super.onHalfClose();
                 } catch (Exception e) {
-                    final String description = Optional.ofNullable(e.getLocalizedMessage())
-                            .orElse(Optional.ofNullable(e.getMessage()).orElse(""));
-
-                    final Status status = Status.INTERNAL.withCause(e)
-                            .withDescription(description);
-
+                    final Status status = Status.INTERNAL.withCause(e).withDescription(AppUtils.getMessage(e));
                     serverCall.close(status, metadata);
                 }
             }

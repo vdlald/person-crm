@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 
+import static com.vladislav.crm.AppUtils.getMessage;
+
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AccessDeniedExceptionHandler implements ServerInterceptor {
@@ -22,7 +24,7 @@ public class AccessDeniedExceptionHandler implements ServerInterceptor {
                 try {
                     super.onHalfClose();
                 } catch (AccessDeniedException e) {
-                    serverCall.close(Status.PERMISSION_DENIED.withCause(e).withDescription(e.getMessage()), metadata);
+                    serverCall.close(Status.PERMISSION_DENIED.withCause(e).withDescription(getMessage(e)), metadata);
                 }
             }
         };

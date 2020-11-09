@@ -1,5 +1,6 @@
 package com.vladislav.crm.communications.grpc.interceptors;
 
+import com.vladislav.crm.AppUtils;
 import com.vladislav.crm.functions.AuthenticateByJwtFunction;
 import io.grpc.*;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -26,7 +27,7 @@ public class JwtInterceptor implements ServerInterceptor {
             return new ServerCall.Listener<>() {
             };
         } catch (Exception e) {
-            serverCall.close(Status.UNAUTHENTICATED.withDescription(e.getMessage()), new Metadata());
+            serverCall.close(Status.UNAUTHENTICATED.withDescription(AppUtils.getMessage(e)), new Metadata());
             return new ServerCall.Listener<>() {
             };
         }

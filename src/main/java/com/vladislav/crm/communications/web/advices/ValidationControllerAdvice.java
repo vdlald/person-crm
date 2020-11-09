@@ -1,5 +1,6 @@
 package com.vladislav.crm.communications.web.advices;
 
+import com.vladislav.crm.AppUtils;
 import com.vladislav.crm.communications.web.responses.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.TransactionSystemException;
@@ -34,7 +35,7 @@ public class ValidationControllerAdvice {
             status = HttpStatus.BAD_REQUEST;
         } else {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
-            message = exception.getMessage();
+            message = AppUtils.getMessage(exception);
         }
 
         return ErrorResponse.builder()
