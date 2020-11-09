@@ -13,12 +13,13 @@ import org.springframework.stereotype.Component;
 public class JwtInterceptor implements ServerInterceptor {
 
     private final AuthenticateByJwtFunction authenticateByJwtFunction;
+    private final Metadata.Key<String> authorizationKey;
 
     @Override
     public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(
             ServerCall<ReqT, RespT> serverCall, Metadata metadata, ServerCallHandler<ReqT, RespT> next
     ) {
-        final String requestTokenHeader = metadata.get(Metadata.Key.of("jwt", Metadata.ASCII_STRING_MARSHALLER));
+        final String requestTokenHeader = metadata.get(authorizationKey);
         try {
             authenticateByJwtFunction.apply(requestTokenHeader);
             return next.startCall(serverCall, metadata);

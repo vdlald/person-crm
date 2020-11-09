@@ -20,7 +20,7 @@ public class AuthenticateByJwtFunctionImpl implements AuthenticateByJwtFunction 
     @Override
     public Boolean apply(String requestTokenHeader) {
         if (Objects.nonNull(requestTokenHeader) && requestTokenHeader.startsWith("Bearer ")) {
-            final String token = requestTokenHeader.substring(7);
+            final String token = requestTokenHeader.substring("Bearer ".length());
 
             final UserDetails user = parseJwtTokenFunction.apply(token);
 

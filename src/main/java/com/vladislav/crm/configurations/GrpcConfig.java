@@ -1,9 +1,6 @@
 package com.vladislav.crm.configurations;
 
-import io.grpc.BindableService;
-import io.grpc.Server;
-import io.grpc.ServerBuilder;
-import io.grpc.ServerInterceptor;
+import io.grpc.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +25,11 @@ public class GrpcConfig {
             services.forEach(serverBuilder::addService);
         }
         return serverBuilder.build();
+    }
+
+    @Bean
+    Metadata.Key<String> authorizationKey() {
+        return Metadata.Key.of("Authorization", Metadata.ASCII_STRING_MARSHALLER);
     }
 }
 
