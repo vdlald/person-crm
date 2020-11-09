@@ -22,7 +22,7 @@ public class CreateCompanyRequestHandlerImpl implements CreateCompanyRequestHand
         final User user = getCurrentUserStubOperation.execute();
 
         final Company company = new Company()
-                .setUserUnsafe(user)
+                .setUser(user)
                 .setName(request.getName());
 
         return companyCreateOperation.execute(company);

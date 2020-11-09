@@ -38,7 +38,7 @@ public class UserInfo extends AbstractEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public UserInfo setUser(User newUser) {
+    public UserInfo setUserSafe(User newUser) {
         if (Objects.equals(user, newUser)) {
             return this;
         }
@@ -46,13 +46,13 @@ public class UserInfo extends AbstractEntity {
         if (user != null) {
             final User oldUser = user;
             user = null;
-            oldUser.setInfo(null);
+            oldUser.setInfoSafe(null);
         }
 
         user = newUser;
 
         if (user != null) {
-            user.setInfo(this);
+            user.setInfoSafe(this);
         }
         return this;
     }

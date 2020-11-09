@@ -20,7 +20,7 @@ public class CreatePipelineRequestHandlerImpl implements CreatePipelineRequestHa
     public Pipeline handle(CreatePipelineRequest request) {
         final Pipeline pipeline = new Pipeline()
                 .setName(request.getName())
-                .setUserUnsafe(getCurrentUserStubOperation.execute());
+                .setUser(getCurrentUserStubOperation.execute());
 
         return createPipelineOperation.execute(pipeline);
     }

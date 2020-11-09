@@ -19,10 +19,10 @@ public class TestStatusAndLeadRelationshipsConsistency {
 
     @Test
     public void setStatus() {
-        lead.setStatus(status);
+        lead.setStatusSafe(status);
         checkAdd(status);
 
-        lead.setStatus(null);
+        lead.setStatusSafe(null);
         checkRemove();
     }
 
@@ -40,8 +40,8 @@ public class TestStatusAndLeadRelationshipsConsistency {
         final Status status2 = new Status().setName("status2");
         status2.setId(2L);
 
-        lead.setStatus(status);
-        lead.setStatus(status2);
+        lead.setStatusSafe(status);
+        lead.setStatusSafe(status2);
 
         checkAdd(status2);
     }

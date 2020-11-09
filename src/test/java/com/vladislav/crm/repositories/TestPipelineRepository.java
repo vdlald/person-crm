@@ -28,7 +28,7 @@ public class TestPipelineRepository {
     @Before
     public void setUp() {
         user = userRepository.save(IntegrationTestUtils.getUser());
-        pipeline = pipelineRepository.save(new Pipeline().setName("pipeline").setUser(user));
+        pipeline = pipelineRepository.save(new Pipeline().setName("pipeline").setUserSafe(user));
     }
 
     @After

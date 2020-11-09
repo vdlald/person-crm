@@ -40,10 +40,10 @@ public class TestLeadRepository extends AbstractTransactionalJUnit4SpringContext
     @Before
     public void setUp() {
         user = userRepository.save(IntegrationTestUtils.getUser());
-        pipeline = pipelineRepository.save(new Pipeline().setName("pipeline").setUser(user));
-        status = statusRepository.save(new Status().setName("status").setPipeline(pipeline));
-        contact = contactRepository.save(new Contact().setName("contact").setUser(user));
-        lead = leadRepository.save(new Lead().setName("lead").setUser(user).setStatus(status).addContact(contact));
+        pipeline = pipelineRepository.save(new Pipeline().setName("pipeline").setUserSafe(user));
+        status = statusRepository.save(new Status().setName("status").setPipelineSafe(pipeline));
+        contact = contactRepository.save(new Contact().setName("contact").setUserSafe(user));
+        lead = leadRepository.save(new Lead().setName("lead").setUserSafe(user).setStatusSafe(status).addContact(contact));
     }
 
     @After
@@ -70,7 +70,7 @@ public class TestLeadRepository extends AbstractTransactionalJUnit4SpringContext
 
     @Test
     public void testMoveLeadToStatus() {
-        final Status status2 = statusRepository.save(new Status().setName("status2").setPipeline(pipeline));
+        final Status status2 = statusRepository.save(new Status().setName("status2").setPipelineSafe(pipeline));
         leadRepository.moveLeadToStatus(lead.getId(), status2.getId());
         final Lead lead1 = leadRepository.findById(this.lead.getId()).get();
         Assertions.assertEquals(status2, lead1.getStatus());
@@ -78,7 +78,7 @@ public class TestLeadRepository extends AbstractTransactionalJUnit4SpringContext
 
     @Test
     public void testAttachLeadToContact() {
-        final Contact contact2 = contactRepository.save(new Contact().setName("contact2").setUser(user));
+        final Contact contact2 = contactRepository.save(new Contact().setName("contact2").setUserSafe(user));
         leadRepository.attachLeadToContact(lead.getId(), contact2.getId());
         final Lead lead1 = leadRepository.findById(this.lead.getId()).get();
         Assertions.assertEquals(2, lead1.getContacts().size());

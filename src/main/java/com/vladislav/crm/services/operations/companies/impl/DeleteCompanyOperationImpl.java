@@ -19,7 +19,7 @@ public class DeleteCompanyOperationImpl implements DeleteOperation<Company> {
     @Override
     public void execute(@NonNull Long id) {
         final Company company = readCompanyOperation.execute(id);
-        company.getContacts().forEach(contact -> contact.setCompanyUnsafe(null));
+        company.getContacts().forEach(contact -> contact.setCompany(null));
         companyRepository.save(company);
     }
 }

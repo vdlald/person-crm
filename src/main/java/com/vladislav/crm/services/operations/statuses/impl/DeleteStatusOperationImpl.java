@@ -21,7 +21,7 @@ public class DeleteStatusOperationImpl implements DeleteOperation<Status> {
     @Transactional
     public void execute(@NonNull Long id) {
         final Status status = readStatusOperation.execute(id);
-        status.getLeads().forEach(lead -> lead.setStatusUnsafe(null));
+        status.getLeads().forEach(lead -> lead.setStatus(null));
         statusRepository.delete(status);
     }
 }

@@ -27,12 +27,12 @@ public class CreateContactRequestHandlerImpl implements CreateContactRequestHand
         final User user = getCurrentUserStubOperation.execute();
 
         final Contact contact = new Contact()
-                .setUserUnsafe(user)
+                .setUser(user)
                 .setName(request.getName());
 
         final Long companyId = request.getCompanyId();
         if (companyId != null) {
-            contact.setCompanyUnsafe(readCompanyStubOperation.execute(companyId));
+            contact.setCompany(readCompanyStubOperation.execute(companyId));
         }
 
         return createContactOperation.execute(contact);

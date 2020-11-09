@@ -23,7 +23,7 @@ public class CreateStatusRequestHandlerImpl implements CreateStatusRequestHandle
     public Status handle(CreateStatusRequest request) {
         final Status status = new Status()
                 .setName(request.getName())
-                .setPipelineUnsafe(readPipelineOperation.execute(request.getPipelineId()));
+                .setPipeline(readPipelineOperation.execute(request.getPipelineId()));
 
         return statusCreateOperation.execute(status);
     }

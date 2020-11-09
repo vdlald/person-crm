@@ -31,7 +31,7 @@ public class TestCompanyRepository {
     @Before
     public void setUp() {
         user = userRepository.save(IntegrationTestUtils.getUser());
-        company = companyRepository.save(new Company().setName("company").setUser(user));
+        company = companyRepository.save(new Company().setName("company").setUserSafe(user));
     }
 
     @After

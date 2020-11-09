@@ -19,19 +19,19 @@ public class TestUserAndUserInfoRelationshipsConsistency {
 
     @Test
     public void setUser() {
-        userInfo.setUser(user);
+        userInfo.setUserSafe(user);
         checkAdd();
 
-        userInfo.setUser(null);
+        userInfo.setUserSafe(null);
         checkRemove();
     }
 
     @Test
     public void setInfo() {
-        user.setInfo(userInfo);
+        user.setInfoSafe(userInfo);
         checkAdd();
 
-        user.setInfo(null);
+        user.setInfoSafe(null);
         checkRemove();
     }
 

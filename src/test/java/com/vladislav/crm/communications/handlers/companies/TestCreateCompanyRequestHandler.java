@@ -37,7 +37,7 @@ public class TestCreateCompanyRequestHandler {
 
         final Company savedCompany = new Company().setName("company");
         savedCompany.setId(1L);
-        savedCompany.setUserUnsafe(user);
+        savedCompany.setUser(user);
 
         Mockito.when(getCurrentUserStubOperation.execute()).thenReturn(user);
         Mockito.when(

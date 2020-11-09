@@ -38,7 +38,7 @@ public class Pipeline extends AbstractEntity {
     @OneToMany(mappedBy = "pipeline", fetch = FetchType.LAZY)
     private List<Status> statuses = new ArrayList<>();
 
-    public Pipeline setUser(User newUser) {
+    public Pipeline setUserSafe(User newUser) {
         if (Objects.equals(user, newUser)) {
             return this;
         }
@@ -55,17 +55,12 @@ public class Pipeline extends AbstractEntity {
         return this;
     }
 
-    public Pipeline setUserUnsafe(User newUser) {
-        user = newUser;
-        return this;
-    }
-
     public Pipeline addStatus(Status status) {
         if (statuses.contains(status)) {
             return this;
         }
         statuses.add(status);
-        status.setPipeline(this);
+        status.setPipelineSafe(this);
         return this;
     }
 
@@ -74,7 +69,7 @@ public class Pipeline extends AbstractEntity {
             return this;
         }
         statuses.remove(status);
-        status.setPipeline(null);
+        status.setPipelineSafe(null);
         return this;
     }
 
