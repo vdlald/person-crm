@@ -1,5 +1,6 @@
-package com.vladislav.crm.security.filters;
+package com.vladislav.crm.functions.impl;
 
+import com.vladislav.crm.functions.AuthenticateByJwtFunction;
 import com.vladislav.crm.functions.ParseJwtTokenFunction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,29 +8,17 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Objects;
 
-@Component("jwtFilter")
+@Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JwtFilter extends OncePerRequestFilter {
+public class AuthenticateByJwtFunctionImpl implements AuthenticateByJwtFunction {
 
     private final ParseJwtTokenFunction parseJwtTokenFunction;
 
     @Override
-    protected void doFilterInternal(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain
-    ) throws ServletException, IOException {
-        final String requestTokenHeader = request.getHeader("Authorization");
-
+    public Boolean apply(String requestTokenHeader) {
         if (Objects.nonNull(requestTokenHeader) && requestTokenHeader.startsWith("Bearer ")) {
             final String token = requestTokenHeader.substring(7);
 
@@ -39,7 +28,8 @@ public class JwtFilter extends OncePerRequestFilter {
                     new UsernamePasswordAuthenticationToken(user, "", user.getAuthorities());
 
             SecurityContextHolder.getContext().setAuthentication(auth);
+            return true;
         }
-        filterChain.doFilter(request, response);
+        return false;
     }
 }
