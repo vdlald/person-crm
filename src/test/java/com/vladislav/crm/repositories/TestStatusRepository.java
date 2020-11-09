@@ -35,10 +35,10 @@ public class TestStatusRepository {
     @Before
     public void setUp() {
         user = userRepository.save(IntegrationTestUtils.getUser());
-        pipeline = pipelineRepository.save(new Pipeline().setName("pipeline").setUser(user));
+        pipeline = pipelineRepository.save(new Pipeline().setName("pipeline").setUserSafe(user));
 
         final String statusName = UUID.randomUUID().toString().substring(0, 10);
-        status = statusRepository.save(new Status().setName(statusName).setPipeline(pipeline));
+        status = statusRepository.save(new Status().setName(statusName).setPipelineSafe(pipeline));
     }
 
     @After

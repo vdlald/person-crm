@@ -28,7 +28,7 @@ public class GenerateRefreshTokenFunctionImpl implements GenerateRefreshTokenFun
         final Instant createdAt = Instant.now();
         final Instant expiredAt = createdAt.plus(refreshTokenLifetime, ChronoUnit.DAYS);
 
-        final RefreshToken refreshToken = new RefreshToken().setUserUnsafe(user)
+        final RefreshToken refreshToken = new RefreshToken().setUser(user)
                 .setValidUntil(LocalDateTime.ofInstant(expiredAt, ZoneId.systemDefault()));
 
         return refreshTokenRepository.save(refreshToken);

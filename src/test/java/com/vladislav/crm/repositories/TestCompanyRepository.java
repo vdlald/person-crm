@@ -7,7 +7,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,7 +31,7 @@ public class TestCompanyRepository {
     @Before
     public void setUp() {
         user = userRepository.save(IntegrationTestUtils.getUser());
-        company = companyRepository.save(new Company().setName("company").setUser(user));
+        company = companyRepository.save(new Company().setName("company").setUserSafe(user));
     }
 
     @After
@@ -61,17 +60,5 @@ public class TestCompanyRepository {
     public void testFindUserIdById() {
         final Long userId = companyRepository.findUserIdById(company.getId()).get();
         Assertions.assertEquals(user.getId(), userId);
-    }
-
-    @Test
-    @Transactional
-    @Disabled  // вопрос: почему меняется имя компании ?
-    public void testChangeInUserNotAffectToCompany() {
-        user = userRepository.findById(user.getId()).get();
-        user.getCompanies().get(0).setName("name");
-        userRepository.save(user);
-
-        company = companyRepository.findById(this.company.getId()).get();
-        Assertions.assertEquals("company", company.getName());
     }
 }

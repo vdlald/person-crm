@@ -19,16 +19,16 @@ public class TestUserAndContactRelationshipsConsistency {
 
     @Test
     public void setUser() {
-        contact.setUser(user);
+        contact.setUserSafe(user);
         checkAdd();
 
         final User user2 = new User();
         user2.setId(2L);
-        contact.setUser(user2);
+        contact.setUserSafe(user2);
         assertTrue(user.getContacts().isEmpty());
         assertEquals(contact, user2.getContacts().get(0));
 
-        contact.setUser(null);
+        contact.setUserSafe(null);
         assertTrue(user2.getContacts().isEmpty());
         assertNull(contact.getUser());
     }

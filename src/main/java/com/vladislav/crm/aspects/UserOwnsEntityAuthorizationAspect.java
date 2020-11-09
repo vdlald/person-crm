@@ -14,7 +14,6 @@ public class UserOwnsEntityAuthorizationAspect {
     public static void hasAuthorizationPoint() {
     }
 
-    // вопрос: нормально ли делать таким образом ?
     @Around("hasAuthorizationPoint() && args(id)")
     public Object whenNullReturnTrue(
             ProceedingJoinPoint joinPoint, Long id

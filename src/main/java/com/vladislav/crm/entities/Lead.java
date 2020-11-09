@@ -41,7 +41,6 @@ public class Lead extends AbstractEntityWithTime {
     @ToString.Include
     private User user;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "status_id")
     @ToString.Include
@@ -68,7 +67,7 @@ public class Lead extends AbstractEntityWithTime {
         }
     }
 
-    public Lead setUser(User newUser) {
+    public Lead setUserSafe(User newUser) {
         if (Objects.equals(user, newUser)) {
             return this;
         }
@@ -85,12 +84,7 @@ public class Lead extends AbstractEntityWithTime {
         return this;
     }
 
-    public Lead setUserUnsafe(User newUser) {
-        user = newUser;
-        return this;
-    }
-
-    public Lead setStatus(Status newStatus) {
+    public Lead setStatusSafe(Status newStatus) {
         if (Objects.equals(status, newStatus)) {
             return this;
         }
@@ -104,11 +98,6 @@ public class Lead extends AbstractEntityWithTime {
         if (newStatus != null) {
             status.addLead(this);
         }
-        return this;
-    }
-
-    public Lead setStatusUnsafe(Status newStatus) {
-        status = newStatus;
         return this;
     }
 

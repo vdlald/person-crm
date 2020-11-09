@@ -1,5 +1,6 @@
 package com.vladislav.crm.communications.grpc.interceptors;
 
+import com.vladislav.crm.AppUtils;
 import io.grpc.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,32 +19,32 @@ import java.nio.charset.StandardCharsets;
 public class BasicAuthInterceptor implements ServerInterceptor {
 
     private final AuthenticationManager authenticationManager;
+    private final Metadata.Key<String> authorizationKey;
 
     @Override
     public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(
             ServerCall<ReqT, RespT> serverCall, Metadata metadata, ServerCallHandler<ReqT, RespT> serverCallHandler
     ) {
-        final Context context = Context.current();
+        final String authorization = metadata.get(authorizationKey);
 
-        final String basicAuth = metadata.get(Metadata.Key.of("Authorization", Metadata.ASCII_STRING_MARSHALLER));
-
-        if (basicAuth == null) {
-            return Contexts.interceptCall(context, serverCall, metadata, serverCallHandler);
+        if (authorization == null) {
+            return serverCallHandler.startCall(serverCall, metadata);
         }
 
         try {
-            authUser(basicAuth);
+            if (authorization.startsWith("Basic ")) {
+                authUser(authorization);
+            }
+            return serverCallHandler.startCall(serverCall, metadata);
         } catch (BadCredentialsException e) {
-            serverCall.close(Status.UNAUTHENTICATED.withDescription(e.getLocalizedMessage()), new Metadata());
+            serverCall.close(Status.UNAUTHENTICATED.withDescription(AppUtils.getMessage(e)), new Metadata());
             return new ServerCall.Listener<>() {
             };
         }
-
-        return Contexts.interceptCall(context, serverCall, metadata, serverCallHandler);
     }
 
     private void authUser(String basicAuth) {
-        final String base64Credentials = basicAuth.substring("Basic".length()).trim();
+        final String base64Credentials = basicAuth.substring("Basic ".length());
         final String credentials;
         try {
             credentials = new String(Base64Utils.decodeFromString(base64Credentials), StandardCharsets.UTF_8);

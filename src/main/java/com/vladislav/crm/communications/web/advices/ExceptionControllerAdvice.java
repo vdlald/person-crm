@@ -17,7 +17,7 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse exceptionHandler(Exception e) {
-        log.error(e.getLocalizedMessage(), e);
+        log.error(AppUtils.getMessage(e), e);
         return ErrorResponse.builder()
                 .setStatus(HttpStatus.INTERNAL_SERVER_ERROR)
                 .setMessage(AppUtils.getMessage(e))

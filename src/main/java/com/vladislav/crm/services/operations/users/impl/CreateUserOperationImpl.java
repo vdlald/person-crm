@@ -25,7 +25,7 @@ public class CreateUserOperationImpl implements CreateOperation<User> {
             throw new EntityExistsException();
         }
 
-        newUser.setInfo(new UserInfo());
+        newUser.setInfoSafe(new UserInfo());
         encodePassword(newUser);
 
         return userRepository.save(newUser);

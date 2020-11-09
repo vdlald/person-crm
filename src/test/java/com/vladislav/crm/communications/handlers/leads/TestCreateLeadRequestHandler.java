@@ -51,7 +51,7 @@ public class TestCreateLeadRequestHandler {
         lead = TestUtils.getLead(1L)
                 .setName("lead")
                 .setSale(BigDecimal.ONE)
-                .setStatusUnsafe(TestUtils.getStatus(2L));
+                .setStatus(TestUtils.getStatus(2L));
 
         Mockito.when(leadCreateOperation.execute(Mockito.any())).thenReturn(lead);
 

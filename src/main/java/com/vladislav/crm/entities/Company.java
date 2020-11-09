@@ -43,7 +43,7 @@ public class Company extends AbstractEntity {
             return null;
         }
         contacts.add(contact);
-        contact.setCompany(this);
+        contact.setCompanySafe(this);
         return this;
     }
 
@@ -52,7 +52,7 @@ public class Company extends AbstractEntity {
             return null;
         }
         contacts.remove(contact);
-        contact.setCompany(null);
+        contact.setCompanySafe(null);
         return this;
     }
 
@@ -60,7 +60,7 @@ public class Company extends AbstractEntity {
         return new ArrayList<>(contacts);
     }
 
-    public Company setUser(User newUser) {
+    public Company setUserSafe(User newUser) {
         if (Objects.equals(user, newUser)) {
             return this;
         }
@@ -74,11 +74,6 @@ public class Company extends AbstractEntity {
         if (user != null) {
             user.addCompany(this);
         }
-        return this;
-    }
-
-    public Company setUserUnsafe(User user) {
-        this.user = user;
         return this;
     }
 }

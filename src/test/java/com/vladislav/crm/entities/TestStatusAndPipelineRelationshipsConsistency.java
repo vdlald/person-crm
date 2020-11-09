@@ -19,16 +19,16 @@ public class TestStatusAndPipelineRelationshipsConsistency {
 
     @Test
     public void setPipeline() {
-        status.setPipeline(pipeline);
+        status.setPipelineSafe(pipeline);
         checkAdd();
 
         final Pipeline pipeline2 = new Pipeline();
         pipeline2.setId(2L);
-        status.setPipeline(pipeline2);
+        status.setPipelineSafe(pipeline2);
         assertTrue(pipeline.getStatuses().isEmpty());
         assertEquals(pipeline2, status.getPipeline());
 
-        status.setPipeline(null);
+        status.setPipelineSafe(null);
         assertTrue(pipeline2.getStatuses().isEmpty());
         assertNull(status.getPipeline());
     }

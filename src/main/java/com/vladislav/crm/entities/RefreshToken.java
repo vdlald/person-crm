@@ -39,7 +39,7 @@ public class RefreshToken {
     @EqualsAndHashCode.Include
     private LocalDateTime validUntil;
 
-    public RefreshToken setUser(User newUser) {
+    public RefreshToken setUserSafe(User newUser) {
         if (Objects.equals(user, newUser)) {
             return this;
         }
@@ -53,11 +53,6 @@ public class RefreshToken {
         if (user != null) {
             user.addRefreshToken(this);
         }
-        return this;
-    }
-
-    public RefreshToken setUserUnsafe(User user) {
-        this.user = user;
         return this;
     }
 }

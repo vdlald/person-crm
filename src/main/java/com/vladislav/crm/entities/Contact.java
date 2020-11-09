@@ -45,7 +45,7 @@ public class Contact extends AbstractEntityWithTime {
             inverseJoinColumns = @JoinColumn(name = "lead_id", referencedColumnName = "lead_id"))
     private Set<Lead> leads = new HashSet<>();
 
-    public Contact setUser(User newUser) {
+    public Contact setUserSafe(User newUser) {
         if (Objects.equals(user, newUser)) {
             return this;
         }
@@ -62,12 +62,7 @@ public class Contact extends AbstractEntityWithTime {
         return this;
     }
 
-    public Contact setUserUnsafe(User newUser) {
-        user = newUser;
-        return this;
-    }
-
-    public Contact setCompany(Company newCompany) {
+    public Contact setCompanySafe(Company newCompany) {
         if (Objects.equals(company, newCompany)) {
             return this;
         }
@@ -81,11 +76,6 @@ public class Contact extends AbstractEntityWithTime {
         if (company != null) {
             newCompany.addContact(this);
         }
-        return this;
-    }
-
-    public Contact setCompanyUnsafe(Company company) {
-        this.company = company;
         return this;
     }
 

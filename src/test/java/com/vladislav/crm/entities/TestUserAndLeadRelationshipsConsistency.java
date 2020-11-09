@@ -19,16 +19,16 @@ public class TestUserAndLeadRelationshipsConsistency {
 
     @Test
     public void setUser() {
-        lead.setUser(user);
+        lead.setUserSafe(user);
         checkAdd();
 
         final User user2 = new User();
         user2.setId(2L);
-        lead.setUser(user2);
+        lead.setUserSafe(user2);
         assertTrue(user.getLeads().isEmpty());
         assertEquals(lead, user2.getLeads().get(0));
 
-        lead.setUser(null);
+        lead.setUserSafe(null);
         assertTrue(user2.getLeads().isEmpty());
         assertNull(lead.getUser());
     }

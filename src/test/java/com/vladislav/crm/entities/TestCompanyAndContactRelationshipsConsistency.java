@@ -19,16 +19,16 @@ public class TestCompanyAndContactRelationshipsConsistency {
 
     @Test
     public void setCompany() {
-        contact.setCompany(company);
+        contact.setCompanySafe(company);
         checkAdd();
 
         final Company company2 = new Company();
         company2.setId(2L);
-        contact.setCompany(company2);
+        contact.setCompanySafe(company2);
         assertTrue(company.getContacts().isEmpty());
         assertEquals(company2, contact.getCompany());
 
-        contact.setCompany(null);
+        contact.setCompanySafe(null);
         assertTrue(company2.getContacts().isEmpty());
         assertNull(contact.getCompany());
     }

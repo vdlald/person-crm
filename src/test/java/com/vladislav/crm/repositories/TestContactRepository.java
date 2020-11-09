@@ -35,8 +35,8 @@ public class TestContactRepository {
     @Before
     public void setUp() {
         user = userRepository.save(IntegrationTestUtils.getUser());
-        company = companyRepository.save(new Company().setUser(user).setName("company"));
-        contact = contactRepository.save(new Contact().setName("contact").setUser(user).setCompany(company));
+        company = companyRepository.save(new Company().setUserSafe(user).setName("company"));
+        contact = contactRepository.save(new Contact().setName("contact").setUserSafe(user).setCompanySafe(company));
     }
 
     @After
@@ -58,7 +58,7 @@ public class TestContactRepository {
 
     @Test
     public void testAttachContactToCompany() {
-        final Company company2 = companyRepository.save(new Company().setName("company2").setUser(user));
+        final Company company2 = companyRepository.save(new Company().setName("company2").setUserSafe(user));
         contactRepository.attachContactToCompany(contact.getId(), company2.getId());
 
         final Contact contact1 = contactRepository.findById(this.contact.getId()).get();

@@ -1,7 +1,7 @@
-package com.vladislav.crm.services.operations.impl;
+package com.vladislav.crm.services.operations.users.impl;
 
 import com.vladislav.crm.entities.User;
-import com.vladislav.crm.services.operations.GetCurrentUserPrincipalOperation;
+import com.vladislav.crm.services.operations.users.GetCurrentUserPrincipalOperation;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

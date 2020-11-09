@@ -74,7 +74,7 @@ public class User extends AbstractEntityWithTime implements UserDetails {
     @JsonIgnoreProperties("user")
     private List<Company> companies = new ArrayList<>();
 
-    public User setInfo(UserInfo newInfo) {
+    public User setInfoSafe(UserInfo newInfo) {
         if (Objects.equals(info, newInfo)) {
             return this;
         }
@@ -82,13 +82,13 @@ public class User extends AbstractEntityWithTime implements UserDetails {
         if (info != null) {
             final UserInfo oldInfo = info;
             info = null;
-            oldInfo.setUser(null);
+            oldInfo.setUserSafe(null);
         }
 
         info = newInfo;
 
         if (info != null) {
-            info.setUser(this);
+            info.setUserSafe(this);
         }
         return this;
     }
@@ -98,7 +98,7 @@ public class User extends AbstractEntityWithTime implements UserDetails {
             return this;
         }
         contacts.add(contact);
-        contact.setUser(this);
+        contact.setUserSafe(this);
         return this;
     }
 
@@ -107,7 +107,7 @@ public class User extends AbstractEntityWithTime implements UserDetails {
             return this;
         }
         contacts.remove(contact);
-        contact.setUser(null);
+        contact.setUserSafe(null);
         return this;
     }
 
@@ -116,7 +116,7 @@ public class User extends AbstractEntityWithTime implements UserDetails {
             return this;
         }
         pipelines.add(pipeline);
-        pipeline.setUser(this);
+        pipeline.setUserSafe(this);
         return this;
     }
 
@@ -125,7 +125,7 @@ public class User extends AbstractEntityWithTime implements UserDetails {
             return this;
         }
         pipelines.remove(pipeline);
-        pipeline.setUser(null);
+        pipeline.setUserSafe(null);
         return this;
     }
 
@@ -134,7 +134,7 @@ public class User extends AbstractEntityWithTime implements UserDetails {
             return this;
         }
         leads.add(lead);
-        lead.setUser(this);
+        lead.setUserSafe(this);
         return this;
     }
 
@@ -143,7 +143,7 @@ public class User extends AbstractEntityWithTime implements UserDetails {
             return this;
         }
         leads.remove(lead);
-        lead.setUser(null);
+        lead.setUserSafe(null);
         return this;
     }
 
@@ -152,7 +152,7 @@ public class User extends AbstractEntityWithTime implements UserDetails {
             return this;
         }
         companies.add(company);
-        company.setUser(this);
+        company.setUserSafe(this);
         return this;
     }
 
@@ -161,7 +161,7 @@ public class User extends AbstractEntityWithTime implements UserDetails {
             return this;
         }
         companies.remove(company);
-        company.setUser(null);
+        company.setUserSafe(null);
         return this;
     }
 
@@ -170,7 +170,7 @@ public class User extends AbstractEntityWithTime implements UserDetails {
             return this;
         }
         refreshTokens.add(token);
-        token.setUser(this);
+        token.setUserSafe(this);
         return this;
     }
 
@@ -179,7 +179,7 @@ public class User extends AbstractEntityWithTime implements UserDetails {
             return this;
         }
         refreshTokens.remove(refreshToken);
-        refreshToken.setUser(null);
+        refreshToken.setUserSafe(null);
         return this;
     }
 

@@ -22,6 +22,7 @@ public class ExceptionHandler implements ServerInterceptor {
                 try {
                     super.onHalfClose();
                 } catch (Exception e) {
+                    e.printStackTrace();
                     final Status status = Status.INTERNAL.withCause(e).withDescription(AppUtils.getMessage(e));
                     serverCall.close(status, metadata);
                 }

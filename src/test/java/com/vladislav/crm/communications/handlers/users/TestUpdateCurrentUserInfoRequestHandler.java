@@ -29,7 +29,7 @@ public class TestUpdateCurrentUserInfoRequestHandler {
 
     @BeforeEach
     public void setUp() {
-        user = TestUtils.getUser(1L).setInfo(new UserInfo().setEmail("").setFirstname("").setLastname(""));
+        user = TestUtils.getUser(1L).setInfoSafe(new UserInfo().setEmail("").setFirstname("").setLastname(""));
 
         Mockito.when(getCurrentUserOperation.execute()).thenReturn(user);
         Mockito.when(userUpdateOperation.execute(Mockito.any(User.class))).thenReturn(user);

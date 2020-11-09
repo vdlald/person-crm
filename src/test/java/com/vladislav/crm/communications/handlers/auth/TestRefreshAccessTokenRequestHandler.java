@@ -48,7 +48,7 @@ public class TestRefreshAccessTokenRequestHandler {
         user = TestUtils.getUser(1L);
 
         refreshToken = new RefreshToken().setToken(UUID.randomUUID())
-                .setUserUnsafe(user)
+                .setUser(user)
                 .setValidUntil(LocalDateTime.now().plus(1, ChronoUnit.DAYS));
 
         requestHandler = new RefreshAccessTokenRequestHandlerImpl(
@@ -66,7 +66,7 @@ public class TestRefreshAccessTokenRequestHandler {
 
         final RefreshToken newRefreshToken = new RefreshToken()
                 .setToken(UUID.randomUUID())
-                .setUser(user);
+                .setUserSafe(user);
         Mockito.when(generateRefreshTokenFunction.apply(user)).thenReturn(newRefreshToken);
 
         final AuthResponse handle = requestHandler.handle(refreshToken.getToken());
