@@ -14,7 +14,7 @@ public class CreateLeadOperationImpl extends AbstractCreateOperation<Lead> {
         super(repository);
     }
 
-    @Override  // refactor candidate: данный override нужен только для работы аспектов
+    @Override
     public Lead execute(Lead entity) {
         return super.execute(entity);
     }

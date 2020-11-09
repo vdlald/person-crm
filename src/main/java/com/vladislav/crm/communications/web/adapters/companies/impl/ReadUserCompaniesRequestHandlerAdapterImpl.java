@@ -2,9 +2,9 @@ package com.vladislav.crm.communications.web.adapters.companies.impl;
 
 import com.vladislav.crm.communications.handlers.companies.ReadUserCompaniesRequestHandler;
 import com.vladislav.crm.communications.web.adapters.companies.ReadUserCompaniesRequestHandlerAdapter;
-import com.vladislav.crm.communications.web.assemblers.CompanyResponseAssembler;
+import com.vladislav.crm.communications.web.assemblers.ReadCompanyResponseAssembler;
 import com.vladislav.crm.communications.web.controllers.impl.UserCompaniesControllerImpl;
-import com.vladislav.crm.communications.web.responses.CompanyResponse;
+import com.vladislav.crm.communications.web.responses.ReadCompanyResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
@@ -24,13 +24,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class ReadUserCompaniesRequestHandlerAdapterImpl implements ReadUserCompaniesRequestHandlerAdapter {
 
     private final ReadUserCompaniesRequestHandler requestHandler;
-    private final CompanyResponseAssembler companyResponseAssembler;
+    private final ReadCompanyResponseAssembler readCompanyResponseAssembler;
 
     @Override
     public RepresentationModel<?> handle(Void unused) {
-        final List<EntityModel<CompanyResponse>> companies = requestHandler.handle()
+        final List<EntityModel<ReadCompanyResponse>> companies = requestHandler.handle()
                 .stream()
-                .map(companyResponseAssembler::toModel)
+                .map(readCompanyResponseAssembler::toModel)
                 .collect(Collectors.toUnmodifiableList());
 
         return HalModelBuilder.emptyHalModel()

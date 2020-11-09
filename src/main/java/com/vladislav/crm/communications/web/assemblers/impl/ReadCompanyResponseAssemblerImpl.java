@@ -1,10 +1,10 @@
 package com.vladislav.crm.communications.web.assemblers.impl;
 
+import com.vladislav.crm.communications.web.assemblers.ReadCompanyResponseAssembler;
+import com.vladislav.crm.communications.web.controllers.impl.UserCompaniesControllerImpl;
+import com.vladislav.crm.communications.web.responses.ReadCompanyResponse;
 import com.vladislav.crm.entities.AbstractEntity;
 import com.vladislav.crm.entities.Company;
-import com.vladislav.crm.communications.web.assemblers.CompanyResponseAssembler;
-import com.vladislav.crm.communications.web.controllers.impl.UserCompaniesControllerImpl;
-import com.vladislav.crm.communications.web.responses.CompanyResponse;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Component;
@@ -15,10 +15,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
-public class CompanyResponseAssemblerImpl implements CompanyResponseAssembler {
+public class ReadCompanyResponseAssemblerImpl implements ReadCompanyResponseAssembler {
     @Override
-    public EntityModel<CompanyResponse> toModel(Company entity) {
-        final CompanyResponse response = new CompanyResponse()
+    public EntityModel<ReadCompanyResponse> toModel(Company entity) {
+        final ReadCompanyResponse response = new ReadCompanyResponse()
                 .setId(entity.getId())
                 .setName(entity.getName())
                 .setContactsId(entity.getContacts().stream()

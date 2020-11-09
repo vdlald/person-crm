@@ -26,7 +26,7 @@ public interface LeadRepository extends JpaRepository<Lead, Long> {
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query(value = "UPDATE leads SET status_id = :statusId WHERE lead_id = :leadId", nativeQuery = true)
+    @Query(value = "UPDATE leads SET status_id = :statusId WHERE lead_id = :leadId", nativeQuery = true)  // вопрос: нормально ли так делать?
     void moveLeadToStatus(@Param("leadId") Long leadId, @Param("statusId") Long statusId);
 
     @Transactional

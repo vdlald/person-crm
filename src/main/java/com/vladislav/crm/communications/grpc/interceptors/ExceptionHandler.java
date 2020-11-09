@@ -1,16 +1,14 @@
 package com.vladislav.crm.communications.grpc.interceptors;
 
+import com.vladislav.crm.AppUtils;
 import io.grpc.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
-
-import static com.vladislav.crm.AppUtils.getMessage;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class AccessDeniedExceptionHandler implements ServerInterceptor {
+public class ExceptionHandler implements ServerInterceptor {
 
     @Override
     public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(
@@ -23,8 +21,9 @@ public class AccessDeniedExceptionHandler implements ServerInterceptor {
             public void onHalfClose() {
                 try {
                     super.onHalfClose();
-                } catch (AccessDeniedException e) {
-                    serverCall.close(Status.PERMISSION_DENIED.withCause(e).withDescription(getMessage(e)), metadata);
+                } catch (Exception e) {
+                    final Status status = Status.INTERNAL.withCause(e).withDescription(AppUtils.getMessage(e));
+                    serverCall.close(status, metadata);
                 }
             }
         };
