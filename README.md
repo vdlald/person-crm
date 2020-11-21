@@ -14,3 +14,7 @@
 ## Прочее
 
 Вы можете протестировать бэкенд с помощью Postman и BloomRPC. Для этого можете скачать релиз приложения обернутый в докер (https://github.com/vdlald/person-crm/releases/tag/beta)
+
+## UML-диаграмма БД
+
+![](etc/crm.png)
